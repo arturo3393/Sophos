@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
 import com.google.challengesophos.R
+import com.google.challengesophos.ViewModel.GetDocsViewModel
 import com.google.challengesophos.ViewModel.LoginViewModel
 
 
@@ -13,6 +14,8 @@ class MainActivity : AppCompatActivity() {
 //This will only contian fragements
 
     private val loginViewModel: LoginViewModel by viewModels()
+
+    private val getDocsViewModel: GetDocsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,16 +26,21 @@ class MainActivity : AppCompatActivity() {
         val passwordIn: TextView = findViewById(R.id.etPassword)
 
 
-//listens and saves the
-        logInBtn.setOnClickListener {
+//listens and saves the email and password from the login
+     /*   logInBtn.setOnClickListener {
 
             val emailLogin = emailIn.text.toString().trim()
             val passwordLogin = passwordIn.text.toString().trim()
             loginViewModel.getLoginViewModel(emailLogin, passwordLogin)
+        }*/
+
+
+// Listens and brings the list of docs only with the email
+
+        logInBtn.setOnClickListener {
+            val emailLogin = emailIn.text.toString().trim()
+            getDocsViewModel.getDocsViewModel(emailLogin)
         }
-
-
-
 
 
     }

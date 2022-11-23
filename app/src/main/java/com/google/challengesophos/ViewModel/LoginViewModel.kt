@@ -31,9 +31,9 @@ class LoginViewModel : ViewModel() {
             val response : Response<LoginApiResponse> = getRetrofit().create(APIServiceLogin::class.java)
                 .getLogin(emailLogin,passwordLogin)
 
-            val userNFO = response.body()
+            val userInfo = response.body()
             println(response.isSuccessful)
-                println(userNFO?.nombre.toString())
+                println(userInfo?.nombre.toString())
 
         }
     }
