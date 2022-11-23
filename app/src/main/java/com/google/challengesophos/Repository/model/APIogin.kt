@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 
-interface APIServiceLogin {
+interface APIogin {
 
 // Api that returns the loginResponse Model
     @GET("/RS_Usuarios")

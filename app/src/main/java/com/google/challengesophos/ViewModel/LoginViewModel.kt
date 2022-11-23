@@ -3,7 +3,7 @@ package com.google.challengesophos.ViewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.challengesophos.Repository.model.APIServiceLogin
+import com.google.challengesophos.Repository.model.APIogin
 import com.google.challengesophos.Repository.model.LoginApiResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +28,7 @@ class LoginViewModel : ViewModel() {
     //Method that is connected to the view through the parameters and it connects to the model with retrofit.
     fun getLoginViewModel (emailLogin:String, passwordLogin: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val response : Response<LoginApiResponse> = getRetrofit().create(APIServiceLogin::class.java)
+            val response : Response<LoginApiResponse> = getRetrofit().create(APIogin::class.java)
                 .getLogin(emailLogin,passwordLogin)
 
             val userInfo = response.body()
