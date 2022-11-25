@@ -1,14 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="24dp"
     tools:context=".ui.LoginFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-               android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ImageView
+        android:id="@+id/ivSophosLogo"
+        android:layout_width="208dp"
+        android:layout_height="76dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/sophos_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tvLegend"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="14dp"
+        android:text="@string/Legend"
+        android:textAlignment="center"
+        android:textColor="@color/primaryLightColor"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivSophosLogo" />
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_borders"
+        android:drawableStart="@drawable/ic_person"
+        android:drawablePadding="35dp"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLegend" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="104dp"
+        android:background="@drawable/rounded_borders"
+        android:drawableStart="@drawable/ic_key"
+        android:drawablePadding="37dp"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLegend"
+        android:drawableEnd="@drawable/ic_eye"/>
+
+    <View
+        android:id="@+id/dividerEmail"
+        android:layout_width="2dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/primaryLightColor"
+        android:backgroundTint="@color/primaryLightColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.182"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLegend" />
+
+    <View
+        android:id="@+id/dividerPassword"
+        android:layout_width="2dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/primaryLightColor"
+        android:backgroundTint="@color/primaryLightColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
