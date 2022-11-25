@@ -10,7 +10,7 @@
     </style>
 
     <!--Btn Ingresar  -->
-    <style name="styleLoginBtn1Light" parent="Widget.AppCompat.Button.Borderless.Colored">
+    <style name="styleLoginBtn1Light" >
         <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">@font/montserrat_bold</item>
         <item name="android:textAllCaps">false</item>
@@ -19,7 +19,7 @@
     </style>
     <!--Btn fingerprint -->
 
-    <style name="styleLoginBtn2Light" parent="Widget.AppCompat.Button.Borderless.Colored">
+    <style name="styleLoginBtn2Light" parent="Widget.AppCompat.Button">
         <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">@font/montserrat_bold</item>
         <item name="android:textAllCaps">false</item>

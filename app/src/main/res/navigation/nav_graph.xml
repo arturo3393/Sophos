@@ -10,4 +10,14 @@
         android:name="com.google.challengesophos.ui.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.google.challengesophos.ui.WelcomeFragment"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome" >
+        <argument
+            android:name="userID"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

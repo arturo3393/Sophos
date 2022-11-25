@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
+    android:theme="@style/Theme.ChallengeSophos"
     tools:context=".ui.LoginFragment">
 
     <ImageView
@@ -37,6 +38,7 @@
     <EditText
         android:id="@+id/etEmail"
         style="@style/styleLoginTvLight"
+
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
@@ -93,6 +95,7 @@
         app:layout_constraintHorizontal_bias="0.18"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogin"
