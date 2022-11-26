@@ -1,6 +1,5 @@
 package com.google.challengesophos.ui
 
-
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,13 +13,11 @@ import com.google.challengesophos.ViewModel.LoginViewModel
 import com.google.challengesophos.databinding.FragmentLoginBinding
 
 
-
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val loginViewModel: LoginViewModel by viewModels()
 
     private var _binding: FragmentLoginBinding? = null
-
 
 
     // This property is only valid between onCreateView and
@@ -47,12 +44,20 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             val emailIn = binding.etEmail.text.trim().toString()
             val passwordIn = binding.etPassword.text.trim().toString()
             loginViewModel.getLoginViewModel(emailIn, passwordIn)
+            println("model value: " + loginViewModel.loginModel.value)
+            if (loginViewModel.loginModel.value == true) {
+                toastLogin()
 
-            when (loginViewModel.loginModel.value) {
+            } else {
+                navigateToWelcomeFragment()
+            }
+
+            /*when (loginViewModel.loginModel.value) {
                 true -> navigateToWelcomeFragment()
                 else -> toastLogin()
-            }
+            }*/
         }
+
 
         binding.btnFingerprint.setOnClickListener {
 
@@ -64,7 +69,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
 
-    private fun toastLogin(){
+    private fun toastLogin() {
         Toast.makeText(
             context,
             "The email or password entered is invalid",
@@ -72,7 +77,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         ).show()
     }
 
-    private fun navigateToWelcomeFragment(){
+    private fun navigateToWelcomeFragment() {
         view?.findNavController()?.navigate(R.id.action_loginFragment_to_welcomeFragment)
     }
 

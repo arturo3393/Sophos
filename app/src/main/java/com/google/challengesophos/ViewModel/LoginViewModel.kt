@@ -14,13 +14,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-//Add a constructor of context as a helper to get a context here in the viewModel
+
 class LoginViewModel() : ViewModel() {
 
-    var loginModel = MutableLiveData<Boolean>()
+    var loginModel = MutableLiveData<Boolean>(true)
 
 
-    //variables use to show a message for the fingerprint
+
 
 
     //Method retrofit that is use to call the Api in the next method
@@ -40,19 +40,22 @@ class LoginViewModel() : ViewModel() {
 
             val userInfo = response.body()
 
-            if (userInfo?.acceso == true) {
-                println(userInfo.nombre)
-                //navigation pending
-                loginModel.postValue(true)
+            when (userInfo?.acceso == false ){
+                true ->loginModel.postValue(true)
+                else->  loginModel.postValue(false)
 
-            } else {
-                //Fun that makes the Toast from the fragment
-                //Toast pending
 
-                println("This is the view: ${loginModel.value} ")
             }
 
+            /*
 
+            if (userInfo?.acceso == true) {
+                //navigation validation to go to the next fragment (Welcome fragment)
+                //if the loginModel remains false a Toast shows up
+               loginModel.
+             } else{
+                loginModel.postValue(true)
+            }*/
         }
 
     }
