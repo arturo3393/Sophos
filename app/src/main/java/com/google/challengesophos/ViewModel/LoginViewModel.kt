@@ -1,11 +1,11 @@
 package com.google.challengesophos.ViewModel
 
 
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.challengesophos.Repository.model.APIogin
 import com.google.challengesophos.Repository.model.LoginApiResponse
-import com.google.challengesophos.ui.LoginFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 //Add a constructor of context as a helper to get a context here in the viewModel
 class LoginViewModel() : ViewModel() {
 
-    var loginModel = MutableLiveData<LoginFragment>()
+    var loginModel = MutableLiveData<Boolean>()
 
 
     //variables use to show a message for the fingerprint
@@ -43,12 +43,13 @@ class LoginViewModel() : ViewModel() {
             if (userInfo?.acceso == true) {
                 println(userInfo.nombre)
                 //navigation pending
+                loginModel.postValue(true)
 
             } else {
                 //Fun that makes the Toast from the fragment
                 //Toast pending
 
-
+                println("This is the view: ${loginModel.value} ")
             }
 
 
