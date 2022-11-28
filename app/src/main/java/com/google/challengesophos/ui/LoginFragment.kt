@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.util.PatternsCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
@@ -63,6 +64,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
             val emailIn = binding.etEmail.text?.trim().toString() ?: ""
             val passwordIn = binding.etPassword.text?.trim().toString() ?: ""
+            validateEmail(emailIn)
             loginViewModel.getLoginViewModel(emailIn, passwordIn)
             println("Value of the loginModel: " + loginViewModel.loginModel.value)
             when (loginViewModel.loginModel.value) {
@@ -166,6 +168,12 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
 
+    }
+
+    fun validateEmail(email:String){
+       if(!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()){
+           binding.etEmail.error = "Field must be an email"
+       }
     }
 
 

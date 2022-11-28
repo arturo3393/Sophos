@@ -49,6 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvLegend"
         app:startIconDrawable="@drawable/ic_person"
         app:startIconTint="@color/primaryLightColor"
+        app:errorEnabled="true"
 
         >
 
