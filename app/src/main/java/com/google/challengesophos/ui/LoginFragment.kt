@@ -1,22 +1,33 @@
 package com.google.challengesophos.ui
 
+import android.content.Intent
+import android.hardware.biometrics.BiometricManager
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.google.challengesophos.R
 import com.google.challengesophos.ViewModel.LoginViewModel
 import com.google.challengesophos.databinding.FragmentLoginBinding
+import java.util.concurrent.Executor
 
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val loginViewModel: LoginViewModel by viewModels()
+
+    //biometrics
+    private lateinit var executor: Executor
+    private lateinit var biometricPrompt: androidx.biometric.BiometricPrompt
+    private lateinit var promptInfo: androidx.biometric.BiometricPrompt.PromptInfo
 
     private var _binding: FragmentLoginBinding? = null
 
@@ -42,11 +53,12 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         loginViewModel.loginModel.observe(viewLifecycleOwner, Observer {
             val emailIn = binding.etEmail.text?.trim().toString() ?: ""
-           val passwordIn = binding.etPassword.text?.trim().toString() ?: ""
+            val passwordIn = binding.etPassword.text?.trim().toString() ?: ""
             loginViewModel.getLoginViewModel(emailIn, passwordIn)
 
         })
 
+        //Login button that allows or denies the access to the app
         binding.btnLogin.setOnClickListener {
 
             val emailIn = binding.etEmail.text?.trim().toString() ?: ""
@@ -58,11 +70,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 else -> toastLogin()
             }
 
-
         }
+        //Method that checks if the device has biometrics
+        checkDeviceHasBiometric()
 
+        // It checks the fingerprint authentificaiton
         binding.btnFingerprint.setOnClickListener {
-
+            fingerPrintAuthentification()
+            biometricPrompt.authenticate(promptInfo)
         }
 
         //05ftK5Ly0J9s
@@ -84,6 +99,74 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         view?.findNavController()?.navigate(R.id.action_loginFragment_to_welcomeFragment)
     }
 
+    fun fingerPrintAuthentification() {
+        executor = ContextCompat.getMainExecutor(requireContext())
+
+        biometricPrompt = androidx.biometric.BiometricPrompt(this, executor,
+            object : androidx.biometric.BiometricPrompt.AuthenticationCallback() {
+
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    Toast.makeText(
+                        context,
+                        "Authentication error: $errString", Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+
+
+                override fun onAuthenticationSucceeded(result: androidx.biometric.BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    Toast.makeText(
+                        context,
+                        "Authentication succeeded!", Toast.LENGTH_SHORT
+                    )
+                        .show()
+
+                    navigateToWelcomeFragment()
+
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    Toast.makeText(
+                        context, "Authentication failed",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+
+            })
+
+        promptInfo = androidx.biometric.BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Biometric login Sophos")
+            .setSubtitle("Log in using your biometric credential")
+            .setNegativeButtonText("Use account password")
+            .build()
+
+    }
+
+
+    private fun checkDeviceHasBiometric() {
+        val biometricManager = androidx.biometric.BiometricManager.from(requireContext())
+        when (biometricManager.canAuthenticate(androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG or androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL)) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                Log.d("MiniReto2", "App can authenticate using biometrics.")
+                binding.tvMsg.text = "App can authenticate using biometrics."
+            }
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
+                Log.d("MiniReto2", "No biometric features available on this device.")
+                binding.tvMsg.text = "No biometric features available on this device."
+            }
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+                Log.d("MY_APP_TAG", "Biometric features are currently unavailable.")
+                binding.tvMsg.text = "Biometric features are currently unavailable."
+            }
+
+        }
+
+
+    }
 
 
 }
