@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.google.challengesophos.R
 import com.google.challengesophos.ViewModel.LoginViewModel
@@ -39,37 +40,39 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         //Observer to put the Toast  function, the same for navigation
 
+        loginViewModel.loginModel.observe(viewLifecycleOwner, Observer {
+            val emailIn = binding.etEmail.text?.trim().toString() ?: ""
+           val passwordIn = binding.etPassword.text?.trim().toString() ?: ""
+            loginViewModel.getLoginViewModel(emailIn, passwordIn)
+
+        })
 
         binding.btnLogin.setOnClickListener {
-            val emailIn = binding.etEmail.text.trim().toString()
-            val passwordIn = binding.etPassword.text.trim().toString()
+
+            val emailIn = binding.etEmail.text?.trim().toString() ?: ""
+            val passwordIn = binding.etPassword.text?.trim().toString() ?: ""
             loginViewModel.getLoginViewModel(emailIn, passwordIn)
-            println("model value: " + loginViewModel.loginModel.value)
-            if (loginViewModel.loginModel.value == true) {
-                toastLogin()
-
-            } else {
-                navigateToWelcomeFragment()
-            }
-
-            /*when (loginViewModel.loginModel.value) {
+            println("Value of the loginModel: " + loginViewModel.loginModel.value)
+            when (loginViewModel.loginModel.value) {
                 true -> navigateToWelcomeFragment()
                 else -> toastLogin()
-            }*/
-        }
+            }
 
+
+        }
 
         binding.btnFingerprint.setOnClickListener {
 
         }
 
+        //05ftK5Ly0J9s
 
         return binding.root
 
     }
 
 
-    private fun toastLogin() {
+    fun toastLogin() {
         Toast.makeText(
             context,
             "The email or password entered is invalid",
@@ -77,8 +80,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         ).show()
     }
 
-    private fun navigateToWelcomeFragment() {
+    fun navigateToWelcomeFragment() {
         view?.findNavController()?.navigate(R.id.action_loginFragment_to_welcomeFragment)
     }
+
+
 
 }
