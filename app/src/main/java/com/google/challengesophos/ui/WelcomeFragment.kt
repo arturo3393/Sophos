@@ -3,11 +3,8 @@ package com.google.challengesophos.ui
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.google.challengesophos.R
 import com.google.challengesophos.ViewModel.LoginViewModel
@@ -78,7 +75,7 @@ class WelcomeFragment : Fragment() {
 
     //used to activate the optionsMenu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.options_menu, menu)
+        inflater.inflate(R.menu.option_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
