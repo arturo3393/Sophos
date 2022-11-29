@@ -13,7 +13,7 @@
         android:id="@+id/ivSophosLogo"
         android:layout_width="208dp"
         android:layout_height="76dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="0dp"
         android:src="@drawable/sophos_logo_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,14 +57,14 @@
             style="@style/styleLoginTvLight"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:autofillHints="emailAddress"
             android:drawableStart="@drawable/ic_person_light"
             android:drawablePadding="20dp"
             android:hint="@string/email"
+            android:importantForAutofill="auto"
             android:inputType="textEmailAddress"
             android:paddingStart="16dp"
-            android:importantForAutofill="auto"
-            android:autofillHints="emailAddress"
-            />
+            android:paddingEnd="16dp"/>
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -92,7 +92,6 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPassword"
             style="@style/styleLoginTvLight"
-            tyle="@style/styleLoginTvLight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawablePadding="20dp"
@@ -138,6 +137,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnFingerprint" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.util.PatternsCompat
 import androidx.fragment.app.viewModels
@@ -34,7 +35,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private var _binding: FragmentLoginBinding? = null
 
     //getting the users name
-    private lateinit var userName:String
+    private var userName: String = ""
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -43,7 +44,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
+        //it removes the name of the app in the action bar
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = " "
     }
 
     override fun onCreateView(
@@ -86,11 +88,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             biometricPrompt.authenticate(promptInfo)
         }
 
-        //brings the name of the user from the viewModel and shows it if it is not null
-        val userNameForFragment = arguments?.let {
-            val name = loginViewModel.userNameLiveData.value
-            userName = it.getString(name).toString()
-        }
+
+
 
 
 
@@ -107,8 +106,12 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         ).show()
     }
 
+    //sends the user to the other screen with argument of the user name to the next fragment
     fun navigateToWelcomeFragment() {
-        view?.findNavController()?.navigate(R.id.action_loginFragment_to_welcomeFragment)
+
+        view?.findNavController()
+            ?.navigate(LoginFragmentDirections.actionLoginFragmentToWelcomeFragment(loginViewModel.userNameLiveData.value))
+        println("Here we have the userName " + loginViewModel.userNameLiveData.value)
     }
 
     //it allows or denies the access with fingerprint
@@ -191,11 +194,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
 
     }
-        //It checks if the person has entered an email
-    private fun validateEmail(email:String){
-       if(!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()){
-           binding.etEmail.error = "Field must be an email"
-       }
+
+    //It checks if the person has entered an email
+    private fun validateEmail(email: String) {
+        if (!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()) {
+            binding.etEmail.error = "Field must be an email"
+
+        }
     }
 
 
