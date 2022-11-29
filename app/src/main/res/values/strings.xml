@@ -8,6 +8,9 @@
     <string name="login_btn">Ingresar</string>
     <string name="welcome">Bienvenido</string>
     <string name="welcoming_legend">Estas son las opciones que tenemos para ti</string>
+    <string name="send_documents">Enviar documentos</string>
+    <string name="see_documents">Ver documentos</string>
+    <string name="offices">Oficinas</string>
     <!-- Welcome fragment -->
 
 

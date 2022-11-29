@@ -14,7 +14,7 @@
         android:layout_width="208dp"
         android:layout_height="76dp"
         android:layout_marginTop="40dp"
-        android:src="@drawable/sophos_logo"
+        android:src="@drawable/sophos_logo_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -47,10 +47,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLegend"
-        app:startIconDrawable="@drawable/ic_person"
+        app:startIconDrawable="@drawable/ic_person_light"
         app:startIconTint="@color/primaryLightColor"
         app:errorEnabled="true"
-
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -58,11 +57,14 @@
             style="@style/styleLoginTvLight"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableStart="@drawable/ic_person"
+            android:drawableStart="@drawable/ic_person_light"
             android:drawablePadding="20dp"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
-            android:paddingStart="16dp" />
+            android:paddingStart="16dp"
+            android:importantForAutofill="auto"
+            android:autofillHints="emailAddress"
+            />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -76,13 +78,13 @@
         android:layout_marginTop="104dp"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
-        app:endIconDrawable="@drawable/ic_eye"
+        app:endIconDrawable="@drawable/ic_eye_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLegend"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@color/primaryLightColor"
-        app:startIconDrawable="@drawable/ic_key"
+        app:startIconDrawable="@drawable/ic_key_light"
         app:startIconTint="@color/primaryLightColor"
 
         >
@@ -118,7 +120,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="24dp"
-        android:drawableStart="@drawable/ic_fingerprint"
+        android:drawableStart="@drawable/ic_fingerprint_light"
         android:paddingStart="22dp"
         android:paddingEnd="40dp"
         android:text="@string/fingerprint_btn"

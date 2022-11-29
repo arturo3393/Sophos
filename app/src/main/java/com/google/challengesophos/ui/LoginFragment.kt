@@ -165,6 +165,17 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 binding.tvMsg.text = "Biometric features are currently unavailable."
             }
 
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
+                    putExtra(
+                        Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+                        BiometricManager.Authenticators.BIOMETRIC_STRONG or
+                                BiometricManager.Authenticators.DEVICE_CREDENTIAL
+                    )
+                }
+                startActivityForResult(enrollIntent, 100)
+            }
+
         }
 
 

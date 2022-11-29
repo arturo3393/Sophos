@@ -2,12 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/welcome_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/welcome_frame"
-    tools:context=".ui.WelcomeFragment"
     android:orientation="vertical"
-    >
+    tools:context=".ui.WelcomeFragment">
 
 
     <LinearLayout
@@ -64,6 +63,224 @@
 
         </FrameLayout>
     </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvSendDocs"
+            style="@style/styleCardSendDocumentsLight"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginBottom="400dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:id="@+id/tvSendDocs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:drawablePadding="20dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="@string/send_documents"
+                    android:textColor="@color/sophosPink"
+                    android:textSize="16sp"
+                    android:paddingBottom="4dp"
+                    app:layout_constraintBottom_toTopOf="@+id/btnSendDocs"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.287"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSendDocs"
+                    style="@style/styleWelcomeBtn1Light"
+                    android:layout_width="170dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="12dp"
+                    android:drawableEnd="@drawable/ic_arrow_light"
+                    android:drawableTint="@color/sophosPink"
+                    android:paddingStart="32dp"
+                    android:paddingEnd="8dp"
+                    android:text="@string/login_btn"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ivSendDocs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/ic_send_docs_light"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.046"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvSeeDocs"
+            style="@style/styleCardSeeDocumentsLight"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="18dp"
+            app:layout_goneMarginTop="500dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cvSendDocs"
+
+            >
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:id="@+id/tvSeeDocs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:drawablePadding="20dp"
+                    android:paddingBottom="4dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="@string/see_documents"
+                    android:textColor="@color/primaryLightColor"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/btnSeeDocs"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.261"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSeeDocs"
+                    style="@style/styleWelcomeBtn2Light"
+                    android:layout_width="170dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="12dp"
+                    android:drawableEnd="@drawable/ic_arrow_light"
+                    android:drawableTint="@color/primaryLightColor"
+                    android:paddingStart="32dp"
+                    android:paddingEnd="8dp"
+                    android:text="@string/login_btn"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ivSeeDocs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/ic_see_docs_light"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.046"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvOffice"
+            style="@style/styleCardOfficesLight"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="18dp"
+            app:layout_goneMarginTop="500dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cvSeeDocs"
+
+            >
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:id="@+id/tvOffice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:drawablePadding="20dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:paddingBottom="4dp"
+                    android:text="@string/offices"
+                    android:textColor="@color/officesGreen"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/btnOffices"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.195"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnOffices"
+                    style="@style/styleWelcomeBtn3Light"
+                    android:layout_width="170dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="12dp"
+                    android:drawableEnd="@drawable/ic_arrow_light"
+                    android:drawableTint="@color/officesGreen"
+                    android:paddingStart="32dp"
+                    android:paddingEnd="8dp"
+                    android:text="@string/login_btn"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ivOffices"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/ic_office_light"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.046"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>
