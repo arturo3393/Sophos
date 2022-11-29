@@ -15,7 +15,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginViewModel() : ViewModel() {
 
-    var loginModel = MutableLiveData<Boolean>(false)
+    var loginModel = MutableLiveData<Boolean>(false) //validates the login
+    var userNameLiveData  = MutableLiveData<String?>() //gets the user name
 
     //Method retrofit that is use to call the Api in the next method
     fun getRetrofit(): Retrofit {
@@ -32,10 +33,12 @@ class LoginViewModel() : ViewModel() {
                 .getLogin(emailIn, passwordIn)
 
             val userInfo = response.body()
+            val userName = userInfo?.nombre
 
             if (userInfo?.acceso == true) {
                 //println("true")
                 loginModel.postValue(true)
+                userNameLiveData.postValue(userName)
             } else {
                 //println("false")
                 loginModel.postValue(false)

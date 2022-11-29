@@ -1,9 +1,7 @@
 package com.google.challengesophos.ViewModel
 
 import androidx.lifecycle.ViewModel
-import com.google.challengesophos.Repository.model.APIGetDocs
 import com.google.challengesophos.Repository.model.APIGetOffices
-import com.google.challengesophos.Repository.model.DocResponse
 import com.google.challengesophos.Repository.model.OfficeResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

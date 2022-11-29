@@ -15,6 +15,8 @@ class MainActivity : AppCompatActivity() {
 //Databinding initialized
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
     }
 
 

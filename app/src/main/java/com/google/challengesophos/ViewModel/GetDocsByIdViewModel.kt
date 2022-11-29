@@ -2,7 +2,6 @@ package com.google.challengesophos.ViewModel
 
 import androidx.lifecycle.ViewModel
 import com.google.challengesophos.Repository.model.APIGetDocById
-import com.google.challengesophos.Repository.model.DocItems
 import com.google.challengesophos.Repository.model.DocResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

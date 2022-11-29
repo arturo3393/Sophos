@@ -20,8 +20,32 @@
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome" >
         <argument
-            android:name="userID"
+            android:name="user_name"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_sendDocsFragment"
+            app:destination="@id/sendDocsFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_seeDocsFragment"
+            app:destination="@id/seeDocsFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_officesFragment"
+            app:destination="@id/officesFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/sendDocsFragment"
+        android:name="com.google.challengesophos.ui.SendDocsFragment"
+        android:label="fragment_send_docs"
+        tools:layout="@layout/fragment_send_docs" />
+    <fragment
+        android:id="@+id/seeDocsFragment"
+        android:name="com.google.challengesophos.ui.SeeDocsFragment"
+        android:label="fragment_see_docs"
+        tools:layout="@layout/fragment_see_docs" />
+    <fragment
+        android:id="@+id/officesFragment"
+        android:name="com.google.challengesophos.ui.OfficesFragment"
+        android:label="fragment_offices"
+        tools:layout="@layout/fragment_offices" />
 </navigation>

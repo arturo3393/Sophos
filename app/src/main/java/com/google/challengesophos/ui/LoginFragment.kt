@@ -16,8 +16,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.google.challengesophos.R
-import com.google.challengesophos.ViewModel.LoginViewModel
 import com.google.challengesophos.databinding.FragmentLoginBinding
+
+import com.google.challengesophos.ViewModel.LoginViewModel
 import java.util.concurrent.Executor
 
 
@@ -32,6 +33,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private var _binding: FragmentLoginBinding? = null
 
+    //getting the users name
+    private lateinit var userName:String
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -47,6 +50,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         //binding initialized
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
@@ -82,14 +86,20 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             biometricPrompt.authenticate(promptInfo)
         }
 
-        //05ftK5Ly0J9s
+        //brings the name of the user from the viewModel and shows it if it is not null
+        val userNameForFragment = arguments?.let {
+            val name = loginViewModel.userNameLiveData.value
+            userName = it.getString(name).toString()
+        }
+
+
 
         return binding.root
 
     }
 
 
-    fun toastLogin() {
+    private fun toastLogin() {
         Toast.makeText(
             context,
             "The email or password entered is invalid",
@@ -101,7 +111,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         view?.findNavController()?.navigate(R.id.action_loginFragment_to_welcomeFragment)
     }
 
-    fun fingerPrintAuthentification() {
+    //it allows or denies the access with fingerprint
+    private fun fingerPrintAuthentification() {
         executor = ContextCompat.getMainExecutor(requireContext())
 
         biometricPrompt = androidx.biometric.BiometricPrompt(this, executor,
@@ -148,7 +159,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     }
 
-
+    //check if the device can use biometrics, if not, it send it to the device configuration
     private fun checkDeviceHasBiometric() {
         val biometricManager = androidx.biometric.BiometricManager.from(requireContext())
         when (biometricManager.canAuthenticate(androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG or androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL)) {
@@ -180,8 +191,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
 
     }
-
-    fun validateEmail(email:String){
+        //It checks if the person has entered an email
+    private fun validateEmail(email:String){
        if(!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()){
            binding.etEmail.error = "Field must be an email"
        }
