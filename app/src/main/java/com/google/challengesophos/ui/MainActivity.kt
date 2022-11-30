@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -21,7 +24,6 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var binding: ActivityMainBinding
-    //lateinit var binding:
     lateinit var navController: NavController
 
 
@@ -30,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
 //Databinding initialized
 
-       binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         //sets the toolbar of the activity
@@ -43,11 +45,18 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         //Include the hamburger menu in the toolbar
-        binding.activitiyToolbar.overflowIcon = resources.getDrawable(R.drawable.ic_menu)
+        binding.activitiyToolbar.overflowIcon = getDrawable(R.drawable.ic_menu)
+
+        //Changes the tittle color
+        binding.activitiyToolbar.setTitleTextColor(resources.getColor(R.color.primaryLightColor))
 
 
+        //Puts this icon as the Navigate up icon
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_light)
 
     }
+
     //sets the back button
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
@@ -56,7 +65,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //enables the menu
-   override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.option_menu, menu)
         return true
     }
@@ -72,19 +81,23 @@ class MainActivity : AppCompatActivity() {
                 navController.navigate(R.id.action_welcomeFragment_to_seeDocsFragment)
                 true
             }
-            R.id.officesMenu -> {navController.navigate(R.id.action_welcomeFragment_to_officesFragment)
-                true}
+            R.id.officesMenu -> {
+                navController.navigate(R.id.action_welcomeFragment_to_officesFragment)
+                true
+            }
 
-            R.id.logoutMenu -> {navController.navigate(R.id.action_welcomeFragment_to_loginFragment)
-                true}
+            R.id.logoutMenu -> {
+                navController.navigate(R.id.action_welcomeFragment_to_loginFragment)
+                true
+            }
             //missing the dark and language menu
             /*R.id.darkModeMenu->view?.findNavController()?.navigate(R
                     R.id.languageMenu->view?.findNavController()?.navigate(R*/
-        else -> {
-            super.onOptionsItemSelected(item)
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
         }
     }
-}
 
 
 }

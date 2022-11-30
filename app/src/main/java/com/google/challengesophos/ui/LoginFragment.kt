@@ -34,8 +34,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private var _binding: FragmentLoginBinding? = null
 
-    //getting the users name
-    private var userName: String = ""
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -46,6 +44,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         //it removes the name of the app in the action bar
         (requireActivity() as AppCompatActivity).supportActionBar?.title = " "
+
     }
 
     override fun onCreateView(
@@ -64,6 +63,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             loginViewModel.getLoginViewModel(emailIn, passwordIn)
 
         })
+
+
 
         //Login button that allows or denies the access to the app
         binding.btnLogin.setOnClickListener {

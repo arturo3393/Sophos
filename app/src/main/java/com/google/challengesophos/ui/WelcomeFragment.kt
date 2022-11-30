@@ -20,7 +20,7 @@ class WelcomeFragment : Fragment() {
 
     private var _binding: FragmentWelcomeBinding? = null
 
-    private var userName_: String? = null
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -29,7 +29,9 @@ class WelcomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-         userName_ = arguments?.getString("user_name")
+
+
+
 
 
     }
@@ -42,7 +44,9 @@ class WelcomeFragment : Fragment() {
         _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
 
 
+        //puts the name to the appbar
         (activity as AppCompatActivity).supportActionBar?.title = arguments?.getString("user_name")
+        //disables the back array
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
 
