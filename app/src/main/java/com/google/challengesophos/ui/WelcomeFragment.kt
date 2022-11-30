@@ -39,6 +39,10 @@ class WelcomeFragment : Fragment() {
                 arguments?.getString("user_name").toString()
         }
 
+        //set the text color of the toolbar
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+
         //activate the option Menu
         setHasOptionsMenu(true)
     }

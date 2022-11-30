@@ -37,15 +37,27 @@
         android:id="@+id/sendDocsFragment"
         android:name="com.google.challengesophos.ui.SendDocsFragment"
         android:label="fragment_send_docs"
-        tools:layout="@layout/fragment_send_docs" />
+        tools:layout="@layout/fragment_send_docs" >
+        <action
+            android:id="@+id/action_sendDocsFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/seeDocsFragment"
         android:name="com.google.challengesophos.ui.SeeDocsFragment"
         android:label="fragment_see_docs"
-        tools:layout="@layout/fragment_see_docs" />
+        tools:layout="@layout/fragment_see_docs" >
+        <action
+            android:id="@+id/action_seeDocsFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/officesFragment"
         android:name="com.google.challengesophos.ui.OfficesFragment"
         android:label="fragment_offices"
-        tools:layout="@layout/fragment_offices" />
+        tools:layout="@layout/fragment_offices" >
+        <action
+            android:id="@+id/action_officesFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+    </fragment>
 </navigation>

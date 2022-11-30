@@ -8,12 +8,14 @@
     android:padding="24dp"
     android:theme="@style/Theme.ChallengeSophos"
     tools:context=".ui.LoginFragment">
+    
+
 
     <ImageView
         android:id="@+id/ivSophosLogo"
         android:layout_width="208dp"
         android:layout_height="76dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="40dp"
         android:src="@drawable/sophos_logo_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

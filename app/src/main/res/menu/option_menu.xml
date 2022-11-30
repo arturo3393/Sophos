@@ -22,6 +22,9 @@
         android:id="@+id/languageMenu"
         android:title="@string/English_language" />
 
+    <item android:id="@+id/logoutMenu"
+        android:title="@string/logout"/>
+
 </menu>
 
     <!--
