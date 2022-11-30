@@ -32,6 +32,9 @@ class WelcomeFragment : Fragment() {
 */
         //it brings the name of the user by the safe args of the navigation saved in the bundle
         //and it is put in the action bar
+
+
+
         if (arguments?.getString("user_name") == null) {
             (requireActivity() as AppCompatActivity).supportActionBar?.title = ""
         } else {
@@ -71,6 +74,7 @@ class WelcomeFragment : Fragment() {
 
         }
 
+        binding.tvUserNameToolbar.text = arguments?.getString("user_name")
 
 
         return binding.root
@@ -100,6 +104,7 @@ class WelcomeFragment : Fragment() {
 
         return super.onOptionsItemSelected(item)
     }
+
 
 
 }
