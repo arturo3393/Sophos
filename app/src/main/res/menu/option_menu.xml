@@ -5,15 +5,9 @@
     >
 
     <item
-        android:id="@+id/hambugerMenu"
-        android:enabled="true"
-        android:icon="@drawable/ic_menu"
-        android:title="hamburgerMenu"
-        android:visible="true"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/sendDocsMenu"
-        android:title="@string/send_documents" />
+        android:title="@string/send_documents"
+        />
     <item android:id="@+id/seeDocsMenu"
         android:title="@string/see_documents" />
     <item android:id="@+id/officesMenu"

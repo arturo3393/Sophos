@@ -7,9 +7,6 @@
     android:orientation="vertical"
     tools:context=".ui.SendDocsFragment">
 
-   <include
-       android:id="@+id/custumToolbar"
-       layout="@layout/custum_toolbar"/>
 
     <LinearLayout
         android:layout_width="match_parent"

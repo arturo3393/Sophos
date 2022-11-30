@@ -2,6 +2,7 @@ package com.google.challengesophos.ui
 
 import android.os.Bundle
 import android.view.*
+import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -19,7 +20,7 @@ class WelcomeFragment : Fragment() {
 
     private var _binding: FragmentWelcomeBinding? = null
 
-
+    private var userName_: String? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -28,21 +29,8 @@ class WelcomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-/*
-        //sets the toolbar in the fragment but it doesn't show the menu
-        val toolbar = view?.findViewById<Toolbar>(R.id.toolbarWelcome)
-        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
-*/
-        //it brings the name of the user by the safe args of the navigation saved in the bundle
-        //and it is put in the action bar
+         userName_ = arguments?.getString("user_name")
 
-
-       /* if (arguments?.getString("user_name") == null) {
-            (requireActivity() as AppCompatActivity).supportActionBar?.title = ""
-        } else {
-            (requireActivity() as AppCompatActivity).supportActionBar?.title =
-                arguments?.getString("user_name").toString()
-        }*/
 
     }
 
@@ -52,6 +40,10 @@ class WelcomeFragment : Fragment() {
     ): View {
         //binding initialized
         _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
+
+
+        (activity as AppCompatActivity).supportActionBar?.title = arguments?.getString("user_name")
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
 
 
@@ -69,28 +61,6 @@ class WelcomeFragment : Fragment() {
 
         }
 
-        //inflates the menu to be shown and handles the clicks
-        binding.welcomeToolbar.inflateMenu(R.menu.option_menu)
-
-        //listens to each option of the the menu
-        binding.welcomeToolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.sendDocsMenu -> view?.findNavController()
-                    ?.navigate(R.id.action_welcomeFragment_to_sendDocsFragment)
-                R.id.seeDocsMenu -> view?.findNavController()
-                    ?.navigate(R.id.action_welcomeFragment_to_seeDocsFragment)
-                R.id.officesMenu -> view?.findNavController()
-                    ?.navigate(R.id.action_welcomeFragment_to_officesFragment)
-                R.id.logoutMenu -> view?.findNavController()
-                    ?.navigate(R.id.action_welcomeFragment_to_loginFragment)
-                //missing the dark and language menu
-                /*R.id.darkModeMenu->view?.findNavController()?.navigate(R
-                        R.id.languageMenu->view?.findNavController()?.navigate(R*/
-
-            }
-
-            return@setOnMenuItemClickListener true
-        }
 
 
         //Bring the user's name with safe args
@@ -103,43 +73,12 @@ class WelcomeFragment : Fragment() {
 
     fun showUsersName(){
          if(arguments?.getString("user_name")?.isNotEmpty() == true){
-             binding.tvUserNameToolbar.text = arguments?.getString("user_name")
+             (activity as AppCompatActivity).supportActionBar?.title = arguments?.getString("user_name")
          } else{
-             binding.tvUserNameToolbar.text = ""
+             (activity as AppCompatActivity).supportActionBar?.title = "Pablo"
          }
     }
 
-/*
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        menu.findItem(R.menu.option_menu)
-        super.onPrepareOptionsMenu(menu)
-    }
-
-        //used to activate the optionsMenu
-        override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-            menu.clear()
-            inflater.inflate(R.menu.option_menu, menu)
-            super.onCreateOptionsMenu(menu, inflater)
-        }
-
-        //takes user to the destination in the menu
-        override fun onOptionsItemSelected(item: MenuItem): Boolean {
-            when (item.itemId) {
-                R.id.sendDocsMenu -> view?.findNavController()
-                    ?.navigate(R.id.action_welcomeFragment_to_sendDocsFragment)
-                R.id.seeDocsMenu -> view?.findNavController()
-                    ?.navigate(R.id.action_welcomeFragment_to_seeDocsFragment)
-                R.id.officesMenu -> view?.findNavController()
-                    ?.navigate(R.id.action_welcomeFragment_to_officesFragment)
-                //missing the dark and language menu
-                /*R.id.darkModeMenu->view?.findNavController()?.navigate(R
-                        R.id.languageMenu->view?.findNavController()?.navigate(R*/
-
-            }
-
-            return super.onOptionsItemSelected(item)
-        }
-*/
 
 
 }

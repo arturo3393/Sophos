@@ -202,6 +202,16 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         }
     }
+ //it hides the toolbar
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity).supportActionBar?.hide()
+    }
+//it shows the toolbar
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity).supportActionBar?.show()
+    }
 
 
 }
