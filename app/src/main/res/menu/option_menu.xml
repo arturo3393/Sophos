@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/xmlOptionsMenu"
+    >
 
     <item
         android:id="@+id/hambugerMenu"
         android:enabled="true"
         android:icon="@drawable/ic_menu"
-        android:title="hambugerMenu"
+        android:title="hamburgerMenu"
         android:visible="true"
         app:showAsAction="ifRoom" />
     <item

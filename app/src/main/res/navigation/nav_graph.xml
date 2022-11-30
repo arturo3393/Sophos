@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_welcomeFragment_to_officesFragment"
             app:destination="@id/officesFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/sendDocsFragment"
