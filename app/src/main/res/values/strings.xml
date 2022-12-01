@@ -17,10 +17,16 @@
     <!-- Menu -->
     <string name="dark_mode">Modo nocturno</string>
     <string name="English_language">Idioma Inglés</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logout">Cerrar sesión</string>
     <string name="come_back">Regresar</string>
+
+    <!-- Send docs -->
+    <string name="send_docs">Envio de documentación</string>
+    <string name="document_number">Número de documento</string>
+    <string name="names">Nombres</string>
+    <string name="Last_name">Apellidos</string>
+    <string name="Document">Documento</string>
+    <string name="Send">Enviar</string>
 
 
 </resources>

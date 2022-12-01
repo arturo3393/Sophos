@@ -11,20 +11,114 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="420dp"
+        android:layout_marginTop="80dp"
         android:orientation="vertical">
 
-
         <TextView
-            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="@string/send_docs"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <ImageView
+            android:id="@+id/ivTakePhotoDocs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="32dp"
+            android:src="@drawable/ic_add_a_photo" />
+
+        <Spinner
+            android:id="@+id/spDocType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="48dp"
-            android:text="SEND DOCS" />
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="8dp"
+
+            />
+
+        <EditText
+            style="@style/styleSendDocsTexts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/document_number"
+            android:drawableStart="@drawable/ic_badge_light"
+            android:drawablePadding="20dp"
+
+            />
+
+        <EditText
+            style="@style/styleSendDocsTexts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/names"
+
+            />
+
+        <EditText
+            style="@style/styleSendDocsTexts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/Last_name" />
+
+        <EditText
+            style="@style/styleSendDocsTexts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email" />
+
+        <Spinner
+            android:id="@+id/spDocCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="8dp"
+
+            />
+
+
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAttachDoc"
+            style="@style/styleLoginBtn1Light"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="44dp"
+            android:backgroundTint="@color/sophosPink"
+            android:text="@string/Document"
+            android:drawableStart="@drawable/ic_btn_attach"
+            android:paddingStart="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="40dp"
+             />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSendDoc"
+            style="@style/styleLoginBtn1Light"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="40dp"
+            android:backgroundTint="@color/sophosPink"
+            android:text="@string/Send"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnAttachDoc" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </LinearLayout>

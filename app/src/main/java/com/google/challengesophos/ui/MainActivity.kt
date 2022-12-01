@@ -1,15 +1,11 @@
 package com.google.challengesophos.ui
 
 
-import android.opengl.Visibility
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.annotation.ColorInt
-import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -71,33 +67,36 @@ class MainActivity : AppCompatActivity() {
     }
 
     //navigate to each option in the menu
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.sendDocsMenu -> {
-                navController.navigate(R.id.action_welcomeFragment_to_sendDocsFragment)
-                true
-            }
-            R.id.seeDocsMenu -> {
-                navController.navigate(R.id.action_welcomeFragment_to_seeDocsFragment)
-                true
-            }
-            R.id.officesMenu -> {
-                navController.navigate(R.id.action_welcomeFragment_to_officesFragment)
-                true
-            }
+     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+          return when (item.itemId) {
+              R.id.sendDocsMenu -> {
+                  navController.navigate(R.id.action_welcomeFragment_to_sendDocsFragment)
 
-            R.id.logoutMenu -> {
-                navController.navigate(R.id.action_welcomeFragment_to_loginFragment)
-                true
-            }
-            //missing the dark and language menu
-            /*R.id.darkModeMenu->view?.findNavController()?.navigate(R
-                    R.id.languageMenu->view?.findNavController()?.navigate(R*/
-            else -> {
-                super.onOptionsItemSelected(item)
-            }
-        }
-    }
+                  true
+              }
+              R.id.seeDocsMenu -> {
+                  navController.navigate(R.id.action_welcomeFragment_to_seeDocsFragment)
+                  true
+              }
+              R.id.officesMenu -> {
+                  navController.navigate(R.id.action_welcomeFragment_to_officesFragment)
+                  true
+              }
+
+              R.id.logoutMenu -> {
+                  navController.navigate(R.id.action_welcomeFragment_to_loginFragment)
+                  true
+              }
+              //missing the dark and language menu
+              /*R.id.darkModeMenu->view?.findNavController()?.navigate(R
+                      R.id.languageMenu->view?.findNavController()?.navigate(R*/
+              else -> {
+                  super.onOptionsItemSelected(item)
+              }
+          }
+      }
+
+
 
 
 }
