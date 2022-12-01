@@ -11,4 +11,9 @@ interface APIGetOffices {
         @Query("ciudad") city:String
     ): Response<OfficeResponse>
 
+    //Bring the complete items list of the offices, it is used to get the list of cities
+    @GET("RS_Oficinas")
+     fun getCities()
+    : Response<OfficeResponse>
+
 }

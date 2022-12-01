@@ -1,8 +1,8 @@
 package com.google.challengesophos.ViewModel
 
 
-
 import androidx.lifecycle.*
+import com.google.challengesophos.Repository.model.APIGetOffices
 import com.google.challengesophos.Repository.model.APIogin
 import com.google.challengesophos.Repository.model.LoginApiResponse
 import kotlinx.coroutines.CoroutineScope
@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class LoginViewModel() : ViewModel() {
 
     var loginModel = MutableLiveData<Boolean>(false) //validates the login
-    var userNameLiveData  = MutableLiveData<String?>() //gets the user name
+    var userNameLiveData = MutableLiveData<String?>() //gets the user name
 
     //Method retrofit that is use to call the Api in the next method
     fun getRetrofit(): Retrofit {
@@ -47,5 +47,5 @@ class LoginViewModel() : ViewModel() {
 
     }
 
-}
 
+}

@@ -7,15 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 
 import com.google.challengesophos.R
+import com.google.challengesophos.ViewModel.PostDocViewModel
 import com.google.challengesophos.databinding.FragmentSendDocsBinding
 import java.util.*
 
 class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnItemSelectedListener {
 
     private var _binding: FragmentSendDocsBinding? = null
+
+    private val postDocViewModel:PostDocViewModel by viewModels()
 
     //Adapter for the spinner of docs type
     lateinit var arrayAdapterTypeDocs: ArrayAdapter<String>
@@ -57,6 +62,11 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         //Configures the content of the selection
         binding.spDocType.onItemSelectedListener = this
 
+        //Observes the cities that the Api brings
+        postDocViewModel.citiesLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            Toast.makeText(context, "WEEEEEEEEEEEE", Toast.LENGTH_SHORT).show()
+
+        })
 
 
 
