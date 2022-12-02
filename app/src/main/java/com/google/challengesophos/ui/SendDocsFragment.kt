@@ -1,7 +1,11 @@
 package com.google.challengesophos.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,9 +35,11 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
 
     //The code of the permission for the camera
     private val PERMISSION_CAMARA:Int = 100
+    private val CAMARA_REQUEST_CODE: Int = 101
 
     //The code of the permission for the storage
     private val PERMISSION_EXTERNAL_STORAGE: Int = 100
+    private val IMAGE_REQUEST_CODE :Int = 102
 
 
     // This property is only valid between onCreateView and
@@ -108,11 +114,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         binding.btnAttachDoc.setOnClickListener {
             askForFilesPermission()
 
-            Toast.makeText(
-                context,
-                "TWEEEE.",
-                Toast.LENGTH_SHORT
-            ).show()
+            showMessage("WEEEEEEEEEEE")
 
         }
 
@@ -145,11 +147,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                 takePhoto()
             }
             shouldShowRequestPermissionRationale(android.Manifest.permission.CAMERA) -> {
-                Toast.makeText(
-                    context,
-                    "The permission was previously denied, allow it in settings.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                showMessage("The permission was previously denied, allow it in settings.")
 
             }
             else -> {
@@ -166,11 +164,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                 uploadPhoto()
             }
             shouldShowRequestPermissionRationale(android.Manifest.permission.READ_EXTERNAL_STORAGE) -> {
-                Toast.makeText(
-                    context,
-                    "The permission was previously denied, allow it in settings.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                showMessage("The permission was previously denied, allow it in settings.")
 
             }
             else -> {
@@ -206,11 +200,46 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     }
 
     private fun takePhoto() {
-
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, CAMARA_REQUEST_CODE)
     }
 
     private fun uploadPhoto(){
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type="image/*"
+        startActivityForResult(intent, IMAGE_REQUEST_CODE)
+    }
 
+    //Manages the result of the photo
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            CAMARA_REQUEST_CODE ->{
+                if(resultCode != Activity.RESULT_OK){
+                    showMessage("Photo was not taken")
+                }
+                else{
+                    val bitmap = data?.extras?.get("data") as Bitmap
+                    binding.ivTakePhotoDocs.setImageBitmap(bitmap) //The result of the photo is here
+                }
+            }
+            IMAGE_REQUEST_CODE ->{
+                if (requestCode == IMAGE_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK){
+                    binding.ivTakePhotoDocs.setImageURI(data?.data) //The result of the pick up is here
+                }
+                else{
+                    showMessage("Image was not uploaded")
+                }
+            }
+        }
+    }
+
+
+
+
+
+    private fun showMessage(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
 
