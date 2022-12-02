@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
@@ -19,6 +20,7 @@ import androidx.fragment.app.viewModels
 import com.google.challengesophos.R
 import com.google.challengesophos.ViewModel.PostDocViewModel
 import com.google.challengesophos.databinding.FragmentSendDocsBinding
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnItemSelectedListener {
@@ -109,12 +111,14 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
 
         binding.ivTakePhotoDocs.setOnClickListener {
             askForCameraPermission()
+
+
         }
 
         binding.btnAttachDoc.setOnClickListener {
             askForFilesPermission()
 
-            showMessage("WEEEEEEEEEEE")
+
 
         }
 
@@ -205,6 +209,16 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     }
 
     private fun uploadPhoto(){
+         Intent(Intent.ACTION_PICK).also {
+            it.type="image/*"
+            val mimeTypes = arrayOf("images/jpeg","images/jpg","images/png") //only allows this format
+            it.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+            startActivityForResult(it, IMAGE_REQUEST_CODE)
+        }
+
+    }
+
+    private fun pickImageGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type="image/*"
         startActivityForResult(intent, IMAGE_REQUEST_CODE)
@@ -219,12 +233,17 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                     showMessage("Photo was not taken")
                 }
                 else{
+
                     val bitmap = data?.extras?.get("data") as Bitmap
-                    binding.ivTakePhotoDocs.setImageBitmap(bitmap) //The result of the photo is here
+                    val imageTakenBase64= convertBitmapToBase64(bitmap)
+                    showMessage(imageTakenBase64)
+
+                    // binding.ivTakePhotoDocs.setImageBitmap(bitmap) To show the image in a view
                 }
             }
             IMAGE_REQUEST_CODE ->{
                 if (requestCode == IMAGE_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK){
+
                     binding.ivTakePhotoDocs.setImageURI(data?.data) //The result of the pick up is here
                 }
                 else{
@@ -232,6 +251,13 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                 }
             }
         }
+    }
+
+    fun convertBitmapToBase64(bitmap: Bitmap):String{
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100, stream)
+        val image = stream.toByteArray()
+        return android.util.Base64.encodeToString(image, android.util.Base64.DEFAULT)
     }
 
 
@@ -246,9 +272,4 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
 }
 
 
-/*
-//Saves the value of the live data to make it shorter in the adapter
-private fun getCitiesIndex(index: Int): String {
-    return postDocViewModel.citiesLiveData.value?.get(index)?.toString() ?: ""
-}*/
 
