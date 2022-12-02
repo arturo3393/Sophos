@@ -17,7 +17,7 @@ class PostDocViewModel : ViewModel() {
     init{
         getCities()
     }
-    var citiesLiveData = MutableLiveData<String>("")
+    var citiesLiveData = MutableLiveData<MutableList<String>>()
 
     var docModel = MutableLiveData<DocItems>()
 
@@ -47,13 +47,15 @@ class PostDocViewModel : ViewModel() {
 
             //brings the cities available in the API
             if (cities != null) {
-                val citiesList = mutableListOf<String>()
-                for (city in cities.indices-1) {
+                val citiesList = mutableSetOf<String>()
+                for (city in cities.indices) {
                     citiesList.add(cities[city].Ciudad)
                 }
-                val cities2 = citiesList.toSet().toString()
-                citiesLiveData.postValue(cities2)
-                println(citiesLiveData.postValue(cities2).toString())
+
+
+                citiesLiveData.postValue(citiesList.toMutableList())
+                println("I'm the set  $citiesList")
+
 
             }
         }

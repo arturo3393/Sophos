@@ -15,6 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginViewModel() : ViewModel() {
 
+
     var loginModel = MutableLiveData<Boolean>(false) //validates the login
     var userNameLiveData = MutableLiveData<String?>() //gets the user name
 

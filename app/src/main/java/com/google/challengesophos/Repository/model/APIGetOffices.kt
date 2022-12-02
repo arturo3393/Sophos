@@ -13,7 +13,7 @@ interface APIGetOffices {
 
     //Bring the complete items list of the offices, it is used to get the list of cities
     @GET("RS_Oficinas")
-     fun getCities()
+    suspend fun getCities()
     : Response<OfficeResponse>
 
 }
