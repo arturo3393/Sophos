@@ -2,17 +2,10 @@ package com.google.challengesophos.ui
 
 import android.os.Bundle
 import android.view.*
-import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import com.google.android.material.badge.BadgeDrawable
-import com.google.android.material.badge.BadgeUtils
 import com.google.challengesophos.R
-import com.google.challengesophos.ViewModel.LoginViewModel
 import com.google.challengesophos.databinding.FragmentWelcomeBinding
 
 
@@ -28,11 +21,6 @@ class WelcomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
-
-
 
     }
 
@@ -52,8 +40,15 @@ class WelcomeFragment : Fragment() {
 
 
         binding.btnSendDocs.setOnClickListener {
-            view?.findNavController()?.navigate(R.id.action_welcomeFragment_to_sendDocsFragment)
 
+            view?.findNavController()
+                ?.navigate(
+                    WelcomeFragmentDirections.actionWelcomeFragmentToSendDocsFragment(
+                        arguments?.getString(
+                            "user_email"
+                        )
+                    )
+                )
         }
 
         binding.btnSeeDocs.setOnClickListener {
@@ -66,7 +61,6 @@ class WelcomeFragment : Fragment() {
         }
 
 
-
         //Bring the user's name with safe args
         showUsersName()
 
@@ -75,13 +69,19 @@ class WelcomeFragment : Fragment() {
         return binding.root
     }
 
-    fun showUsersName(){
-         if(arguments?.getString("user_name")?.isNotEmpty() == true){
-             (activity as AppCompatActivity).supportActionBar?.title = arguments?.getString("user_name")
-         } else{
-             (activity as AppCompatActivity).supportActionBar?.title = "Pablo"
-         }
+    fun showUsersName() {
+        if (arguments?.getString("user_name")?.isNotEmpty() == true) {
+            (activity as AppCompatActivity).supportActionBar?.title =
+                arguments?.getString("user_name")
+        } else {
+            (activity as AppCompatActivity).supportActionBar?.title = "Pablo"
+        }
     }
+
+
+
+
+
 
 
 

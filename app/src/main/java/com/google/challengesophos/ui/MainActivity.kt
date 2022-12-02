@@ -71,7 +71,6 @@ class MainActivity : AppCompatActivity() {
           return when (item.itemId) {
               R.id.sendDocsMenu -> {
                   navController.navigate(R.id.action_welcomeFragment_to_sendDocsFragment)
-
                   true
               }
               R.id.seeDocsMenu -> {

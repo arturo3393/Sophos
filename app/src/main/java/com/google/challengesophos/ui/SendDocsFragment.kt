@@ -7,12 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
-
 import com.google.challengesophos.R
-import com.google.challengesophos.ViewModel.LoginViewModel
 import com.google.challengesophos.ViewModel.PostDocViewModel
 import com.google.challengesophos.databinding.FragmentSendDocsBinding
 import java.util.*
@@ -93,11 +90,14 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         binding.spDocType.onItemSelectedListener = this
         binding.spDocCity.onItemSelectedListener = this
 
+        binding.etEmailSendDocs.setText(arguments?.getString("user_email"))
 
 
 
         return binding.root
 
+
+        //05ftK5Ly0J9s
     }
 
 
@@ -105,7 +105,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         //Saves the answer of the user of the docs type
         val typeDocsSelected = arrayAdapterTypeDocs.getItem(position)
-        TODO("Missing the way to select the answer, the arrayadapter is in the local scope, in the global is empty")
+        //"Missing the way to select the answer, the arrayadapter is in the local scope, in the global is empty"
         // val citySelected = arrayAdapterCities.getItem(position)
     }
 

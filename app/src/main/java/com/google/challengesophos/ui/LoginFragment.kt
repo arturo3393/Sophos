@@ -58,19 +58,18 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         //Observer to put the Toast  function, the same for navigation
 
         loginViewModel.loginModel.observe(viewLifecycleOwner, Observer {
-            val emailIn = binding.etEmail.text?.trim().toString() ?: ""
-            val passwordIn = binding.etPassword.text?.trim().toString() ?: ""
+            val emailIn = binding.etEmail.text?.trim().toString()
+            val passwordIn = binding.etPassword.text?.trim().toString()
             loginViewModel.getLoginViewModel(emailIn, passwordIn)
 
         })
 
 
-
         //Login button that allows or denies the access to the app
         binding.btnLogin.setOnClickListener {
 
-            val emailIn = binding.etEmail.text?.trim().toString() ?: ""
-            val passwordIn = binding.etPassword.text?.trim().toString() ?: ""
+            val emailIn = binding.etEmail.text?.trim().toString()
+            val passwordIn = binding.etPassword.text?.trim().toString()
             validateEmail(emailIn)
             loginViewModel.getLoginViewModel(emailIn, passwordIn)
             println("Value of the loginModel: " + loginViewModel.loginModel.value)
@@ -111,7 +110,12 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     fun navigateToWelcomeFragment() {
 
         view?.findNavController()
-            ?.navigate(LoginFragmentDirections.actionLoginFragmentToWelcomeFragment(loginViewModel.userNameLiveData.value))
+            ?.navigate(
+                LoginFragmentDirections.actionLoginFragmentToWelcomeFragment(
+                    loginViewModel.userNameLiveData.value,
+                    binding.etEmail.text?.trim().toString()
+                )
+            )
         println("Here we have the userName " + loginViewModel.userNameLiveData.value)
     }
 
@@ -203,12 +207,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         }
     }
- //it hides the toolbar
+
+    //it hides the toolbar
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity).supportActionBar?.hide()
     }
-//it shows the toolbar
+
+    //it shows the toolbar
     override fun onStop() {
         super.onStop()
         (activity as AppCompatActivity).supportActionBar?.show()
