@@ -49,7 +49,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     private val calendar: Calendar = Calendar.getInstance()
     private val currentDate = DateFormat.getDateInstance().format(calendar.time)
     private  var citySelected: String? = null
-    private var imageTakenBase64: String? = null
+    private lateinit var imageTakenBase64: String
 
 
     // This property is only valid between onCreateView and
@@ -131,7 +131,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         })
 
         binding.btnSendDoc.setOnClickListener {
-
+            println(imageTakenBase64)
             println(getInformationForPosting())
 
          /*   try {
@@ -254,11 +254,6 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
 
     }
 
-    private fun pickImageGallery() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, IMAGE_REQUEST_CODE)
-    }
 
     //Manages the result of the photo
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -268,10 +263,9 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                 if (resultCode != Activity.RESULT_OK) {
                     showMessage("Photo was not taken")
                 } else {
-
                     val bitmap = data?.extras?.get("data") as Bitmap
-                    val imageTakenBase64 = convertBitmapToBase64(bitmap)
-                    showMessage(imageTakenBase64)
+                      imageTakenBase64 = convertBitmapToBase64(bitmap)
+
 
                     // binding.ivTakePhotoDocs.setImageBitmap(bitmap) To show the image in a view
                 }
@@ -286,6 +280,8 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
             }
         }
     }
+
+
 
     fun convertBitmapToBase64(bitmap: Bitmap): String {
         val stream = ByteArrayOutputStream()
@@ -310,7 +306,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
             "Chile",
             binding.etEmailSendDocs.text.toString().trim(),
             "PreguntarTipoAdjunto",
-            "inventada"
+            imageTakenBase64
 
         )
     }
