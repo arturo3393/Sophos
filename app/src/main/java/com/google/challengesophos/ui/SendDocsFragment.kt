@@ -48,10 +48,11 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     private val IMAGE_REQUEST_CODE: Int = 102
 
     //Declaring all the variables needed to send the post
-    private  var typeDocsSelected: String? = null
+
+    private lateinit var typeDocsSelected: String
     private val calendar: Calendar = Calendar.getInstance()
     private val currentDate = DateFormat.getDateInstance().format(calendar.time)
-    private  var citySelected: String? = null
+    private var citySelected: String? = null
     private lateinit var imageTakenBase64: String
 
 
@@ -136,17 +137,16 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         binding.btnSendDoc.setOnClickListener {
             println(getInformationForPosting())
 
-         /*   try {
-                when(getInformationForPosting()!=null) {
-                    true -> postDocViewModel.postDoc(getInformationForPosting())
+            /*   try {
+                   when(getInformationForPosting()!=null) {
+                       true -> postDocViewModel.postDoc(getInformationForPosting())
 
-                    else -> showMessage("You must fill all the field to send the document")
+                       else -> showMessage("You must fill all the field to send the document")
 
-                }
-            } catch (e: Exception){
-                showMessage("the problem is here")
-            }*/
-
+                   }
+               } catch (e: Exception){
+                   showMessage("the problem is here")
+               }*/
 
 
         }
@@ -164,7 +164,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     //Implemented methods of the interface AdapterView.OnItemSelectedListener (selected item)
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         //Saves the answer of the user of the docs type
-         typeDocsSelected = arrayAdapterTypeDocs.getItem(position)
+        typeDocsSelected = arrayAdapterTypeDocs.getItem(position).toString()
         //"Missing the way to select the answer, the arrayadapter is in the local scope, in the global is empty"
         // val citySelected = arrayAdapterCities.getItem(position)
     }
@@ -266,7 +266,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                     showMessage("Photo was not taken")
                 } else {
                     val bitmap = data?.extras?.get("data") as Bitmap
-                      imageTakenBase64 = convertBitmapToBase64(bitmap)
+                    imageTakenBase64 = convertBitmapToBase64(bitmap)
 
 
                     // binding.ivTakePhotoDocs.setImageBitmap(bitmap) To show the image in a view
@@ -281,9 +281,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                     imageTakenBase64 = convertBitmapToBase64(bitmap)
 
 
-
-
-                   // imageTakenBase64 = convertBitmapToBase64(bitmap)
+                    // imageTakenBase64 = convertBitmapToBase64(bitmap)
                     //showMessage(imageTakenBase64)
 
                 } else {
@@ -301,11 +299,11 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         return android.util.Base64.encodeToString(image, android.util.Base64.DEFAULT)
     }
 
-    fun convertUriToBitmap(uri: Uri?):Bitmap{
+    fun convertUriToBitmap(uri: Uri?): Bitmap {
         return if (Build.VERSION.SDK_INT < 28) {
             MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
         } else {
-            val source= ImageDecoder.createSource(requireContext().contentResolver, uri!!)
+            val source = ImageDecoder.createSource(requireContext().contentResolver, uri!!)
             ImageDecoder.decodeBitmap(source)
         }
     }
@@ -318,8 +316,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     fun getInformationForPosting(): DocItems {
         return DocItems(
             "PreguntarIdRegistro",
-            currentDate,
-            "cc",
+            currentDate, typeDocsSelected,
             binding.etIDNumberSendDocs.text.toString().trim(),
             binding.etIDNumberSendDocs.text.toString().trim(),
             binding.etLastNameSendDocs.text.toString().trim(),
