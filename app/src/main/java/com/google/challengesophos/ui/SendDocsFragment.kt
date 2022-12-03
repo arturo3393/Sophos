@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
@@ -18,9 +17,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.google.challengesophos.R
+import com.google.challengesophos.Repository.model.DocItems
 import com.google.challengesophos.ViewModel.PostDocViewModel
 import com.google.challengesophos.databinding.FragmentSendDocsBinding
 import java.io.ByteArrayOutputStream
+import java.text.DateFormat
 import java.util.*
 
 class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnItemSelectedListener {
@@ -36,12 +37,19 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     lateinit var arrayAdapterCities: ArrayAdapter<String>
 
     //The code of the permission for the camera
-    private val PERMISSION_CAMARA:Int = 100
+    private val PERMISSION_CAMARA: Int = 100
     private val CAMARA_REQUEST_CODE: Int = 101
 
     //The code of the permission for the storage
     private val PERMISSION_EXTERNAL_STORAGE: Int = 100
-    private val IMAGE_REQUEST_CODE :Int = 102
+    private val IMAGE_REQUEST_CODE: Int = 102
+
+    //Declaring all the variables needed to send the post
+    private  var typeDocsSelected: String? = null
+    private val calendar: Calendar = Calendar.getInstance()
+    private val currentDate = DateFormat.getDateInstance().format(calendar.time)
+    private  var citySelected: String? = null
+    private var imageTakenBase64: String? = null
 
 
     // This property is only valid between onCreateView and
@@ -111,20 +119,41 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
 
         binding.ivTakePhotoDocs.setOnClickListener {
             askForCameraPermission()
-
-
         }
 
         binding.btnAttachDoc.setOnClickListener {
             askForFilesPermission()
+        }
+
+        //Observes the post method and its arguments
+        postDocViewModel.docModel.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            postDocViewModel.postDoc(getInformationForPosting())
+        })
+
+        binding.btnSendDoc.setOnClickListener {
+
+            println(getInformationForPosting())
+
+         /*   try {
+                when(getInformationForPosting()!=null) {
+                    true -> postDocViewModel.postDoc(getInformationForPosting())
+
+                    else -> showMessage("You must fill all the field to send the document")
+
+                }
+            } catch (e: Exception){
+                showMessage("the problem is here")
+            }*/
 
 
 
         }
 
 
-        return binding.root
 
+
+
+        return binding.root
 
 
     }
@@ -161,9 +190,12 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         }
     }
 
-    private fun askForFilesPermission(){
+    private fun askForFilesPermission() {
         when {
-            ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
+            )
                     == PackageManager.PERMISSION_GRANTED -> {
                 uploadPhoto()
             }
@@ -172,7 +204,10 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
 
             }
             else -> {
-                requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), PERMISSION_EXTERNAL_STORAGE)
+                requestPermissions(
+                    arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
+                    PERMISSION_EXTERNAL_STORAGE
+                )
             }
 
         }
@@ -186,18 +221,18 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        when(requestCode){
+        when (requestCode) {
             PERMISSION_CAMARA -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                        takePhoto()
+                    takePhoto()
                 }
             }
 
-            PERMISSION_EXTERNAL_STORAGE-> {
+            PERMISSION_EXTERNAL_STORAGE -> {
                 if (grantResults.isNotEmpty() && grantResults[1] == PackageManager.PERMISSION_GRANTED)
                     uploadPhoto()
             }
-            else-> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+            else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         }
 
@@ -208,10 +243,11 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         startActivityForResult(intent, CAMARA_REQUEST_CODE)
     }
 
-    private fun uploadPhoto(){
-         Intent(Intent.ACTION_PICK).also {
-            it.type="image/*"
-            val mimeTypes = arrayOf("images/jpeg","images/jpg","images/png") //only allows this format
+    private fun uploadPhoto() {
+        Intent(Intent.ACTION_PICK).also {
+            it.type = "image/*"
+            val mimeTypes =
+                arrayOf("images/jpeg", "images/jpg", "images/png") //only allows this format
             it.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
             startActivityForResult(it, IMAGE_REQUEST_CODE)
         }
@@ -220,54 +256,91 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
 
     private fun pickImageGallery() {
         val intent = Intent(Intent.ACTION_PICK)
-        intent.type="image/*"
+        intent.type = "image/*"
         startActivityForResult(intent, IMAGE_REQUEST_CODE)
     }
 
     //Manages the result of the photo
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        when(requestCode){
-            CAMARA_REQUEST_CODE ->{
-                if(resultCode != Activity.RESULT_OK){
+        when (requestCode) {
+            CAMARA_REQUEST_CODE -> {
+                if (resultCode != Activity.RESULT_OK) {
                     showMessage("Photo was not taken")
-                }
-                else{
+                } else {
 
                     val bitmap = data?.extras?.get("data") as Bitmap
-                    val imageTakenBase64= convertBitmapToBase64(bitmap)
+                    val imageTakenBase64 = convertBitmapToBase64(bitmap)
                     showMessage(imageTakenBase64)
 
                     // binding.ivTakePhotoDocs.setImageBitmap(bitmap) To show the image in a view
                 }
             }
-            IMAGE_REQUEST_CODE ->{
-                if (requestCode == IMAGE_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK){
+            IMAGE_REQUEST_CODE -> {
+                if (requestCode == IMAGE_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
 
                     binding.ivTakePhotoDocs.setImageURI(data?.data) //The result of the pick up is here
-                }
-                else{
+                } else {
                     showMessage("Image was not uploaded")
                 }
             }
         }
     }
 
-    fun convertBitmapToBase64(bitmap: Bitmap):String{
+    fun convertBitmapToBase64(bitmap: Bitmap): String {
         val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100, stream)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
         val image = stream.toByteArray()
         return android.util.Base64.encodeToString(image, android.util.Base64.DEFAULT)
     }
-
-
-
 
 
     private fun showMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
+    fun getInformationForPosting(): DocItems {
+        return DocItems(
+            "PreguntarIdRegistro",
+            currentDate,
+            "cc",
+            binding.etIDNumberSendDocs.text.toString().trim(),
+            binding.etIDNumberSendDocs.text.toString().trim(),
+            binding.etLastNameSendDocs.text.toString().trim(),
+            "Chile",
+            binding.etEmailSendDocs.text.toString().trim(),
+            "PreguntarTipoAdjunto",
+            "inventada"
+
+        )
+    }
+
+
+    /*  fun getInformationForPosting(
+          IdRegistro: String,
+          Fecha: String,
+          TipoId: String,
+          Identificacion: String,
+          Nombre: String,
+          Apellido: String,
+          Ciudad: String,
+          Correo: String,
+          TipoAdjunto: String,
+          Adjunto: String
+      ): DocItems {
+          return DocItems(
+              IdRegistro,
+              Fecha,
+              TipoId,
+              Identificacion,
+              Nombre,
+              Apellido,
+              Ciudad,
+              Correo,
+              TipoAdjunto,
+              Adjunto
+          )
+      }*/
 
 }
 

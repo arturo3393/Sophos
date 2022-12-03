@@ -17,6 +17,7 @@ class PostDocViewModel : ViewModel() {
     init{
         getCities()
     }
+
     var citiesLiveData = MutableLiveData<MutableList<String>>()
 
     var docModel = MutableLiveData<DocItems>()
@@ -28,10 +29,13 @@ class PostDocViewModel : ViewModel() {
             .build()
     }
 
-    fun postDoc(Docinput: DocItems) {
-        CoroutineScope(Dispatchers.IO).launch {
+    fun postDoc(DocInput: DocItems) {
+        viewModelScope.launch {
             val response = getRetrofit().create(ApiPostDoc::class.java)
-                .postDoc(Docinput)
+                .postDoc(DocInput)
+
+            response.toString()
+
             // Pending to know the type of response or how I knot that it posted the info
         }
 
