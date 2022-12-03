@@ -4,6 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
@@ -131,7 +134,6 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         })
 
         binding.btnSendDoc.setOnClickListener {
-            println(imageTakenBase64)
             println(getInformationForPosting())
 
          /*   try {
@@ -162,7 +164,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     //Implemented methods of the interface AdapterView.OnItemSelectedListener (selected item)
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         //Saves the answer of the user of the docs type
-        val typeDocsSelected = arrayAdapterTypeDocs.getItem(position)
+         typeDocsSelected = arrayAdapterTypeDocs.getItem(position)
         //"Missing the way to select the answer, the arrayadapter is in the local scope, in the global is empty"
         // val citySelected = arrayAdapterCities.getItem(position)
     }
@@ -273,7 +275,17 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
             IMAGE_REQUEST_CODE -> {
                 if (requestCode == IMAGE_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
 
-                    binding.ivTakePhotoDocs.setImageURI(data?.data) //The result of the pick up is here
+                    //binding.ivTakePhotoDocs.setImageURI(data?.data) //The result of the pick up is here
+                    //val bitmap = data?.extras?.get("data") as Bitmap
+                    val bitmap = convertUriToBitmap(data?.data)
+                    imageTakenBase64 = convertBitmapToBase64(bitmap)
+
+
+
+
+                   // imageTakenBase64 = convertBitmapToBase64(bitmap)
+                    //showMessage(imageTakenBase64)
+
                 } else {
                     showMessage("Image was not uploaded")
                 }
@@ -282,12 +294,20 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     }
 
 
-
     fun convertBitmapToBase64(bitmap: Bitmap): String {
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
         val image = stream.toByteArray()
         return android.util.Base64.encodeToString(image, android.util.Base64.DEFAULT)
+    }
+
+    fun convertUriToBitmap(uri: Uri?):Bitmap{
+        return if (Build.VERSION.SDK_INT < 28) {
+            MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
+        } else {
+            val source= ImageDecoder.createSource(requireContext().contentResolver, uri!!)
+            ImageDecoder.decodeBitmap(source)
+        }
     }
 
 
