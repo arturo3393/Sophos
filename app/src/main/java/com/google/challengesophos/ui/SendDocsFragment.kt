@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log.d
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import com.google.challengesophos.R
 import com.google.challengesophos.Repository.model.DocItems
 import com.google.challengesophos.ViewModel.PostDocViewModel
@@ -134,13 +136,18 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         })
 
         binding.btnSendDoc.setOnClickListener {
-            when(validateUsersDataForPost()){
-                true -> {getInformationForPosting()
+            when (validateUsersDataForPost()) {
+                true -> {
+                    postDocViewModel.postDoc(getInformationForPosting())
                     showMessage("Documents have been sent")
+                    view?.findNavController()?.navigate(
+                        SendDocsFragmentDirections.actionSendDocsFragmentSelf(
+                            arguments?.getString(
+                                "user_email"
+                            )))
                 }
                 else -> showMessage("Please fill ALL fields")
             }
-
 
             println(getInformationForPosting())
         }
@@ -314,14 +321,14 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
 
     private fun getInformationForPosting(): DocItems {
         return DocItems(
-            "2",
+            "1",
             currentDate, typeDocsSelected,
             binding.etIDNumberSendDocs.text.toString().trim(),
             binding.etNamesSendDocs.text.toString().trim(),
             binding.etLastNameSendDocs.text.toString().trim(),
             binding.etEmailSendDocs.text.toString().trim(),
             citySelected,
-            "Reporte",
+            "Certificación",
             imageTakenBase64
 
         )
@@ -341,7 +348,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         ) {
             return false
         }
-      return true
+        return true
     }
 
 }

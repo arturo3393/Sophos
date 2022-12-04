@@ -49,6 +49,9 @@
             android:name="user_email"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_sendDocsFragment_self"
+            app:destination="@id/sendDocsFragment" />
     </fragment>
     <fragment
         android:id="@+id/seeDocsFragment"
