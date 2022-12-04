@@ -17,9 +17,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat.requestPermissions
-import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.google.challengesophos.R
@@ -55,7 +52,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     private lateinit var typeDocsSelected: String
     private val calendar: Calendar = Calendar.getInstance()
     private val currentDate = DateFormat.getDateInstance().format(calendar.time)
-    private lateinit var imageTakenBase64: String
+    private var imageTakenBase64 = ""
 
 
     // This property is only valid between onCreateView and
@@ -137,6 +134,14 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         })
 
         binding.btnSendDoc.setOnClickListener {
+            when(validateUsersDataForPost()){
+                true -> {getInformationForPosting()
+                    showMessage("Documents have been sent")
+                }
+                else -> showMessage("Please fill ALL fields")
+            }
+
+
             println(getInformationForPosting())
         }
 
@@ -307,19 +312,36 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
-    fun getInformationForPosting(): DocItems {
+    private fun getInformationForPosting(): DocItems {
         return DocItems(
-            "PreguntarIdRegistro",
+            "2",
             currentDate, typeDocsSelected,
             binding.etIDNumberSendDocs.text.toString().trim(),
-            binding.etIDNumberSendDocs.text.toString().trim(),
+            binding.etNamesSendDocs.text.toString().trim(),
             binding.etLastNameSendDocs.text.toString().trim(),
-            citySelected ?: "Madrid",
             binding.etEmailSendDocs.text.toString().trim(),
-            "PreguntarTipoAdjunto",
+            citySelected,
+            "Reporte",
             imageTakenBase64
 
         )
+    }
+
+
+    private fun validateUsersDataForPost(): Boolean {
+        if (getInformationForPosting().TipoId == "Tipo de documento" ||
+            getInformationForPosting().Identificacion == "" ||
+            getInformationForPosting().Nombre == "" ||
+            getInformationForPosting().Apellido == "" ||
+            getInformationForPosting().Correo == "" ||
+            getInformationForPosting().Ciudad == "Ciudad" ||
+            getInformationForPosting().TipoAdjunto == "" ||
+            getInformationForPosting().Adjunto == "" ||
+            getInformationForPosting().IdRegistro == ""
+        ) {
+            return false
+        }
+      return true
     }
 
 }
