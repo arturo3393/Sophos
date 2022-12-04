@@ -139,7 +139,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
             when (validateUsersDataForPost()) {
                 true -> {
                     postDocViewModel.postDoc(getInformationForPosting())
-                    showMessage("Documents have been sent")
+                    showMessage("Document has been sent")
                     view?.findNavController()?.navigate(
                         SendDocsFragmentDirections.actionSendDocsFragmentSelf(
                             arguments?.getString(
@@ -321,14 +321,14 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
 
     private fun getInformationForPosting(): DocItems {
         return DocItems(
-            "1",
+            "22",
             currentDate, typeDocsSelected,
             binding.etIDNumberSendDocs.text.toString().trim(),
             binding.etNamesSendDocs.text.toString().trim(),
             binding.etLastNameSendDocs.text.toString().trim(),
-            binding.etEmailSendDocs.text.toString().trim(),
             citySelected,
-            "Certificación",
+            binding.etEmailSendDocs.text.toString().trim(),
+            "Constancia",
             imageTakenBase64
 
         )

@@ -29,7 +29,7 @@ class LoginViewModel() : ViewModel() {
 
     //Method that is connected to the view through the parameters and it connects to the model with retrofit.
     fun getLoginViewModel(emailIn: String, passwordIn: String) {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch {
             val response: Response<LoginApiResponse> = getRetrofit().create(APIogin::class.java)
                 .getLogin(emailIn, passwordIn)
 

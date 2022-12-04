@@ -36,7 +36,6 @@ class PostDocViewModel : ViewModel() {
 
            println("Server response ${response.toString()}")
 
-            // Pending to know the type of response or how I knot that it posted the info
         }
 
     }
@@ -64,33 +63,6 @@ class PostDocViewModel : ViewModel() {
             }
         }
 
-
-
-
-
-
     }
-
-    /*
-    fun getCities(){
-        val response = getRetrofit().create(APIGetOffices::class.java)
-            .getCities()
-
-
-        val cities = response.body()?.Items
-
-        //brings the cities available in the API
-        if (cities != null) {
-            val citiesList = mutableListOf<String>()
-            for (city in cities.indices-1) {
-                citiesList.add(cities[city].Ciudad)
-            }
-            val cities2 = citiesList.toSet().toString()
-            citiesLiveData.postValue(cities2)
-
-            println("I'm the error " + citiesLiveData.postValue(cities2).toString())
-        }
-    }*/
-
 
 }
