@@ -17,6 +17,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat.requestPermissions
+import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.google.challengesophos.R
@@ -48,11 +51,10 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     private val IMAGE_REQUEST_CODE: Int = 102
 
     //Declaring all the variables needed to send the post
-
+    private lateinit var citySelected: String
     private lateinit var typeDocsSelected: String
     private val calendar: Calendar = Calendar.getInstance()
     private val currentDate = DateFormat.getDateInstance().format(calendar.time)
-    private var citySelected: String? = null
     private lateinit var imageTakenBase64: String
 
 
@@ -92,22 +94,20 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
 
         //Observes the cities that the Api brings
 
-
         postDocViewModel.citiesLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
 
             arrayAdapterCities.addAll(
                 Arrays.asList(
                     "Ciudad",
-                    postDocViewModel.citiesLiveData.value?.get(0)?.toString() ?: "",
-                    postDocViewModel.citiesLiveData.value?.get(1)?.toString() ?: "",
-                    postDocViewModel.citiesLiveData.value?.get(2)?.toString() ?: "",
-                    postDocViewModel.citiesLiveData.value?.get(3)?.toString() ?: "",
-                    postDocViewModel.citiesLiveData.value?.get(4)?.toString() ?: "",
-                    postDocViewModel.citiesLiveData.value?.get(5)?.toString() ?: ""
-
+                    postDocViewModel.citiesLiveData.value?.get(0).toString(),
+                    postDocViewModel.citiesLiveData.value?.get(1).toString(),
+                    postDocViewModel.citiesLiveData.value?.get(2).toString(),
+                    postDocViewModel.citiesLiveData.value?.get(3).toString(),
+                    postDocViewModel.citiesLiveData.value?.get(4).toString(),
+                    postDocViewModel.citiesLiveData.value?.get(5).toString()
                 )
-            )
 
+            )
         })
 
 
@@ -119,6 +119,8 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         binding.spDocType.onItemSelectedListener = this
         binding.spDocCity.onItemSelectedListener = this
 
+
+        //bring the arg of the email
         binding.etEmailSendDocs.setText(arguments?.getString("user_email"))
 
         binding.ivTakePhotoDocs.setOnClickListener {
@@ -136,19 +138,6 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
 
         binding.btnSendDoc.setOnClickListener {
             println(getInformationForPosting())
-
-            /*   try {
-                   when(getInformationForPosting()!=null) {
-                       true -> postDocViewModel.postDoc(getInformationForPosting())
-
-                       else -> showMessage("You must fill all the field to send the document")
-
-                   }
-               } catch (e: Exception){
-                   showMessage("the problem is here")
-               }*/
-
-
         }
 
 
@@ -163,10 +152,15 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
 
     //Implemented methods of the interface AdapterView.OnItemSelectedListener (selected item)
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        //Saves the answer of the user of the docs type
-        typeDocsSelected = arrayAdapterTypeDocs.getItem(position).toString()
-        //"Missing the way to select the answer, the arrayadapter is in the local scope, in the global is empty"
-        // val citySelected = arrayAdapterCities.getItem(position)
+
+        when (parent?.id) {
+            //Saves the answer of the user of the docs type selected
+            R.id.spDocType -> typeDocsSelected = arrayAdapterTypeDocs.getItem(position).toString()
+            //Saves the answer of the city selected
+            R.id.spDocCity -> citySelected = arrayAdapterCities.getItem(position).toString()
+
+        }
+
     }
 
     //Implemented methods of the interface AdapterView.OnItemSelectedListener (selected item)
@@ -320,40 +314,13 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
             binding.etIDNumberSendDocs.text.toString().trim(),
             binding.etIDNumberSendDocs.text.toString().trim(),
             binding.etLastNameSendDocs.text.toString().trim(),
-            "Chile",
+            citySelected ?: "Madrid",
             binding.etEmailSendDocs.text.toString().trim(),
             "PreguntarTipoAdjunto",
             imageTakenBase64
 
         )
     }
-
-
-    /*  fun getInformationForPosting(
-          IdRegistro: String,
-          Fecha: String,
-          TipoId: String,
-          Identificacion: String,
-          Nombre: String,
-          Apellido: String,
-          Ciudad: String,
-          Correo: String,
-          TipoAdjunto: String,
-          Adjunto: String
-      ): DocItems {
-          return DocItems(
-              IdRegistro,
-              Fecha,
-              TipoId,
-              Identificacion,
-              Nombre,
-              Apellido,
-              Ciudad,
-              Correo,
-              TipoAdjunto,
-              Adjunto
-          )
-      }*/
 
 }
 
