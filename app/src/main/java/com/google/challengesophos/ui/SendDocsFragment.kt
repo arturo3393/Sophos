@@ -358,6 +358,3 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     }
 
 }
-
-
-

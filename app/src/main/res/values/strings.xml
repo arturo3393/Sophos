@@ -28,5 +28,8 @@
     <string name="Document">Documento</string>
     <string name="Send">Enviar</string>
 
+    <!-- See docs -->
+    <string name="Documents">Documentos</string>
+
 
 </resources>

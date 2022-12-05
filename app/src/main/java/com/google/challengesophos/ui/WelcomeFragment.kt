@@ -52,7 +52,14 @@ class WelcomeFragment : Fragment() {
         }
 
         binding.btnSeeDocs.setOnClickListener {
-            view?.findNavController()?.navigate(R.id.action_welcomeFragment_to_seeDocsFragment)
+            view?.findNavController()?.navigate(
+                WelcomeFragmentDirections.actionWelcomeFragmentToSeeDocsFragment(
+                    arguments?.getString(
+                        "user_email"
+                    )
+                )
+            )
+
         }
 
         binding.btnOffices.setOnClickListener {
@@ -77,12 +84,6 @@ class WelcomeFragment : Fragment() {
             (activity as AppCompatActivity).supportActionBar?.title = "Pablo"
         }
     }
-
-
-
-
-
-
 
 
 }

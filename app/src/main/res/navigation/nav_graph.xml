@@ -57,7 +57,12 @@
         android:id="@+id/seeDocsFragment"
         android:name="com.google.challengesophos.ui.SeeDocsFragment"
         android:label="fragment_see_docs"
-        tools:layout="@layout/fragment_see_docs" />
+        tools:layout="@layout/fragment_see_docs" >
+        <argument
+            android:name="user_email"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/officesFragment"
         android:name="com.google.challengesophos.ui.OfficesFragment"

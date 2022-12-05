@@ -19,6 +19,7 @@ class GetDocsByIdViewModel: ViewModel() {
             .build()
     }
 
+    /*
     fun getDocsViewModel (idDoc:String) {
         CoroutineScope(Dispatchers.IO).launch {
             val response : Response<DocResponse> = getRetrofit().create(APIGetDocById::class.java)
@@ -32,5 +33,8 @@ class GetDocsByIdViewModel: ViewModel() {
             }
 
         }
+
+
+     */
 
 }

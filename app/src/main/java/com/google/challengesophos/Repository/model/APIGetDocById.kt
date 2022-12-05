@@ -9,5 +9,5 @@ interface APIGetDocById {
     @GET("/RS_Documentos")
     suspend fun getSpecificDoc(
         @Query("idRegistro") idRegister:String
-    ): Response<DocResponse>
+    ): Response<DocItems>
 }

@@ -1,16 +1,27 @@
 package com.google.challengesophos.ui
 
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.challengesophos.R
+import com.google.challengesophos.ViewModel.GetDocsViewModel
 import com.google.challengesophos.databinding.FragmentSeeDocsBinding
+import com.google.challengesophos.ui.adapter.ItemsDocsAdapter
 
 
-class SeeDocsFragment : Fragment() {
+class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
+
+    private val seeDocsModel : GetDocsViewModel by viewModels()
+
 
     private var _binding: FragmentSeeDocsBinding? = null
 
@@ -20,6 +31,7 @@ class SeeDocsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
@@ -35,9 +47,48 @@ class SeeDocsFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_light)
 
+        val email = arguments?.getString("user_email")
+
+        initRecyclerView()
+
+        seeDocsModel.getDocsModelLiveData.observe(viewLifecycleOwner, Observer {
+            if (email != null) {
+                seeDocsModel.getDocsList(email)
+               // binding.tvSeeDocuments.text = seeDocsModel.getDocsModelLiveData.value.toString()
+            } else
+                println("Email is null")
+        })
+
+
+        binding.buttonPrueba.setOnClickListener {
+
+            if (email != null) {
+                seeDocsModel.getDocsList(email)
+                initRecyclerView()
+                Toast.makeText(context, "I'm inside the view".toString(), Toast.LENGTH_LONG).show()
+
+
+            }else
+                println("Email is null")
+        }
+
+
+
+
         return binding.root
 
 
+    }
+
+     fun initRecyclerView(){
+         val manager = LinearLayoutManager(context)
+         val decoration = DividerItemDecoration(context,manager.orientation)
+         decoration.setDrawable(resources.getDrawable(R.drawable.rv_divider))
+
+        binding.rvDocList.layoutManager = manager
+        binding.rvDocList.adapter = ItemsDocsAdapter(seeDocsModel.getDocsModelLiveData.value)
+
+         binding.rvDocList.addItemDecoration(decoration)
     }
 
 
