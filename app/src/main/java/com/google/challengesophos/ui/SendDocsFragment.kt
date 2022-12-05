@@ -27,6 +27,8 @@ import com.google.challengesophos.ViewModel.PostDocViewModel
 import com.google.challengesophos.databinding.FragmentSendDocsBinding
 import java.io.ByteArrayOutputStream
 import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatterBuilder
 import java.util.*
 
 class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnItemSelectedListener {
@@ -53,7 +55,10 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     private lateinit var citySelected: String
     private lateinit var typeDocsSelected: String
     private val calendar: Calendar = Calendar.getInstance()
-    private val currentDate = DateFormat.getDateInstance().format(calendar.time)
+    private val currentDate = SimpleDateFormat("d/M/yyyy").format(calendar.time)
+
+
+    //private val currentDate = DateFormat.getDateInstance().format(calendar.time)
     private var imageTakenBase64 = ""
 
 
@@ -128,6 +133,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
 
         binding.btnAttachDoc.setOnClickListener {
             askForFilesPermission()
+            println(currentDate)
         }
 
         //Observes the post method and its arguments
@@ -321,14 +327,14 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
 
     private fun getInformationForPosting(): DocItems {
         return DocItems(
-            "22",
+            "33",
             currentDate, typeDocsSelected,
             binding.etIDNumberSendDocs.text.toString().trim(),
             binding.etNamesSendDocs.text.toString().trim(),
             binding.etLastNameSendDocs.text.toString().trim(),
             citySelected,
             binding.etEmailSendDocs.text.toString().trim(),
-            "Constancia",
+            "Memoria",
             imageTakenBase64
 
         )
