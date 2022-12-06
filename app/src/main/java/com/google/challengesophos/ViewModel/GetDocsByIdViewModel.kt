@@ -25,7 +25,6 @@ class GetDocsByIdViewModel: ViewModel() {
             .build()
     }
 
-
     fun getDocsViewModel (idDoc:String) {
         viewModelScope.launch {
             val response : Response<DocResponse> = getRetrofit().create(APIGetDocById::class.java)
@@ -34,9 +33,6 @@ class GetDocsByIdViewModel: ViewModel() {
             val docsInfo = response.body()
 
             getDocsImgMutableLiveData.postValue(docsInfo?.Items)
-            println(response.isSuccessful)
-
-          //  println(docsInfo?.Items?.get(0)?.Adjunto.toString())
 
             }
 

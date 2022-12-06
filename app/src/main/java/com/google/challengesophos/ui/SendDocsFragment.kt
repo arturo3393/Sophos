@@ -150,7 +150,9 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                         SendDocsFragmentDirections.actionSendDocsFragmentSelf(
                             arguments?.getString(
                                 "user_email"
-                            )))
+                            )
+                        )
+                    )
                 }
                 else -> showMessage("Please fill ALL fields")
             }
@@ -326,15 +328,14 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     }
 
     private fun getInformationForPosting(): DocItems {
-        return DocItems(
-            "33",
+        return DocItems( "",
             currentDate, typeDocsSelected,
             binding.etIDNumberSendDocs.text.toString().trim(),
             binding.etNamesSendDocs.text.toString().trim(),
             binding.etLastNameSendDocs.text.toString().trim(),
             citySelected,
             binding.etEmailSendDocs.text.toString().trim(),
-            "Memoria",
+            binding.etDocTypeSendDocs.text.toString().trim(),
             imageTakenBase64
 
         )
@@ -350,7 +351,8 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
             getInformationForPosting().Ciudad == "Ciudad" ||
             getInformationForPosting().TipoAdjunto == "" ||
             getInformationForPosting().Adjunto == "" ||
-            getInformationForPosting().IdRegistro == ""
+            getInformationForPosting().IdRegistro == "" ||
+            getInformationForPosting().TipoAdjunto == ""
         ) {
             return false
         }

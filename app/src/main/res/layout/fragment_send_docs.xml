@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="8dp"
             android:src="@drawable/ic_add_a_photo" />
 
         <Spinner
@@ -76,6 +76,13 @@
             android:layout_height="wrap_content"
             android:hint="@string/email" />
 
+        <EditText
+            android:id="@+id/etDocTypeSendDocs"
+            style="@style/styleSendDocsTexts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/document_type" />
+
         <Spinner
             android:id="@+id/spDocCity"
             android:layout_width="match_parent"
@@ -85,6 +92,8 @@
             android:layout_marginBottom="8dp"
 
             />
+
+
 
 
     </LinearLayout>

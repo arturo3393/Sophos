@@ -6,10 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.challengesophos.R
 import com.google.challengesophos.databinding.FragmentOfficesBinding
 
-class OfficesFragment : Fragment() {
+class OfficesFragment : Fragment(), OnMapReadyCallback {
+
+    private lateinit var map:GoogleMap
 
     private var _binding: FragmentOfficesBinding? = null
 
@@ -38,10 +48,31 @@ class OfficesFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_light)
 
 
+        createFragment()
+
         return binding.root
 
     }
 
+    private fun createFragment() {
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
+        createMarker()
+    }
+
+    private fun createMarker (){
+        val coordinates = LatLng()
+        var marker: MarkerOptions = MarkerOptions().position(coordinates).title()
+        map.addMarker(marker)
+        map.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(coordinates,18f), 4000, null
+        )
+    }
 
 
 }

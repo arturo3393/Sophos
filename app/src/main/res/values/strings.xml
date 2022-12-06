@@ -30,6 +30,7 @@
 
     <!-- See docs -->
     <string name="Documents">Documentos</string>
+    <string name="document_type">Tipo de documento</string>
 
 
 </resources>
