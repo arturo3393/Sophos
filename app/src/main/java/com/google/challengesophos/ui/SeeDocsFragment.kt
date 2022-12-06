@@ -22,12 +22,13 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
 
     private val seeDocsModel : GetDocsViewModel by viewModels()
 
-
     private var _binding: FragmentSeeDocsBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,30 +48,18 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_light)
 
-        val email = arguments?.getString("user_email")
-
-        initRecyclerView()
+        val email = arguments?.getString("user_email")!!
 
         seeDocsModel.getDocsModelLiveData.observe(viewLifecycleOwner, Observer {
-            if (email != null) {
-                seeDocsModel.getDocsList(email)
-               // binding.tvSeeDocuments.text = seeDocsModel.getDocsModelLiveData.value.toString()
-            } else
-                println("Email is null")
+
+            seeDocsModel.getDocsList(email)
+            initRecyclerView()
+
+
         })
+        seeDocsModel.getDocsList(email)
 
 
-        binding.buttonPrueba.setOnClickListener {
-
-            if (email != null) {
-                seeDocsModel.getDocsList(email)
-                initRecyclerView()
-                Toast.makeText(context, "I'm inside the view".toString(), Toast.LENGTH_LONG).show()
-
-
-            }else
-                println("Email is null")
-        }
 
 
 
@@ -80,7 +69,7 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
 
     }
 
-     fun initRecyclerView(){
+     private fun initRecyclerView(){
          val manager = LinearLayoutManager(context)
          val decoration = DividerItemDecoration(context,manager.orientation)
          decoration.setDrawable(resources.getDrawable(R.drawable.rv_divider))
@@ -88,9 +77,8 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
         binding.rvDocList.layoutManager = manager
         binding.rvDocList.adapter = ItemsDocsAdapter(seeDocsModel.getDocsModelLiveData.value)
 
-         binding.rvDocList.addItemDecoration(decoration)
+        binding.rvDocList.addItemDecoration(decoration)
     }
-
 
 
 

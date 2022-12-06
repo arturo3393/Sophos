@@ -10,6 +10,7 @@ import com.google.challengesophos.Repository.model.DocResponse
 import com.google.challengesophos.ui.SeeDocsFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -35,8 +36,10 @@ class GetDocsViewModel : ViewModel(){
 
             val docsInfo = response.body()
 
-            getDocsModelLiveData.postValue(docsInfo?.Items?.toMutableList())
+            getDocsModelLiveData.postValue(docsInfo?.Items)
 
+            //it avoids the coroutine to continue updating itself
+            viewModelScope.cancel()
 
            /* docsInfo?.Items?.forEach{
                 getDocsModelLiveData.postValue(it)

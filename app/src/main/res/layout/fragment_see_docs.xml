@@ -38,12 +38,9 @@
         android:id="@+id/rvDocList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        tools:listitem="@layout/item_see_docs"
+        android:layout_marginBottom="20dp"
        />
 
-    <Button
-        android:id="@+id/buttonPrueba"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
 
 </LinearLayout>

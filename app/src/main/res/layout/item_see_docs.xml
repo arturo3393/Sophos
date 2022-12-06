@@ -63,6 +63,6 @@
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/tvNameItem"
         app:layout_constraintTop_toBottomOf="@+id/tvAttachedType"
-        tools:text="Perez Días" />
+        tools:text="Perez Diaz" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
