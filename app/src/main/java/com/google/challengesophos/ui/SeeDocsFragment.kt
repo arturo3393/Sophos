@@ -55,20 +55,19 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
         val email = arguments?.getString("user_email")!!
 
         getDocsModel.getDocsModelLiveData.observe(viewLifecycleOwner, Observer {
-
+        //brings the list of documents
             getDocsModel.getDocsList(email)
             initRecyclerView()
-
-
 
         })
         //Activates the observer and the recycler view
         getDocsModel.getDocsList(email)
 
+        //observing the image and converting it to image
         getDocsByIdViewModel.getDocsImgMutableLiveData.observe(viewLifecycleOwner, Observer {
-            val imgCamilo = getDocsByIdViewModel.getDocsImgMutableLiveData.value?.get(0)?.Adjunto
-            val imgCamilo2 = decodePicString(imgCamilo!!)
-            binding.ivSeeDocsImage.setImageBitmap(imgCamilo2)
+            val imageBase64 = getDocsByIdViewModel.getDocsImgMutableLiveData.value?.get(0)?.Adjunto
+            val imgConverted = decodePicString(imageBase64!!)
+            binding.ivSeeDocsImage.setImageBitmap(imgConverted)
         })
 
 
@@ -85,10 +84,10 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
          decoration.setDrawable(resources.getDrawable(R.drawable.rv_divider))
 
         binding.rvDocList.layoutManager = manager
-        binding.rvDocList.adapter = ItemsDocsAdapter(getDocsModel.getDocsModelLiveData.value) {
+        binding.rvDocList.adapter = ItemsDocsAdapter(getDocsModel.getDocsModelLiveData.value)
+
+        {
             getDocsByIdViewModel.getDocsViewModel(it.IdRegistro)
-
-
         }
 
         binding.rvDocList.addItemDecoration(decoration)

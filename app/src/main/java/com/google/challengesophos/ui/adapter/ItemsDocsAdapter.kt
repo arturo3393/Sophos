@@ -14,8 +14,10 @@ import com.google.challengesophos.Repository.model.DocItems
 import com.google.challengesophos.databinding.ItemSeeDocsBinding
 import kotlinx.coroutines.NonDisposableHandle.parent
 
-class ItemsDocsAdapter(private val getDocsViewModel: List<DocItems>?, private val onItemSelected: (DocItems)-> Unit): RecyclerView.Adapter<ItemsDocsViewHolder>()  {
-
+class ItemsDocsAdapter(
+    private val getDocsViewModel: List<DocItems>?,
+    private val onItemSelected: (DocItems) -> Unit
+) : RecyclerView.Adapter<ItemsDocsViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemsDocsViewHolder {
@@ -30,49 +32,10 @@ class ItemsDocsAdapter(private val getDocsViewModel: List<DocItems>?, private va
     }
 
     override fun getItemCount(): Int {
-       return getDocsViewModel?.size ?: 3
+        return getDocsViewModel?.size ?: 3
     }
 
 
 }
 
-class ItemsDocsViewHolder (view: View) : RecyclerView.ViewHolder(view){
-
-
-    val binding = ItemSeeDocsBinding.bind(view)
-
-    val image = view.findViewById<ImageView>(R.id.ivSeeDocsImage)
-
-    fun render(getDocsViewModel: DocItems?, onItemSelected: (DocItems)-> Unit  ){
-        binding.tvAttachedType.text = getDocsViewModel?.TipoAdjunto
-        binding.tvItemFecha.text = getDocsViewModel?.Fecha
-        binding.tvNameItem.text = getDocsViewModel?.Nombre
-        binding.tvLastNameItem.text = getDocsViewModel?.Apellido
-
-        binding.root.setOnClickListener{
-            if (getDocsViewModel != null) {
-                onItemSelected(getDocsViewModel)
-            } else{
-                println("RE PAILA")
-            }
-        }
-
-//       image.setImageBitmap(decodePicString(seeDocsViewModel.Adjunto))
-
-
-        //Instead of this pass a lambda in the Adapter
-
-
-    }
-
-    fun decodePicString (encodedString: String): Bitmap {
-
-        val imageBytes = Base64.decode(encodedString, Base64.DEFAULT)
-        val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-
-        return decodedImage
-    }
-
-
-}
 
