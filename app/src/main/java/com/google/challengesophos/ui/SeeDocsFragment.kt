@@ -1,18 +1,21 @@
 package com.google.challengesophos.ui
 
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.challengesophos.R
+import com.google.challengesophos.ViewModel.GetDocsByIdViewModel
 import com.google.challengesophos.ViewModel.GetDocsViewModel
 import com.google.challengesophos.databinding.FragmentSeeDocsBinding
 import com.google.challengesophos.ui.adapter.ItemsDocsAdapter
@@ -20,7 +23,8 @@ import com.google.challengesophos.ui.adapter.ItemsDocsAdapter
 
 class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
 
-    private val seeDocsModel : GetDocsViewModel by viewModels()
+    private val getDocsModel : GetDocsViewModel by viewModels()
+    private val getDocsByIdViewModel: GetDocsByIdViewModel by viewModels()
 
     private var _binding: FragmentSeeDocsBinding? = null
 
@@ -50,16 +54,22 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
 
         val email = arguments?.getString("user_email")!!
 
-        seeDocsModel.getDocsModelLiveData.observe(viewLifecycleOwner, Observer {
+        getDocsModel.getDocsModelLiveData.observe(viewLifecycleOwner, Observer {
 
-            seeDocsModel.getDocsList(email)
+            getDocsModel.getDocsList(email)
             initRecyclerView()
 
 
+
         })
-        seeDocsModel.getDocsList(email)
+        //Activates the observer and the recycler view
+        getDocsModel.getDocsList(email)
 
-
+        getDocsByIdViewModel.getDocsImgMutableLiveData.observe(viewLifecycleOwner, Observer {
+            val imgCamilo = getDocsByIdViewModel.getDocsImgMutableLiveData.value?.get(0)?.Adjunto
+            val imgCamilo2 = decodePicString(imgCamilo!!)
+            binding.ivSeeDocsImage.setImageBitmap(imgCamilo2)
+        })
 
 
 
@@ -75,11 +85,21 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
          decoration.setDrawable(resources.getDrawable(R.drawable.rv_divider))
 
         binding.rvDocList.layoutManager = manager
-        binding.rvDocList.adapter = ItemsDocsAdapter(seeDocsModel.getDocsModelLiveData.value)
+        binding.rvDocList.adapter = ItemsDocsAdapter(getDocsModel.getDocsModelLiveData.value) {
+            getDocsByIdViewModel.getDocsViewModel(it.IdRegistro)
+
+
+        }
 
         binding.rvDocList.addItemDecoration(decoration)
     }
 
+    fun decodePicString (encodedString: String): Bitmap {
+        val imageBytes = Base64.decode(encodedString, Base64.DEFAULT)
+        val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+
+        return decodedImage
+    }
 
 
 

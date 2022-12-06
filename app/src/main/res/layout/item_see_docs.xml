@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/montserrat_regular"
-        android:layout_marginStart="2dp"
+        android:layout_marginStart="8dp"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/tvNameItem"
         app:layout_constraintTop_toBottomOf="@+id/tvAttachedType"

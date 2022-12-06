@@ -90,8 +90,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
 
         //TO DELETE!!! It allows me to put my email and pasword
-        binding.etEmail.setText("arturo3393@gmail.com")
-        binding.etPassword.setText("05ftK5Ly0J9s")
+        binding.etEmail.setText("jonathanc.perezd@gmail.com")
+        binding.etPassword.setText("CrQwbMhU5hzs2Shu")
 
 
 
