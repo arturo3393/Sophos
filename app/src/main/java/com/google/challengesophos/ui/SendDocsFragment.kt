@@ -152,10 +152,6 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
             }
         }
 
-
-
-
-
         return binding.root
 
 
@@ -344,7 +340,6 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
             getInformationForPosting().Ciudad == "Ciudad" ||
             getInformationForPosting().TipoAdjunto == "" ||
             getInformationForPosting().Adjunto == "" ||
-            getInformationForPosting().IdRegistro == "" ||
             getInformationForPosting().TipoAdjunto == ""
         ) {
             return false

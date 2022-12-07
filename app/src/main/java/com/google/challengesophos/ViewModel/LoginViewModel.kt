@@ -15,6 +15,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginViewModel() : ViewModel() {
 
+    init {
+        getLoginViewModel("","") 
+    }
 
     var loginModel = MutableLiveData<Boolean>(false) //validates the login
     var userNameLiveData = MutableLiveData<String?>() //gets the user name
@@ -37,11 +40,11 @@ class LoginViewModel() : ViewModel() {
             val userName = userInfo?.nombre
 
             if (userInfo?.acceso == true) {
-                //println("true")
+
                 loginModel.postValue(true)
                 userNameLiveData.postValue(userName)
             } else {
-                //println("false")
+
                 loginModel.postValue(false)
             }
         }
