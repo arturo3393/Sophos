@@ -9,16 +9,20 @@
         android:id="@+id/loginFragment"
         android:name="com.google.challengesophos.ui.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />
+        <argument
+            android:name="user_email"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
         android:name="com.google.challengesophos.ui.WelcomeFragment"
         android:label="fragment_welcome"
-        tools:layout="@layout/fragment_welcome" >
+        tools:layout="@layout/fragment_welcome">
         <argument
             android:name="user_name"
             app:argType="string"
@@ -29,22 +33,24 @@
         <action
             android:id="@+id/action_welcomeFragment_to_seeDocsFragment"
             app:destination="@id/seeDocsFragment" />
-        <action
-            android:id="@+id/action_welcomeFragment_to_officesFragment"
-            app:destination="@id/officesFragment" />
-        <action
-            android:id="@+id/action_welcomeFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
         <argument
             android:name="user_email"
             app:argType="string"
             app:nullable="true" />
+
+        <action
+            android:id="@+id/action_welcomeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_officesFragment"
+            app:destination="@id/officesFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/sendDocsFragment"
         android:name="com.google.challengesophos.ui.SendDocsFragment"
         android:label="fragment_send_docs"
-        tools:layout="@layout/fragment_send_docs" >
+        tools:layout="@layout/fragment_send_docs">
         <argument
             android:name="user_email"
             app:argType="string"
@@ -52,20 +58,55 @@
         <action
             android:id="@+id/action_sendDocsFragment_self"
             app:destination="@id/sendDocsFragment" />
+        <action
+            android:id="@+id/action_sendDocsFragment_to_seeDocsFragment"
+            app:destination="@id/seeDocsFragment" />
+
+
+        <action
+            android:id="@+id/action_sendDocsFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+
+        <action
+            android:id="@+id/action_sendDocsFragment_to_officesFragment"
+            app:destination="@id/officesFragment"/>
+
     </fragment>
     <fragment
         android:id="@+id/seeDocsFragment"
         android:name="com.google.challengesophos.ui.SeeDocsFragment"
         android:label="fragment_see_docs"
-        tools:layout="@layout/fragment_see_docs" >
+        tools:layout="@layout/fragment_see_docs">
         <argument
             android:name="user_email"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_seeDocsFragment_to_sendDocsFragment"
+            app:destination="@id/sendDocsFragment" />
+        <action
+            android:id="@+id/action_seeDocsFragment_to_officesFragment"
+            app:destination="@id/officesFragment" />
+        <action
+            android:id="@+id/action_seeDocsFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/officesFragment"
         android:name="com.google.challengesophos.ui.OfficesFragment"
         android:label="fragment_offices"
-        tools:layout="@layout/fragment_offices" />
+        tools:layout="@layout/fragment_offices">
+        <action
+            android:id="@+id/action_officesFragment_to_sendDocsFragment"
+            app:destination="@id/sendDocsFragment" />
+        <action
+            android:id="@+id/action_officesFragment_to_seeDocsFragment"
+            app:destination="@id/seeDocsFragment" />
+        <action
+            android:id="@+id/action_officesFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <argument android:name="user_email"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

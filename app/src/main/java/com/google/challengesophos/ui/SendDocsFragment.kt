@@ -9,11 +9,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log.d
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -26,9 +23,8 @@ import com.google.challengesophos.Repository.model.DocItems
 import com.google.challengesophos.ViewModel.PostDocViewModel
 import com.google.challengesophos.databinding.FragmentSendDocsBinding
 import java.io.ByteArrayOutputStream
-import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatterBuilder
+
 import java.util.*
 
 class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnItemSelectedListener {
@@ -66,11 +62,6 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     // onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,6 +69,10 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     ): View {
         //binding initialized
         _binding = FragmentSendDocsBinding.inflate(inflater, container, false)
+
+
+        //enables the menu in the fragment
+        setHasOptionsMenu(true)
 
         //puts the name to the appbar
         (activity as AppCompatActivity).supportActionBar?.title = "Regresar"
@@ -133,7 +128,6 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
 
         binding.btnAttachDoc.setOnClickListener {
             askForFilesPermission()
-            println(currentDate)
         }
 
         //Observes the post method and its arguments
@@ -156,8 +150,6 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                 }
                 else -> showMessage("Please fill ALL fields")
             }
-
-            println(getInformationForPosting())
         }
 
 
@@ -328,7 +320,8 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     }
 
     private fun getInformationForPosting(): DocItems {
-        return DocItems( "",
+        return DocItems(
+            "",
             currentDate, typeDocsSelected,
             binding.etIDNumberSendDocs.text.toString().trim(),
             binding.etNamesSendDocs.text.toString().trim(),
@@ -358,5 +351,53 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         }
         return true
     }
+
+    //Creates the menu
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.option_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    //navigate to each option in the menu
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.sendDocsMenu -> {
+                showMessage("You are already sending docs")
+                true
+            }
+            R.id.seeDocsMenu -> {
+                view?.findNavController()?.navigate(
+                    SendDocsFragmentDirections.actionSendDocsFragmentToSeeDocsFragment(
+                        arguments?.getString(
+                            "user_email"
+                        )
+                    )
+                )
+                true
+            }
+            R.id.officesMenu -> {
+                view?.findNavController()?.navigate(
+                    SendDocsFragmentDirections.actionSendDocsFragmentToOfficesFragment(
+                        arguments?.getString(
+                            "user_email"
+                        )
+                    )
+                )
+                true
+            }
+
+            R.id.logoutMenu -> {
+                view?.findNavController()?.navigate(R.id.action_sendDocsFragment_to_loginFragment)
+                true
+            }
+            //missing the dark and language menu
+            /*R.id.darkModeMenu->view?.findNavController()?.navigate(R
+                    R.id.languageMenu->view?.findNavController()?.navigate(R*/
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
 
 }

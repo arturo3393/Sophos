@@ -4,8 +4,6 @@ package com.google.challengesophos.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -51,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_light)
 
+
+
     }
 
     //sets the back button
@@ -59,19 +59,23 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
 
     }
-
+/*
     //enables the menu
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.option_menu, menu)
         return true
     }
 
+
     //navigate to each option in the menu
      override fun onOptionsItemSelected(item: MenuItem): Boolean {
           return when (item.itemId) {
               R.id.sendDocsMenu -> {
-                  navController.navigate(R.id.action_welcomeFragment_to_sendDocsFragment)
+                  navController.navigate(R.id.action_welcomeFragment_to_sendDocsFragment,)
+                  //println( binding.navHostFragment.getFragment<WelcomeFragment>().arguments)
+
                   true
+                  //WelcomeFragmentDirections.actionWelcomeFragmentToSeeDocsFragment
               }
               R.id.seeDocsMenu -> {
                   navController.navigate(R.id.action_welcomeFragment_to_seeDocsFragment)
@@ -94,6 +98,10 @@ class MainActivity : AppCompatActivity() {
               }
           }
       }
+
+
+ */
+
 
 
 

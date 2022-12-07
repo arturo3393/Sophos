@@ -3,16 +3,15 @@ package com.google.challengesophos.ui
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -29,8 +28,7 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
 
     private val getOfficesViewModel: GetOfficesViewModel by viewModels()
 
-    private var citiesObserved : MutableList<OfficeItems> = mutableListOf()
-
+    private var citiesObserved: MutableList<OfficeItems> = mutableListOf()
 
 
     private val REQUEST_CODE_LOCATION = 0
@@ -52,6 +50,9 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
         _binding = FragmentOfficesBinding.inflate(inflater, container, false)
 
 
+        //enables the menu in the fragment
+        setHasOptionsMenu(true)
+
         //puts the name to the appbar
         (activity as AppCompatActivity).supportActionBar?.title = "Regresar"
         //Sets the back arrow and the icon for it
@@ -61,7 +62,7 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
         getOfficesViewModel.citiesLiveData.observe(viewLifecycleOwner, Observer {
             getOfficesViewModel.getOffices()
             //saves the cities in a mutable list
-            for (cities in getOfficesViewModel.citiesLiveData.value!!){
+            for (cities in getOfficesViewModel.citiesLiveData.value!!) {
                 citiesObserved.add(cities)
             }
 
@@ -91,11 +92,11 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
 
     private fun createMarker() {
 
-          for(cities in citiesObserved){
-            val marker =  MarkerOptions()
-                .position(LatLng(cities.Latitud.toDouble(),cities.Longitud.toDouble()))
+        for (cities in citiesObserved) {
+            val marker = MarkerOptions()
+                .position(LatLng(cities.Latitud.toDouble(), cities.Longitud.toDouble()))
                 .title(cities.Nombre)
-                map.addMarker(marker)
+            map.addMarker(marker)
         }
 
 
@@ -150,6 +151,58 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
                     "Set up location permissions in settings",
                     Toast.LENGTH_SHORT
                 ).show()
+            }
+        }
+    }
+
+
+    //Creates the menu
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.option_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    //navigate to each option in the menu
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.sendDocsMenu -> {
+                view?.findNavController()?.navigate(
+                    OfficesFragmentDirections.actionOfficesFragmentToSendDocsFragment
+                        (
+                        arguments?.getString(
+                            "user_email"
+                        )
+                    )
+                )
+                true
+            }
+            R.id.seeDocsMenu -> {
+                view?.findNavController()?.navigate(
+                    OfficesFragmentDirections.actionOfficesFragmentToSeeDocsFragment
+                        (
+                        arguments?.getString(
+                            "user_email"
+                        )
+                    )
+                )
+
+                true
+            }
+            R.id.officesMenu -> {
+                Toast.makeText(context, "You are alredy seeing the offices", Toast.LENGTH_SHORT)
+                    .show()
+                true
+            }
+
+            R.id.logoutMenu -> {
+                view?.findNavController()?.navigate(R.id.action_officesFragment_to_loginFragment)
+                true
+            }
+            //missing the dark and language menu
+            /*R.id.darkModeMenu->view?.findNavController()?.navigate(R
+                    R.id.languageMenu->view?.findNavController()?.navigate(R*/
+            else -> {
+                super.onOptionsItemSelected(item)
             }
         }
     }

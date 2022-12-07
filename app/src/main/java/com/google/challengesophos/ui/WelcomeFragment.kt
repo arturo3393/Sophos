@@ -19,11 +19,6 @@ class WelcomeFragment : Fragment() {
     private val binding get() = _binding!!
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,6 +26,8 @@ class WelcomeFragment : Fragment() {
         //binding initialized
         _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
 
+        //enables the menu in the fragment
+        setHasOptionsMenu(true)
 
         //puts the name to the appbar
         (activity as AppCompatActivity).supportActionBar?.title = arguments?.getString("user_name")
@@ -63,8 +60,13 @@ class WelcomeFragment : Fragment() {
         }
 
         binding.btnOffices.setOnClickListener {
-            view?.findNavController()?.navigate(R.id.action_welcomeFragment_to_officesFragment)
-
+            view?.findNavController()?.navigate(
+                WelcomeFragmentDirections.actionWelcomeFragmentToOfficesFragment(
+                    arguments?.getString(
+                        "user_email"
+                    )
+                )
+            )
         }
 
 
@@ -85,5 +87,60 @@ class WelcomeFragment : Fragment() {
         }
     }
 
+//creates the menu in welcome fragment
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.option_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+
+    //navigate to each option in the menu from the welcome fragment
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.sendDocsMenu -> {
+                view?.findNavController()?.navigate(
+                    WelcomeFragmentDirections.actionWelcomeFragmentToSendDocsFragment(
+                        arguments?.getString(
+                            "user_email"
+                        )
+                    )
+                )
+
+                true
+
+            }
+            R.id.seeDocsMenu -> {
+                view?.findNavController()?.navigate(
+                    WelcomeFragmentDirections.actionWelcomeFragmentToSeeDocsFragment(
+                        arguments?.getString(
+                            "user_email"
+                        )
+                    )
+                )
+                true
+            }
+            R.id.officesMenu -> {
+                view?.findNavController()?.navigate(
+                    WelcomeFragmentDirections.actionWelcomeFragmentToOfficesFragment(
+                        arguments?.getString(
+                            "user_email"
+                        )
+                    )
+                )
+                true
+            }
+
+            R.id.logoutMenu -> {
+                view?.findNavController()?.navigate(R.id.action_welcomeFragment_to_loginFragment)
+                true
+            }
+            //missing the dark and language menu
+            /*R.id.darkModeMenu->view?.findNavController()?.navigate(R
+                    R.id.languageMenu->view?.findNavController()?.navigate(R*/
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
 
 }

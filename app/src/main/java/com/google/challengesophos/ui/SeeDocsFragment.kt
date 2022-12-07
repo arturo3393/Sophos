@@ -5,13 +5,13 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.challengesophos.R
@@ -23,7 +23,7 @@ import com.google.challengesophos.ui.adapter.ItemsDocsAdapter
 
 class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
 
-    private val getDocsModel : GetDocsViewModel by viewModels()
+    private val getDocsModel: GetDocsViewModel by viewModels()
     private val getDocsByIdViewModel: GetDocsByIdViewModel by viewModels()
 
     private var _binding: FragmentSeeDocsBinding? = null
@@ -34,11 +34,6 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
 
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,8 +41,12 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
         //binding initialized
         _binding = FragmentSeeDocsBinding.inflate(inflater, container, false)
 
+
+        //enables the menu in the fragment
+        setHasOptionsMenu(true)
+
         //puts the name to the appbar
-        (activity as AppCompatActivity).supportActionBar?.title ="Regresar"
+        (activity as AppCompatActivity).supportActionBar?.title = "Regresar"
         //Sets the back arrow and the icon for it
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_light)
@@ -55,7 +54,7 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
         val email = arguments?.getString("user_email")!!
 
         getDocsModel.getDocsModelLiveData.observe(viewLifecycleOwner, Observer {
-        //brings the list of documents
+            //brings the list of documents
             getDocsModel.getDocsList(email)
             initRecyclerView()
 
@@ -78,10 +77,10 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
 
     }
 
-     private fun initRecyclerView(){
-         val manager = LinearLayoutManager(context)
-         val decoration = DividerItemDecoration(context,manager.orientation)
-         decoration.setDrawable(resources.getDrawable(R.drawable.rv_divider))
+    private fun initRecyclerView() {
+        val manager = LinearLayoutManager(context)
+        val decoration = DividerItemDecoration(context, manager.orientation)
+        decoration.setDrawable(resources.getDrawable(R.drawable.rv_divider))
 
         binding.rvDocList.layoutManager = manager
         binding.rvDocList.adapter = ItemsDocsAdapter(getDocsModel.getDocsModelLiveData.value)
@@ -93,13 +92,59 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
         binding.rvDocList.addItemDecoration(decoration)
     }
 
-    fun decodePicString (encodedString: String): Bitmap {
+    fun decodePicString(encodedString: String): Bitmap {
         val imageBytes = Base64.decode(encodedString, Base64.DEFAULT)
         val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
 
         return decodedImage
     }
 
+    //Creates the menu
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.option_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    //navigate to each option in the menu
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.sendDocsMenu -> {
+                view?.findNavController()?.navigate(
+                    SeeDocsFragmentDirections.actionSeeDocsFragmentToSendDocsFragment(
+                        arguments?.getString(
+                            "user_email"
+                        )
+                    )
+                )
+                true
+            }
+            R.id.seeDocsMenu -> {
+               Toast.makeText(context, "You are alredy seeing docs", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.officesMenu -> {
+                view?.findNavController()?.navigate(
+                    SeeDocsFragmentDirections.actionSeeDocsFragmentToOfficesFragment(
+                        arguments?.getString(
+                            "user_email"
+                        )
+                    )
+                )
+                true
+            }
+
+            R.id.logoutMenu -> {
+                view?.findNavController()?.navigate(R.id.action_seeDocsFragment_to_loginFragment)
+                true
+            }
+            //missing the dark and language menu
+            /*R.id.darkModeMenu->view?.findNavController()?.navigate(R
+                    R.id.languageMenu->view?.findNavController()?.navigate(R*/
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
 
 
 }
