@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -18,9 +20,18 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.challengesophos.R
+import com.google.challengesophos.Repository.model.OfficeItems
+import com.google.challengesophos.ViewModel.GetOfficesViewModel
 import com.google.challengesophos.databinding.FragmentOfficesBinding
 
 class OfficesFragment : Fragment(), OnMapReadyCallback {
+
+
+    private val getOfficesViewModel: GetOfficesViewModel by viewModels()
+
+    private var citiesObserved : MutableList<OfficeItems> = mutableListOf()
+
+
 
     private val REQUEST_CODE_LOCATION = 0
 
@@ -32,11 +43,6 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,8 +58,19 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_light)
 
+        getOfficesViewModel.citiesLiveData.observe(viewLifecycleOwner, Observer {
+            getOfficesViewModel.getOffices()
+            //saves the cities in a mutable list
+            for (cities in getOfficesViewModel.citiesLiveData.value!!){
+                citiesObserved.add(cities)
+            }
+
+            createMarker()
+
+        })
 
         createFragment()
+
 
         return binding.root
 
@@ -69,15 +86,21 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
         map = googleMap
         createMarker()
         enableLocation()
+
     }
 
     private fun createMarker() {
-        val coordinates = LatLng(4.6796679999999995, -74.044757)
-        var marker: MarkerOptions =
-            MarkerOptions().position(coordinates).title("Edificio Davivienda - Piso 4")
-        map.addMarker(marker)
+
+          for(cities in citiesObserved){
+            val marker =  MarkerOptions()
+                .position(LatLng(cities.Latitud.toDouble(),cities.Longitud.toDouble()))
+                .title(cities.Nombre)
+                map.addMarker(marker)
+        }
+
+
         map.animateCamera(
-            CameraUpdateFactory.newLatLngZoom(coordinates, 18f), 4000, null
+            CameraUpdateFactory.newLatLngZoom(LatLng(4.7109886, -74.072092), 18f), 4000, null
         )
     }
 
@@ -130,5 +153,6 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
             }
         }
     }
+
 
 }
