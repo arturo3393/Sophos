@@ -3,12 +3,9 @@ package com.google.challengesophos.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.challengesophos.Repository.model.APIGetDocById
 import com.google.challengesophos.Repository.model.APIGetDocs
 import com.google.challengesophos.Repository.model.DocItems
 import com.google.challengesophos.Repository.model.DocResponse
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import retrofit2.Response

@@ -1,5 +1,6 @@
 package com.google.challengesophos.ui
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -15,11 +16,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.google.challengesophos.R
-import com.google.challengesophos.Repository.model.DocItems
+import com.google.challengesophos.Repository.model.DocItemsPost
 import com.google.challengesophos.ViewModel.PostDocViewModel
 import com.google.challengesophos.databinding.FragmentSendDocsBinding
 import java.io.ByteArrayOutputStream
@@ -140,6 +142,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                 true -> {
                     postDocViewModel.postDoc(getInformationForPosting())
                     showMessage("Document has been sent")
+                    println(getInformationForPosting())
                     view?.findNavController()?.navigate(
                         SendDocsFragmentDirections.actionSendDocsFragmentSelf(
                             arguments?.getString(
@@ -179,7 +182,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     //1st the app already has permission, 2. Permission was denied previously. 3. First time the app ask for permission
     private fun askForCameraPermission() {
         when {
-            ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CAMERA)
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
                     == PackageManager.PERMISSION_GRANTED -> {
                 takePhoto()
             }
@@ -198,20 +201,19 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         when {
             ContextCompat.checkSelfPermission(
                 requireContext(),
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
+                Manifest.permission.READ_EXTERNAL_STORAGE
             )
                     == PackageManager.PERMISSION_GRANTED -> {
                 uploadPhoto()
             }
-            shouldShowRequestPermissionRationale(android.Manifest.permission.READ_EXTERNAL_STORAGE) -> {
+            shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) -> {
                 showMessage("The permission was previously denied, allow it in settings.")
 
             }
             else -> {
-                requestPermissions(
-                    arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
-                    PERMISSION_EXTERNAL_STORAGE
-                )
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),PERMISSION_EXTERNAL_STORAGE)
             }
 
         }
@@ -310,15 +312,14 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         }
     }
 
-
     private fun showMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
-    private fun getInformationForPosting(): DocItems {
-        return DocItems(
-            "",
-            currentDate, typeDocsSelected,
+    private fun getInformationForPosting(): DocItemsPost {
+        return DocItemsPost(
+            currentDate,
+            typeDocsSelected,
             binding.etIDNumberSendDocs.text.toString().trim(),
             binding.etNamesSendDocs.text.toString().trim(),
             binding.etLastNameSendDocs.text.toString().trim(),

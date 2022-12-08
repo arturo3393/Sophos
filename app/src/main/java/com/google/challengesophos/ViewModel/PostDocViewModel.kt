@@ -4,9 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.challengesophos.Repository.model.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -29,7 +26,7 @@ class PostDocViewModel : ViewModel() {
             .build()
     }
 
-    fun postDoc(DocInput: DocItems) {
+    fun postDoc(DocInput: DocItemsPost) {
         viewModelScope.launch {
             val response = getRetrofit().create(ApiPostDoc::class.java)
                 .postDoc(DocInput)

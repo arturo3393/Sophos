@@ -7,6 +7,6 @@ interface ApiPostDoc {
 //This sends the corresponding info to post a doc
     @POST("/RS_Documentos")
     suspend fun postDoc(
-        @Body docInfo : DocItems
+        @Body docInfo: DocItemsPost
     )
 }

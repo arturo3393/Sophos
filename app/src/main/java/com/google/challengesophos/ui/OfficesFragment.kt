@@ -101,7 +101,7 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
 
 
         map.animateCamera(
-            CameraUpdateFactory.newLatLngZoom(LatLng(4.7109886, -74.072092), 18f), 4000, null
+            CameraUpdateFactory.newLatLngZoom(LatLng(4.7109886, -74.072092), 12f), 4000, null
         )
     }
 

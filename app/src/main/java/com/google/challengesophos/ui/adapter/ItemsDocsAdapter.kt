@@ -1,18 +1,10 @@
 package com.google.challengesophos.ui.adapter
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.util.Base64
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.challengesophos.R
 import com.google.challengesophos.Repository.model.DocItems
-import com.google.challengesophos.databinding.ItemSeeDocsBinding
-import kotlinx.coroutines.NonDisposableHandle.parent
 
 class ItemsDocsAdapter(
     private val getDocsViewModel: List<DocItems>?,
