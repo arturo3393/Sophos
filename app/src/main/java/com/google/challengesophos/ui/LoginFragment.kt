@@ -1,8 +1,10 @@
 package com.google.challengesophos.ui
 
+
 import android.content.Intent
 import android.hardware.biometrics.BiometricManager
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.provider.Settings
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.util.PatternsCompat
@@ -18,7 +21,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.google.challengesophos.R
 import com.google.challengesophos.databinding.FragmentLoginBinding
-
 import com.google.challengesophos.ViewModel.LoginViewModel
 import java.util.concurrent.Executor
 
@@ -31,6 +33,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: androidx.biometric.BiometricPrompt
     private lateinit var promptInfo: androidx.biometric.BiometricPrompt.PromptInfo
+
 
     private var _binding: FragmentLoginBinding? = null
 
@@ -55,6 +58,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         //binding initialized
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
+
         //Observer to put the Toast  function, the same for navigation
 
         loginViewModel.loginModel.observe(viewLifecycleOwner, Observer {
@@ -74,25 +78,34 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             loginViewModel.getLoginViewModel(emailIn, passwordIn)
             println("Value of the loginModel: " + loginViewModel.loginModel.value)
             when (loginViewModel.loginModel.value) {
-                true -> navigateToWelcomeFragment()
+                true -> {
+                    saveFingerSharedPreferences()
+                    navigateToWelcomeFragment()
+                }
                 else -> toastLogin()
             }
+
 
         }
         //Method that checks if the device has biometrics
         checkDeviceHasBiometric()
 
+
         // It checks the fingerprint authentificaiton
         binding.btnFingerprint.setOnClickListener {
-            fingerPrintAuthentification()
-            biometricPrompt.authenticate(promptInfo)
+
+            if (!establishPrintSharedPreferences()) {
+                establishPrintSharedPreferences()
+            } else {
+               fingerPrintAuthentification()
+                biometricPrompt.authenticate(promptInfo)
+            }
         }
 
 
         //TO DELETE!!! It allows me to put my email and pasword
-        binding.etEmail.setText("arturo3393@gmail.com")
-        binding.etPassword.setText("05ftK5Ly0J9s")
-
+        //  binding.etEmail.setText("arturo3393@gmail.com")
+        //   binding.etPassword.setText("05ftK5Ly0J9s")
 
 
         return binding.root
@@ -145,7 +158,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         "Authentication succeeded!", Toast.LENGTH_SHORT
                     )
                         .show()
-
+                    loadUserFingerPrintPreferences()
                     navigateToWelcomeFragment()
 
                 }
@@ -220,6 +233,55 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     override fun onStop() {
         super.onStop()
         (activity as AppCompatActivity).supportActionBar?.show()
+    }
+
+    //establishes the function that lets the user know he has to login to save preferences
+    private fun establishPrintSharedPreferences(): Boolean {
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+
+        val email = sharedPrefs.getString("email", "")
+        val password = sharedPrefs.getString("password", "")
+
+         if (email == "" || password == "") {
+            showAlertFingerPrint()
+            return false
+        }
+            return true
+
+    }
+
+    //it saves email and password when they are valid
+    private fun saveFingerSharedPreferences() {
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+
+        val email = binding.etEmail.text.toString().trim()
+        val password = binding.etPassword.text.toString().trim()
+
+            val editor = sharedPrefs.edit()
+            editor.putString("email", email)
+            editor.putString("password", password)
+            editor.commit()
+
+
+    }
+
+    //it loads the email and password in the fields
+    private fun loadUserFingerPrintPreferences(){
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+        val email = sharedPrefs.getString("email", "")
+        val password = sharedPrefs.getString("password", "")
+
+        binding.etEmail.setText(email)
+        binding.etPassword.setText(password)
+    }
+
+    //it shows an alert to the user about login to get the preferences
+    private fun showAlertFingerPrint() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("User's Fingerprint")
+        builder.setMessage("To use this function you have to login with your email and password once")
+        val dialog = builder.create()
+        dialog.show()
     }
 
 

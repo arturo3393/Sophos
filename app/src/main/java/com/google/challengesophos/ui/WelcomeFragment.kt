@@ -82,9 +82,9 @@ class WelcomeFragment : Fragment() {
         if (arguments?.getString("user_name")?.isNotEmpty() == true) {
             (activity as AppCompatActivity).supportActionBar?.title =
                 arguments?.getString("user_name")
-        } else {
+        }/* else {
             (activity as AppCompatActivity).supportActionBar?.title = "Pablo"
-        }
+        }*/
     }
 
 //creates the menu in welcome fragment
