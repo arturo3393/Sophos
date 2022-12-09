@@ -2,11 +2,11 @@
     <string name="app_name" translatable="false">Challenge Sophos</string>
     <!-- Login fragment -->
     <string name="Legend">Ingresa tus datos para acceder</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
+    <string name="email">Correo</string>
+    <string name="password">Contraseña</string>
     <string name="fingerprint_btn">Ingresar con huella</string>
     <string name="login_btn">Ingresar</string>
-    <string name="login_error">Email o contraseña incorrectos</string>
+    <string name="login_error">Correo o contraseña incorrectos</string>
     <string name="auth_error">Error de autenticación:</string>
     <string name="auth_succeeded">¡Autenticación exitosa!</string>
     <string name="auth_failed">Autenticación fallida</string>
@@ -16,7 +16,7 @@
     <string name="biomanager_success">Autenticación biométrica disponible</string>
     <string name="biomanager_error_hardware">Autenticación biométrica no disponible en este dispositivo</string>
     <string name="biomanaer_error_hw">Autenticación biométrica no disponible actualmente</string>
-    <string name="validate_email">El campo debe corresponder al email</string>
+    <string name="validate_email">El campo debe corresponder al correo</string>
     <string name="alert_title">Uso de autenticación biométrica</string>
     <string name="alert_message">Para usar esta función debe acceder con su correo y contraseña la primera vez</string>
 

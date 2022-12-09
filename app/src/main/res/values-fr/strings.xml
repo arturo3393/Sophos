@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Login fragment -->
+    <string name="Legend">Entrez vos données d\'accès</string>
+    <string name="email">E-mail</string>
+    <string name="password">Mot de passe</string>
+    <string name="fingerprint_btn">Se connecter avec empreinte</string>
+    <string name="login_btn">Se connecter</string>
+    <string name="login_error">Le mot de passe entré est incorrect</string>
+    <string name="auth_error">Erreur d\'authentification:</string>
+    <string name="auth_succeeded">authentification réussie!</string>
+    <string name="auth_failed">Accès refusé</string>
+    <string name="biometric_tittle">Accès Biométrique Sophos</string>
+    <string name="biometric_subtitle">Connectez-vous en utilisant votre informations d\'identification biométriques</string>
+    <string name="biometric_negative">Utiliser e-mail et mot de passe</string>
+    <string name="biomanager_success">Authentification biométrique disponible</string>
+    <string name="biomanager_error_hardware">Authentification biométrique  n\'est pas disponible sur cet appareil</string>
+    <string name="biomanaer_error_hw">Authentification biométrique n\'est pas disponible actuellement</string>
+    <string name="validate_email">Entrez un e-mail valide</string>
+    <string name="alert_title">Utilisation de l’authentification biométrique</string>
+    <string name="alert_message">Pour utiliser cette fonctionnalité, vous devez vous connecter avec votre e-mail et mot de passe la première fois</string>
+
+    <!-- Welcome fragment -->
+    <string name="welcome">Bienvenue</string>
+    <string name="welcoming_legend">Voici les options que nous avons pour vous</string>
+    <string name="send_documents"> Envoyer des documents</string>
+    <string name="see_documents"> Afficher des documents</string>
+    <string name="offices">Bureaux</string>
+    <string name="btn_continue">Entrer</string>
+
+    <!-- Menu -->
+    <string name="dark_mode">Mode nuit</string>
+    <string name="English_language">Langue espagnole</string>
+    <string name="logout">Se déconnecter</string>
+    <string name="come_back">Retour</string>
+
+    <!-- Send docs -->
+    <string name="send_docs">Envoi de documentation</string>
+    <string name="document_number">Numéro d\'identification</string>
+    <string name="names">Prénom</string>
+    <string name="Last_name">Nom</string>
+    <string name="Document">Document</string>
+    <string name="Send">Envoyer</string>
+    <string name="city">Ville</string>
+    <string name="toast_sent">Document envoyé</string>
+    <string name="toast_sent_fail">Veuillez  remplir TOUS les champs</string>
+    <string name="ask_camera_permission">Le permis a été précédemment refusé, mais vous pouvez l\'activer sous Paramètres</string>
+    <string name="activity_result_msg">La photo n\'a pas été prise </string>
+    <string name="acivity_msg2">L’image n’a pas été chargée</string>
+    <string name="already_sending">Actuellement dans envoi de documentation</string>
+    <string name="attached_type">Type d\'attachement</string>
+    <string name="type_ID"> Type d\'identification</string>
+
+    <!-- See docs -->
+    <string name="Documents">Documents</string>
+    <string name="already_seeing">Actuellement dans documents</string>
+
+    <!-- Offices -->
+    <string name="location_permission">Activer la localisation permission dans les paramètres</string>
+    <string name="already_offices">Actuellement dans bureaux</string>
+
+
+</resources>

@@ -237,8 +237,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     //It checks if the person has entered an email
     private fun validateEmail(email: String) {
+        //String for the message
+        val validateEmailMsg = getString(R.string.validate_email)
         if (!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.etEmail.error = R.string.validate_email.toString()
+            binding.etEmail.error = validateEmailMsg
 
         }
     }
