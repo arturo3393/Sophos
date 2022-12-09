@@ -54,7 +54,7 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
         setHasOptionsMenu(true)
 
         //puts the name to the appbar
-        (activity as AppCompatActivity).supportActionBar?.title = "Regresar"
+        (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.come_back)
         //Sets the back arrow and the icon for it
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_light)
@@ -146,9 +146,11 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
             REQUEST_CODE_LOCATION -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 map.isMyLocationEnabled = true
             } else {
+                //String for toast
+                val locationPermission = getString(R.string.location_permission)
                 Toast.makeText(
                     context,
-                    "Set up location permissions in settings",
+                    locationPermission,
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -189,7 +191,9 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
                 true
             }
             R.id.officesMenu -> {
-                Toast.makeText(context, "You are alredy seeing the offices", Toast.LENGTH_SHORT)
+                //string for message
+                val alreadyInOffices = getString(R.string.already_offices)
+                Toast.makeText(context, alreadyInOffices, Toast.LENGTH_SHORT)
                     .show()
                 true
             }

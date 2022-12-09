@@ -34,7 +34,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private lateinit var biometricPrompt: androidx.biometric.BiometricPrompt
     private lateinit var promptInfo: androidx.biometric.BiometricPrompt.PromptInfo
 
-
     private var _binding: FragmentLoginBinding? = null
 
 
@@ -42,11 +41,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     // onDestroyView.
     private val binding get() = _binding!!
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //it removes the name of the app in the action bar
         (requireActivity() as AppCompatActivity).supportActionBar?.title = " "
+
 
     }
 
@@ -57,6 +59,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         //binding initialized
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
+
+
 
 
         //Observer to put the Toast  function, the same for navigation
@@ -86,6 +90,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             }
 
 
+
         }
         //Method that checks if the device has biometrics
         checkDeviceHasBiometric()
@@ -97,15 +102,17 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             if (!establishPrintSharedPreferences()) {
                 establishPrintSharedPreferences()
             } else {
-               fingerPrintAuthentification()
+
+                fingerPrintAuthentification()
                 biometricPrompt.authenticate(promptInfo)
+
             }
         }
 
 
         //TO DELETE!!! It allows me to put my email and pasword
-        //  binding.etEmail.setText("arturo3393@gmail.com")
-        //   binding.etPassword.setText("05ftK5Ly0J9s")
+          binding.etEmail.setText("arturo3393@gmail.com")
+            binding.etPassword.setText("05ftK5Ly0J9s")
 
 
         return binding.root
@@ -116,7 +123,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun toastLogin() {
         Toast.makeText(
             context,
-            "The email or password entered is invalid",
+            R.string.login_error,
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -131,7 +138,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     binding.etEmail.text?.trim().toString()
                 )
             )
-        println("Here we have the userName " + loginViewModel.userNameLiveData.value)
+        println("Here we have the userName " +   loginViewModel.userNameLiveData.value)
     }
 
     //it allows or denies the access with fingerprint
@@ -155,10 +162,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     super.onAuthenticationSucceeded(result)
                     Toast.makeText(
                         context,
-                        "Authentication succeeded!", Toast.LENGTH_SHORT
+                        R.string.auth_succeeded, Toast.LENGTH_SHORT
                     )
                         .show()
+
+
                     loadUserFingerPrintPreferences()
+
+
                     navigateToWelcomeFragment()
 
                 }
@@ -166,7 +177,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
                     Toast.makeText(
-                        context, "Authentication failed",
+                        context, R.string.auth_failed,
                         Toast.LENGTH_SHORT
                     )
                         .show()
@@ -174,29 +185,38 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
             })
 
+        // String for the promptInfo
+        val biometricTitle = getString(R.string.biometric_tittle)
+        val biometricSubtitle = getString(R.string.biometric_subtitle)
+        val biometricNegative = getString(R.string.biometric_negative)
         promptInfo = androidx.biometric.BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Biometric login Sophos")
-            .setSubtitle("Log in using your biometric credential")
-            .setNegativeButtonText("Use account password")
+            .setTitle(biometricTitle)
+            .setSubtitle(biometricSubtitle)
+            .setNegativeButtonText(biometricNegative)
             .build()
 
     }
 
     //check if the device can use biometrics, if not, it send it to the device configuration
     private fun checkDeviceHasBiometric() {
+        //Strings for the messages
+        val biomanagerSuccess = getString(R.string.biomanager_success)
+        val biomanagerErrorHardware = getString(R.string.biomanager_error_hardware)
+        val biomanagerErrorHW = getString(R.string.biomanaer_error_hw)
+
         val biometricManager = androidx.biometric.BiometricManager.from(requireContext())
         when (biometricManager.canAuthenticate(androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG or androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL)) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
-                Log.d("MiniReto2", "App can authenticate using biometrics.")
-                binding.tvMsg.text = "App can authenticate using biometrics."
+                Log.d("Sophos", "App can authenticate using biometrics.")
+                binding.tvMsg.text = biomanagerSuccess
             }
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-                Log.d("MiniReto2", "No biometric features available on this device.")
-                binding.tvMsg.text = "No biometric features available on this device."
+                Log.d("Sophos", "No biometric features available on this device.")
+                binding.tvMsg.text = biomanagerErrorHardware
             }
             BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                Log.d("MY_APP_TAG", "Biometric features are currently unavailable.")
-                binding.tvMsg.text = "Biometric features are currently unavailable."
+                Log.d("Sophos", "Biometric features are currently unavailable.")
+                binding.tvMsg.text = biomanagerErrorHW
             }
 
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
@@ -218,7 +238,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     //It checks if the person has entered an email
     private fun validateEmail(email: String) {
         if (!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.etEmail.error = "Field must be an email"
+            binding.etEmail.error = R.string.validate_email.toString()
 
         }
     }
@@ -242,11 +262,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val email = sharedPrefs.getString("email", "")
         val password = sharedPrefs.getString("password", "")
 
-         if (email == "" || password == "") {
+        if (email == "" || password == "") {
             showAlertFingerPrint()
             return false
         }
-            return true
+        return true
 
     }
 
@@ -257,29 +277,30 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val email = binding.etEmail.text.toString().trim()
         val password = binding.etPassword.text.toString().trim()
 
-            val editor = sharedPrefs.edit()
-            editor.putString("email", email)
-            editor.putString("password", password)
-            editor.commit()
+        val editor = sharedPrefs.edit()
+        editor.putString("email", email)
+        editor.putString("password", password)
+        editor.commit()
 
 
     }
 
     //it loads the email and password in the fields
-    private fun loadUserFingerPrintPreferences(){
+    private fun loadUserFingerPrintPreferences() {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
         val email = sharedPrefs.getString("email", "")
         val password = sharedPrefs.getString("password", "")
 
         binding.etEmail.setText(email)
         binding.etPassword.setText(password)
+
     }
 
     //it shows an alert to the user about login to get the preferences
     private fun showAlertFingerPrint() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("User's Fingerprint")
-        builder.setMessage("To use this function you have to login with your email and password once")
+        builder.setTitle(R.string.alert_title)
+        builder.setMessage(R.string.alert_message)
         val dialog = builder.create()
         dialog.show()
     }

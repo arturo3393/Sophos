@@ -2,11 +2,8 @@ package com.google.challengesophos.ViewModel
 
 
 import androidx.lifecycle.*
-import com.google.challengesophos.Repository.model.APIGetOffices
 import com.google.challengesophos.Repository.model.APIogin
 import com.google.challengesophos.Repository.model.LoginApiResponse
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -48,6 +45,8 @@ class LoginViewModel() : ViewModel() {
                 loginModel.postValue(false)
             }
         }
+
+
 
     }
 

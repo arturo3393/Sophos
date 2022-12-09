@@ -1,5 +1,6 @@
 package com.google.challengesophos.ui
 
+
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,9 @@ class WelcomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+
+
 
 
     override fun onCreateView(
@@ -74,11 +78,10 @@ class WelcomeFragment : Fragment() {
         showUsersName()
 
 
-
         return binding.root
     }
 
-    fun showUsersName() {
+    private fun showUsersName() {
         if (arguments?.getString("user_name")?.isNotEmpty() == true) {
             (activity as AppCompatActivity).supportActionBar?.title =
                 arguments?.getString("user_name")
@@ -134,6 +137,11 @@ class WelcomeFragment : Fragment() {
                 view?.findNavController()?.navigate(R.id.action_welcomeFragment_to_loginFragment)
                 true
             }
+            R.id.darkModeMenu->{
+
+                true
+            }
+
             //missing the dark and language menu
             /*R.id.darkModeMenu->view?.findNavController()?.navigate(R
                     R.id.languageMenu->view?.findNavController()?.navigate(R*/

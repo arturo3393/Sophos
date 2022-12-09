@@ -46,7 +46,7 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
         setHasOptionsMenu(true)
 
         //puts the name to the appbar
-        (activity as AppCompatActivity).supportActionBar?.title = "Regresar"
+        (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.come_back)
         //Sets the back arrow and the icon for it
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_light)
@@ -119,7 +119,9 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
                 true
             }
             R.id.seeDocsMenu -> {
-               Toast.makeText(context, "You are alredy seeing docs", Toast.LENGTH_SHORT).show()
+                //string for toast
+                val alreadyInDocs = getString(R.string.already_seeing)
+               Toast.makeText(context, alreadyInDocs, Toast.LENGTH_SHORT).show()
                 true
             }
             R.id.officesMenu -> {

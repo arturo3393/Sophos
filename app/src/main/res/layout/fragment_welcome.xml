@@ -157,7 +157,7 @@
                     android:drawableTint="@color/sophosPink"
                     android:paddingStart="32dp"
                     android:paddingEnd="8dp"
-                    android:text="@string/login_btn"
+                    android:text="@string/btn_continue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:ignore="DuplicateSpeakableTextCheck" />
@@ -228,7 +228,7 @@
                     android:drawableTint="@color/primaryLightColor"
                     android:paddingStart="32dp"
                     android:paddingEnd="8dp"
-                    android:text="@string/login_btn"
+                    android:text="@string/btn_continue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
@@ -299,7 +299,7 @@
                     android:drawableTint="@color/officesGreen"
                     android:paddingStart="32dp"
                     android:paddingEnd="8dp"
-                    android:text="@string/login_btn"
+                    android:text="@string/btn_continue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 

@@ -35,6 +35,9 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
 
     private val postDocViewModel: PostDocViewModel by viewModels()
 
+
+
+
     //Adapter for the spinner of docs type
     lateinit var arrayAdapterTypeDocs: ArrayAdapter<String>
 
@@ -77,7 +80,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         setHasOptionsMenu(true)
 
         //puts the name to the appbar
-        (activity as AppCompatActivity).supportActionBar?.title = "Regresar"
+        (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.come_back)
         //Sets the back arrow and the icon for it
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_light)
@@ -90,16 +93,21 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         //Adapter for the spinner of cities
         arrayAdapterCities = ArrayAdapter<String>(requireContext(), R.layout.spinner_styles_light)
 
+        //String for type of ID
+        val typeID = getString(R.string.type_ID)
+
         //puts info inside the spinner
-        arrayAdapterTypeDocs.addAll(Arrays.asList("Tipo de documento", "CC", "TI", "PA", "CE"))
+        arrayAdapterTypeDocs.addAll(Arrays.asList(typeID, "CC", "TI", "PA", "CE"))
 
         //Observes the cities that the Api brings
 
         postDocViewModel.citiesLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
 
+            //Strings used to translate
+              val city:String = getString(R.string.city)
             arrayAdapterCities.addAll(
                 Arrays.asList(
-                    "Ciudad",
+                    city,
                     postDocViewModel.citiesLiveData.value?.get(0).toString(),
                     postDocViewModel.citiesLiveData.value?.get(1).toString(),
                     postDocViewModel.citiesLiveData.value?.get(2).toString(),
@@ -138,10 +146,14 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         })
 
         binding.btnSendDoc.setOnClickListener {
+            //String variable for the toast
+            val documentSent:String = getString(R.string.toast_sent)
+            val documentSentFail:String = getString(R.string.toast_sent_fail)
+
             when (validateUsersDataForPost()) {
                 true -> {
                     postDocViewModel.postDoc(getInformationForPosting())
-                    showMessage("Document has been sent")
+                    showMessage(documentSent)
                     println(getInformationForPosting())
                     view?.findNavController()?.navigate(
                         SendDocsFragmentDirections.actionSendDocsFragmentSelf(
@@ -151,7 +163,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                         )
                     )
                 }
-                else -> showMessage("Please fill ALL fields")
+                else -> showMessage(documentSentFail)
             }
         }
 
@@ -187,7 +199,9 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                 takePhoto()
             }
             shouldShowRequestPermissionRationale(android.Manifest.permission.CAMERA) -> {
-                showMessage("The permission was previously denied, allow it in settings.")
+                //string for the message
+                val permissionDeniedMessage = getString(R.string.ask_camera_permission)
+                showMessage(permissionDeniedMessage)
 
             }
             else -> {
@@ -207,7 +221,9 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                 uploadPhoto()
             }
             shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) -> {
-                showMessage("The permission was previously denied, allow it in settings.")
+                //string for the message
+                val permissionDeniedMessage = getString(R.string.ask_camera_permission)
+                showMessage(permissionDeniedMessage)
 
             }
             else -> {
@@ -267,7 +283,9 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         when (requestCode) {
             CAMARA_REQUEST_CODE -> {
                 if (resultCode != Activity.RESULT_OK) {
-                    showMessage("Photo was not taken")
+                    //String for the message
+                    val photoNotTaken = getString(R.string.activity_result_msg)
+                    showMessage(photoNotTaken)
                 } else {
                     val bitmap = data?.extras?.get("data") as Bitmap
                     imageTakenBase64 = convertBitmapToBase64(bitmap)
@@ -289,7 +307,9 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                     //showMessage(imageTakenBase64)
 
                 } else {
-                    showMessage("Image was not uploaded")
+                    //String for message
+                    val imgNotUploaded = getString(R.string.acivity_msg2)
+                    showMessage(imgNotUploaded)
                 }
             }
         }
@@ -358,7 +378,9 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.sendDocsMenu -> {
-                showMessage("You are already sending docs")
+                //string for the message
+                val alreadySending = getString(R.string.already_sending)
+                showMessage(alreadySending)
                 true
             }
             R.id.seeDocsMenu -> {

@@ -24,7 +24,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/montserrat_bold"
-        tools:text="-"
+        android:text="-"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/tvItemFecha"
         app:layout_constraintTop_toTopOf="parent" />
