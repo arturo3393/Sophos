@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_welcomeFragment_to_officesFragment"
             app:destination="@id/officesFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_self"
+            app:destination="@id/welcomeFragment" />
 
     </fragment>
     <fragment

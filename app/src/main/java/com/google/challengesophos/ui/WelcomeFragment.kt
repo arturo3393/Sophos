@@ -1,13 +1,20 @@
 package com.google.challengesophos.ui
 
 
+import android.app.Activity
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.google.challengesophos.R
 import com.google.challengesophos.databinding.FragmentWelcomeBinding
+import java.util.*
 
 
 class WelcomeFragment : Fragment() {
@@ -20,9 +27,6 @@ class WelcomeFragment : Fragment() {
     private val binding get() = _binding!!
 
 
-
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,6 +36,7 @@ class WelcomeFragment : Fragment() {
 
         //enables the menu in the fragment
         setHasOptionsMenu(true)
+
 
         //puts the name to the appbar
         (activity as AppCompatActivity).supportActionBar?.title = arguments?.getString("user_name")
@@ -90,7 +95,7 @@ class WelcomeFragment : Fragment() {
         }*/
     }
 
-//creates the menu in welcome fragment
+    //creates the menu in welcome fragment
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.option_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -137,7 +142,21 @@ class WelcomeFragment : Fragment() {
                 view?.findNavController()?.navigate(R.id.action_welcomeFragment_to_loginFragment)
                 true
             }
-            R.id.darkModeMenu->{
+            R.id.darkModeMenu -> {
+
+                true
+            }
+
+            R.id.languageMenu -> {
+                val getStringLanguage = getString(R.string.English_language)
+
+                when (getStringLanguage) {
+                    "Idioma Inglés" -> loadLocateEnglish()
+                    "French Language" -> loadLocateFrench()
+                    "Langue espagnole" -> loadLocateSpanish()
+                }
+
+                navigateFragmentItself()
 
                 true
             }
@@ -150,5 +169,61 @@ class WelcomeFragment : Fragment() {
             }
         }
     }
+
+//save the preferences
+    private fun setLocate(Lang: String) {
+
+        val locale = Locale(Lang)
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.locale = locale
+        resources.updateConfiguration(config, requireContext().resources.displayMetrics)
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+        val editor = sharedPrefs.edit()
+        editor.putString("My_Lang", Lang)
+        editor.apply()
+    }
+//Write the preferences
+    private fun loadLocateSpanish() {
+
+        val sharedPreferences =
+            (activity as AppCompatActivity).getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        val language = sharedPreferences.getString("My_Lang", "")
+        if (language != null) {
+            setLocate(language)
+        }
+
+    }
+
+    private fun loadLocateEnglish() {
+
+        val sharedPreferences =
+            (activity as AppCompatActivity).getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        val language = sharedPreferences.getString("My_Lang", "en")
+        if (language != null) {
+            setLocate(language)
+        }
+    }
+
+    private fun loadLocateFrench() {
+
+        val sharedPreferences =
+            (activity as AppCompatActivity).getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        val language = sharedPreferences.getString("My_Lang", "fr")
+        if (language != null) {
+            setLocate(language)
+        }
+    }
+//Upload the fragment to see the language changed
+    private fun navigateFragmentItself() {
+        view?.findNavController()
+            ?.navigate(
+                WelcomeFragmentDirections.actionWelcomeFragmentSelf(
+                    arguments?.getString("user_name"),
+                    arguments?.getString("user_email")
+                )
+            )
+    }
+
 
 }
