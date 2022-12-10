@@ -93,6 +93,9 @@
         <action
             android:id="@+id/action_seeDocsFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_seeDocsFragment_self"
+            app:destination="@id/seeDocsFragment" />
     </fragment>
     <fragment
         android:id="@+id/officesFragment"
@@ -111,5 +114,8 @@
         <argument android:name="user_email"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_officesFragment_self"
+            app:destination="@id/officesFragment" />
     </fragment>
 </navigation>

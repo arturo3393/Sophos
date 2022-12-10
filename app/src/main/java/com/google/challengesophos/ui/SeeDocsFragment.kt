@@ -1,9 +1,12 @@
 package com.google.challengesophos.ui
 
 
+import android.app.Activity
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Base64
 import android.view.*
 import android.widget.Toast
@@ -19,6 +22,7 @@ import com.google.challengesophos.ViewModel.GetDocsByIdViewModel
 import com.google.challengesophos.ViewModel.GetDocsViewModel
 import com.google.challengesophos.databinding.FragmentSeeDocsBinding
 import com.google.challengesophos.ui.adapter.ItemsDocsAdapter
+import java.util.*
 
 
 class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
@@ -134,19 +138,91 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
                 )
                 true
             }
+            R.id.darkModeMenu -> {
+
+                true
+            }
+
+            R.id.languageMenu -> {
+                val getStringLanguage = getString(R.string.English_language)
+
+                when (getStringLanguage) {
+                    "Idioma Inglés" -> loadLocateEnglish()
+                    "French Language" -> loadLocateFrench()
+                    "Langue espagnole" -> loadLocateSpanish()
+                }
+
+                navigateFragmentItself()
+
+                true
+            }
+
 
             R.id.logoutMenu -> {
                 view?.findNavController()?.navigate(R.id.action_seeDocsFragment_to_loginFragment)
                 true
             }
-            //missing the dark and language menu
-            /*R.id.darkModeMenu->view?.findNavController()?.navigate(R
-                    R.id.languageMenu->view?.findNavController()?.navigate(R*/
+
             else -> {
                 super.onOptionsItemSelected(item)
             }
         }
     }
+
+    //save the preferences
+    private fun setLocate(Lang: String) {
+
+        val locale = Locale(Lang)
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.locale = locale
+        resources.updateConfiguration(config, requireContext().resources.displayMetrics)
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+        val editor = sharedPrefs.edit()
+        editor.putString("My_Lang", Lang)
+        editor.apply()
+    }
+    //Write the preferences
+    private fun loadLocateSpanish() {
+
+        val sharedPreferences =
+            (activity as AppCompatActivity).getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        val language = sharedPreferences.getString("My_Lang", "")
+        if (language != null) {
+            setLocate(language)
+        }
+
+    }
+
+    private fun loadLocateEnglish() {
+
+        val sharedPreferences =
+            (activity as AppCompatActivity).getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        val language = sharedPreferences.getString("My_Lang", "en")
+        if (language != null) {
+            setLocate(language)
+        }
+    }
+
+    private fun loadLocateFrench() {
+
+        val sharedPreferences =
+            (activity as AppCompatActivity).getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        val language = sharedPreferences.getString("My_Lang", "fr")
+        if (language != null) {
+            setLocate(language)
+        }
+    }
+    //Upload the fragment to see the language changed
+    private fun navigateFragmentItself() {
+        view?.findNavController()
+            ?.navigate(
+                SeeDocsFragmentDirections.actionSeeDocsFragmentSelf(
+                    arguments?.getString("user_email"),
+                )
+            )
+    }
+
 
 
 }

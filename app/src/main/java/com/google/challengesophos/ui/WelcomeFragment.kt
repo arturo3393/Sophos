@@ -137,11 +137,6 @@ class WelcomeFragment : Fragment() {
                 )
                 true
             }
-
-            R.id.logoutMenu -> {
-                view?.findNavController()?.navigate(R.id.action_welcomeFragment_to_loginFragment)
-                true
-            }
             R.id.darkModeMenu -> {
 
                 true
@@ -160,6 +155,12 @@ class WelcomeFragment : Fragment() {
 
                 true
             }
+
+            R.id.logoutMenu -> {
+                view?.findNavController()?.navigate(R.id.action_welcomeFragment_to_loginFragment)
+                true
+            }
+
 
             //missing the dark and language menu
             /*R.id.darkModeMenu->view?.findNavController()?.navigate(R
