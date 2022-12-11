@@ -10,6 +10,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.view.iterator
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.google.challengesophos.R
@@ -99,6 +100,10 @@ class WelcomeFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.option_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
+
+        //changes the color of the menu
+           // https://www.youtube.com/watch?v=tugFulvCYIM&ab_channel=CodingwithHajar
+
     }
 
 
@@ -161,10 +166,6 @@ class WelcomeFragment : Fragment() {
                 true
             }
 
-
-            //missing the dark and language menu
-            /*R.id.darkModeMenu->view?.findNavController()?.navigate(R
-                    R.id.languageMenu->view?.findNavController()?.navigate(R*/
             else -> {
                 super.onOptionsItemSelected(item)
             }

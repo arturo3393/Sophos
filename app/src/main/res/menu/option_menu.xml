@@ -7,8 +7,7 @@
     <item
         android:id="@+id/sendDocsMenu"
         android:title="@string/send_documents"
-
-        />
+         />
     <item android:id="@+id/seeDocsMenu"
         android:title="@string/see_documents" />
     <item android:id="@+id/officesMenu"
