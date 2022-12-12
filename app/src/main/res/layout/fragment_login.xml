@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login_frame"
+    style="@style/styleBackgroundLight"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
     android:theme="@style/Theme.ChallengeSophos"
     tools:context=".ui.LoginFragment">
-    
 
 
     <ImageView
         android:id="@+id/ivSophosLogo"
+        style="@style/styleLogoSophos"
         android:layout_width="208dp"
         android:layout_height="76dp"
         android:layout_marginTop="40dp"
-        android:src="@drawable/sophos_logo_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,13 +24,13 @@
     <TextView
 
         android:id="@+id/tvLegend"
+        style="@style/styleLegendTextColor"
         android:layout_width="190dp"
         android:layout_height="40dp"
         android:layout_marginTop="16sp"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/Legend"
         android:textAlignment="center"
-        android:textColor="@color/primaryLightColor"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,13 +46,11 @@
         android:layout_marginTop="20dp"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLegend"
-        app:startIconDrawable="@drawable/ic_person_light"
-        app:startIconTint="@color/primaryLightColor"
-        app:errorEnabled="true"
-        >
+        app:startIconDrawable="@drawable/ic_person_light">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etEmail"
@@ -66,7 +64,7 @@
             android:importantForAutofill="auto"
             android:inputType="textEmailAddress"
             android:paddingStart="16dp"
-            android:paddingEnd="16dp"/>
+            android:paddingEnd="16dp" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -85,9 +83,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLegend"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/primaryLightColor"
+
         app:startIconDrawable="@drawable/ic_key_light"
-        app:startIconTint="@color/primaryLightColor"
+
 
         >
 
@@ -121,7 +119,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="24dp"
-        android:drawableStart="@drawable/ic_fingerprint_light"
         android:paddingStart="22dp"
         android:paddingEnd="40dp"
         android:text="@string/fingerprint_btn"
@@ -131,16 +128,14 @@
 
     <TextView
         android:id="@+id/tvMsg"
+        style="@style/tvAppCanAuthenticateTextColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        tools:text="app can authenticate"
-        android:textColor="@color/primaryLightColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnFingerprint" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/btnFingerprint"
+        tools:text="app can authenticate" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

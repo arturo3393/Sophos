@@ -1,6 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.ChallengeSophos" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primaryLightColor</item>
         <item name="colorPrimaryVariant">@color/primaryLightColor</item>
@@ -16,6 +18,8 @@
 
         <!-- Override the andoid color for the app and changes the color of items menu-->
         <item name="android:textColorPrimary">@color/primaryLightColor</item>
+
+
 
     </style>
 </resources>

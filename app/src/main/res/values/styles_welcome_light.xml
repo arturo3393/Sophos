@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!--Card Send Documents light  -->
     <style name="styleCardSendDocumentsLight" parent="Widget.MaterialComponents.CardView">
         <item name="cardCornerRadius">16dp</item>
         <item name="strokeColor">@color/sophosPink</item>
         <item name="strokeWidth">2dp</item>
+    </style>
+
+    <!--Image view Icon send docs  -->
+    <style name="styleImageViewSendDocs">
+        <item name="android:src">@drawable/ic_send_docs_light</item>
+    </style>
+
+    <!--Text view text color send docs  -->
+    <style name="styleTextViewTextColorSendDocs">
+        <item name="android:textColor">@color/sophosPink</item>
     </style>
 
 
@@ -16,6 +26,7 @@
         <item name="android:background">@drawable/borders_wel_pink_light</item>
         <item name="android:textColor">@color/sophosPink</item>
         <item name="android:textAlignment">center</item>
+        <item name="android:drawableTint" tools:targetApi="m">@color/sophosPink</item>
     </style>
 
     <!--Card See Documents light  -->
@@ -23,6 +34,16 @@
         <item name="cardCornerRadius">16dp</item>
         <item name="strokeColor">@color/primaryLightColor</item>
         <item name="strokeWidth">2dp</item>
+    </style>
+
+    <!--Image view IC see docs  -->
+    <style name="styleImageViewSeeDocs">
+        <item name="android:src">@drawable/ic_see_docs_light</item>
+    </style>
+
+    <!--Text view text color see docs  -->
+    <style name="styleTextViewTextColorSeeDocs">
+        <item name="android:textColor">@color/primaryLightColor</item>
     </style>
 
 
@@ -34,6 +55,7 @@
         <item name="android:background">@drawable/rounded_borders_light</item>
         <item name="android:textColor">@color/primaryLightColor</item>
         <item name="android:textAlignment">center</item>
+        <item name="android:drawableTint" tools:targetApi="m">@color/primaryLightColor</item>
     </style>
 
     <!--Card Office light  -->
@@ -41,6 +63,16 @@
         <item name="cardCornerRadius">16dp</item>
         <item name="strokeColor">@color/officesGreen</item>
         <item name="strokeWidth">2dp</item>
+    </style>
+
+    <!--Image view IC offices  -->
+    <style name="styleImageViewOffices">
+        <item name="android:src">@drawable/ic_office_light</item>
+    </style>
+
+    <!--Text view text color offices  -->
+    <style name="styleTextViewTextColorOffices">
+        <item name="android:textColor">@color/officesGreen</item>
     </style>
 
 
@@ -52,5 +84,6 @@
         <item name="android:background">@drawable/borders_wel_green_light</item>
         <item name="android:textColor">@color/officesGreen</item>
         <item name="android:textAlignment">center</item>
+        <item name="android:drawableTint" tools:targetApi="m">@color/officesGreen</item>
     </style>
 </resources>

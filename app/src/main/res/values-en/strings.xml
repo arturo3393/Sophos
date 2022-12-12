@@ -31,6 +31,7 @@
 
     <!-- Menu -->
     <string name="dark_mode">Dark Mode</string>
+    <string name="light_mode">Light Mode</string>
     <string name="English_language">French Language</string>
     <string name="logout">Logout</string>
     <string name="come_back">Back</string>

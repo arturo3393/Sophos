@@ -30,7 +30,8 @@
     <string name="btn_continue">Entrer</string>
 
     <!-- Menu -->
-    <string name="dark_mode">Mode nuit</string>
+    <string name="dark_mode">Thème sombre</string>
+    <string name="light_mode">Thème clair</string>
     <string name="English_language">Langue espagnole</string>
     <string name="logout">Se déconnecter</string>
     <string name="come_back">Retour</string>

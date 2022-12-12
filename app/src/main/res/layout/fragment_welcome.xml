@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-           >
+            >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -105,6 +105,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/styleBackgroundLight"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -130,6 +131,7 @@
 
                 <TextView
                     android:id="@+id/tvSendDocs"
+                    style="@style/styleTextViewTextColorSendDocs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -137,7 +139,6 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:paddingBottom="4dp"
                     android:text="@string/send_documents"
-                    android:textColor="@color/sophosPink"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toTopOf="@+id/btnSendDocs"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -154,7 +155,6 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="12dp"
                     android:drawableEnd="@drawable/ic_arrow_light"
-                    android:drawableTint="@color/sophosPink"
                     android:paddingStart="32dp"
                     android:paddingEnd="8dp"
                     android:text="@string/btn_continue"
@@ -164,10 +164,10 @@
 
                 <ImageView
                     android:id="@+id/ivSendDocs"
+                    style="@style/styleImageViewSendDocs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:src="@drawable/ic_send_docs_light"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.046"
                     app:layout_constraintStart_toStartOf="parent"
@@ -201,6 +201,7 @@
 
                 <TextView
                     android:id="@+id/tvSeeDocs"
+                    style="@style/styleTextViewTextColorSeeDocs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -208,7 +209,6 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:paddingBottom="4dp"
                     android:text="@string/see_documents"
-                    android:textColor="@color/primaryLightColor"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toTopOf="@+id/btnSeeDocs"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -225,7 +225,6 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginBottom="12dp"
                     android:drawableEnd="@drawable/ic_arrow_light"
-                    android:drawableTint="@color/primaryLightColor"
                     android:paddingStart="32dp"
                     android:paddingEnd="8dp"
                     android:text="@string/btn_continue"
@@ -234,10 +233,10 @@
 
                 <ImageView
                     android:id="@+id/ivSeeDocs"
+                    style="@style/styleImageViewSeeDocs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:src="@drawable/ic_see_docs_light"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.046"
                     app:layout_constraintStart_toStartOf="parent"
@@ -279,7 +278,7 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:paddingBottom="4dp"
                     android:text="@string/offices"
-                    android:textColor="@color/officesGreen"
+                    style="@style/styleTextViewTextColorOffices"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toTopOf="@+id/btnOffices"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -296,7 +295,6 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginBottom="12dp"
                     android:drawableEnd="@drawable/ic_arrow_light"
-                    android:drawableTint="@color/officesGreen"
                     android:paddingStart="32dp"
                     android:paddingEnd="8dp"
                     android:text="@string/btn_continue"
@@ -308,7 +306,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:src="@drawable/ic_office_light"
+                    style="@style/styleImageViewOffices"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.046"
                     app:layout_constraintStart_toStartOf="parent"

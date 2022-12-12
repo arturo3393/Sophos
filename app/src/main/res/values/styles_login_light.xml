@@ -1,23 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--It gives styles to the text view in the login -->
+    <!--Background of the fragment-->
+
+    <style name="styleBackgroundLight">
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+
+    <!--Tv legend color text-->
+    <style name="styleLegendTextColor">
+        <item name="android:textColor">@color/primaryLightColor</item>
+    </style>
+
+    <!--Logo Sophos-->
+    <style name="styleLogoSophos">
+        <item name="android:src">@drawable/sophos_logo_light</item>
+    </style>
+
+    <!--IC person -->
+    <style name="styleICpersonTint">
+        <item name="startIconTint">@color/primaryLightColor</item>
+    </style>
+
+    <!--IC key -->
+
+    <!--IC Eye -->
+
+    <!--IC Finger -->
+
+
+    <!--It gives styles to the text view in the login and IC colors-->
     <style name="styleLoginTvLight" parent="Widget.MaterialComponents.TextView">
         <item name="android:textColorHint">@color/primaryLightColor</item>
         <item name="textAllCaps">false</item>
         <item name="android:textSize">20sp</item>
         <item name="fontFamily">@font/montserrat_regular</item>
         <item name="android:background">@drawable/rounded_borders_light</item>
+        <item name="startIconTint">@color/primaryLightColor</item>
+        <item name="passwordToggleTint">@color/primaryLightColor</item>
     </style>
 
     <!--Btn Ingresar  -->
-    <style name="styleLoginBtn1Light" >
+    <style name="styleLoginBtn1Light">
         <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">@font/montserrat_bold</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:background">@drawable/rounded_borders_light</item>
         <item name="android:textColor">@color/white</item>
     </style>
-    <!--Btn fingerprint -->
+    <!--Btn fingerprint and its IC -->
 
     <style name="styleLoginBtn2Light" parent="Widget.AppCompat.Button">
         <item name="android:textSize">20sp</item>
@@ -25,6 +55,14 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:background">@drawable/rounded_borders_light</item>
         <item name="android:textColor">@color/primaryLightColor</item>
+        <item name="android:drawableStart">@drawable/ic_fingerprint_light</item>
+        <item name="drawableTint">@color/primaryLightColor</item>
     </style>
+
+    <!--TV app can authenticate -->
+    <style name="tvAppCanAuthenticateTextColor">
+        <item name="android:textColor">@color/primaryLightColor</item>
+    </style>
+
 
 </resources>

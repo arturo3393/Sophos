@@ -30,6 +30,7 @@
 
     <!-- Menu -->
     <string name="dark_mode">Modo nocturno</string>
+    <string name="light_mode">Modo claro</string>
     <string name="English_language">Idioma Inglés</string>
     <string name="logout">Cerrar sesión</string>
     <string name="come_back">Regresar</string>

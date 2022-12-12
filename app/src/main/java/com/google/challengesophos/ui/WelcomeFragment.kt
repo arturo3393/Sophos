@@ -3,18 +3,27 @@ package com.google.challengesophos.ui
 
 import android.app.Activity
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.view.MenuProvider
 import androidx.core.view.iterator
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.google.challengesophos.R
 import com.google.challengesophos.databinding.FragmentWelcomeBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -84,6 +93,8 @@ class WelcomeFragment : Fragment() {
         showUsersName()
 
 
+
+
         return binding.root
     }
 
@@ -100,10 +111,6 @@ class WelcomeFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.option_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
-
-        //changes the color of the menu
-           // https://www.youtube.com/watch?v=tugFulvCYIM&ab_channel=CodingwithHajar
-
     }
 
 
@@ -144,8 +151,34 @@ class WelcomeFragment : Fragment() {
             }
             R.id.darkModeMenu -> {
 
+               val appSettingPrefs =
+                    (activity as AppCompatActivity).getPreferences(0)
+                val sharedPrefsEdit: SharedPreferences.Editor = appSettingPrefs.edit()
+                val isNightModeOn: Boolean = appSettingPrefs.getBoolean("NightMode", false)
+
+                if (isNightModeOn) {
+
+                    setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    sharedPrefsEdit.putBoolean("NightMode", false)
+                    sharedPrefsEdit.apply()
+
+                } else {
+
+                    setDefaultNightMode(MODE_NIGHT_YES)
+                    sharedPrefsEdit.putBoolean("NightMode", true)
+                    sharedPrefsEdit.apply()
+
+                }
+
+
+
+
+
+
                 true
+
             }
+
 
             R.id.languageMenu -> {
                 val getStringLanguage = getString(R.string.English_language)
@@ -172,7 +205,8 @@ class WelcomeFragment : Fragment() {
         }
     }
 
-//save the preferences
+
+    //save the preferences
     private fun setLocate(Lang: String) {
 
         val locale = Locale(Lang)
@@ -185,7 +219,8 @@ class WelcomeFragment : Fragment() {
         editor.putString("My_Lang", Lang)
         editor.apply()
     }
-//Write the preferences
+
+    //Write the preferences
     private fun loadLocateSpanish() {
 
         val sharedPreferences =
@@ -216,7 +251,8 @@ class WelcomeFragment : Fragment() {
             setLocate(language)
         }
     }
-//Upload the fragment to see the language changed
+
+    //Upload the fragment to see the language changed
     private fun navigateFragmentItself() {
         view?.findNavController()
             ?.navigate(
@@ -226,6 +262,5 @@ class WelcomeFragment : Fragment() {
                 )
             )
     }
-
 
 }
