@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+
+
     <!--Card Send Documents light  -->
     <style name="styleCardSendDocumentsLight" parent="Widget.MaterialComponents.CardView">
         <item name="cardCornerRadius">16dp</item>

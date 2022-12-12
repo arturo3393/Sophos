@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Text color see docs  -->
+    <style name="styleSeeDocsTextColor">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+</resources>

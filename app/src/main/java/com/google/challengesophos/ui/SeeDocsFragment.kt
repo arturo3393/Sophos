@@ -37,7 +37,6 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
     private val binding get() = _binding!!
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -81,9 +80,11 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
 
     }
 
+    //puts the recycler view and its divider
     private fun initRecyclerView() {
         val manager = LinearLayoutManager(context)
         val decoration = DividerItemDecoration(context, manager.orientation)
+
         decoration.setDrawable(resources.getDrawable(R.drawable.rv_divider))
 
         binding.rvDocList.layoutManager = manager
@@ -125,7 +126,7 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
             R.id.seeDocsMenu -> {
                 //string for toast
                 val alreadyInDocs = getString(R.string.already_seeing)
-               Toast.makeText(context, alreadyInDocs, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, alreadyInDocs, Toast.LENGTH_SHORT).show()
                 true
             }
             R.id.officesMenu -> {
@@ -182,6 +183,7 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
         editor.putString("My_Lang", Lang)
         editor.apply()
     }
+
     //Write the preferences
     private fun loadLocateSpanish() {
 
@@ -213,6 +215,7 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
             setLocate(language)
         }
     }
+
     //Upload the fragment to see the language changed
     private fun navigateFragmentItself() {
         view?.findNavController()
@@ -222,7 +225,6 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
                 )
             )
     }
-
 
 
 }
