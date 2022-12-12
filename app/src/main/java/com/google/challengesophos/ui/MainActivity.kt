@@ -2,6 +2,7 @@ package com.google.challengesophos.ui
 
 
 
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
@@ -38,11 +39,22 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        //Include the hamburger menu in the toolbar
-        binding.activitiyToolbar.overflowIcon = getDrawable(R.drawable.ic_menu)
 
-        //Changes the tittle color
-        binding.activitiyToolbar.setTitleTextColor(resources.getColor(R.color.primaryLightColor))
+
+        //Change the tittle color and  include the hamburger menu in the toolbar depending on dark mode
+      when(this.resources.configuration.uiMode.and(Configuration.UI_MODE_NIGHT_MASK)){
+          Configuration.UI_MODE_NIGHT_YES -> {
+              binding.activitiyToolbar.setTitleTextColor(resources.getColor(R.color.white))
+              binding.activitiyToolbar.overflowIcon = getDrawable(R.drawable.ic_menu_dark)
+          }
+          Configuration.UI_MODE_NIGHT_NO -> {
+              binding.activitiyToolbar.setTitleTextColor(resources.getColor(R.color.primaryLightColor))
+              binding.activitiyToolbar.overflowIcon = getDrawable(R.drawable.ic_menu)
+          }
+          Configuration.UI_MODE_NIGHT_UNDEFINED -> {}
+
+      }
+
 
 
         //Puts this icon as the Navigate up icon

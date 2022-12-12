@@ -53,7 +53,17 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.come_back)
         //Sets the back arrow and the icon for it
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_light)
+
+        //it checks if it is dark or light mode and changes the back arrow
+        when (context?.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_dark)
+
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_light)
+            }
+        }
 
         val email = arguments?.getString("user_email")!!
 

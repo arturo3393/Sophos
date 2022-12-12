@@ -38,8 +38,6 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     private val postDocViewModel: PostDocViewModel by viewModels()
 
 
-
-
     //Adapter for the spinner of docs type
     lateinit var arrayAdapterTypeDocs: ArrayAdapter<String>
 
@@ -86,7 +84,17 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         //Sets the back arrow and the icon for it
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_light)
+
+        //it checks if it is dark or light mode and changes the back arrow
+        when (context?.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_dark)
+
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_light)
+            }
+        }
 
 
         //Adapter for the spinner of docs type
@@ -107,7 +115,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         postDocViewModel.citiesLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
 
             //Strings used to translate
-              val city:String = getString(R.string.city)
+            val city: String = getString(R.string.city)
             arrayAdapterCities.addAll(
                 Arrays.asList(
                     city,
@@ -150,8 +158,8 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
 
         binding.btnSendDoc.setOnClickListener {
             //String variable for the toast
-            val documentSent:String = getString(R.string.toast_sent)
-            val documentSentFail:String = getString(R.string.toast_sent_fail)
+            val documentSent: String = getString(R.string.toast_sent)
+            val documentSentFail: String = getString(R.string.toast_sent_fail)
 
             when (validateUsersDataForPost()) {
                 true -> {
@@ -232,7 +240,8 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
             else -> {
                 ActivityCompat.requestPermissions(
                     requireActivity(),
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),PERMISSION_EXTERNAL_STORAGE)
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), PERMISSION_EXTERNAL_STORAGE
+                )
             }
 
         }
@@ -451,6 +460,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         editor.putString("My_Lang", Lang)
         editor.apply()
     }
+
     //Write the preferences
     private fun loadLocateSpanish() {
 
@@ -482,6 +492,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
             setLocate(language)
         }
     }
+
     //Upload the fragment to see the language changed
     private fun navigateFragmentItself() {
         view?.findNavController()
