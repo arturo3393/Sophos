@@ -19,7 +19,7 @@
         <!-- Override the andoid color for the app and changes the color of items menu-->
         <item name="android:textColorPrimary">@color/primaryLightColor</item>
 
-
-
     </style>
+
+
 </resources>

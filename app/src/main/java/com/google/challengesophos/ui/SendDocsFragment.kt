@@ -85,6 +85,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.come_back)
         //Sets the back arrow and the icon for it
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_light)
 
 

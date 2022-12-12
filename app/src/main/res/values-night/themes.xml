@@ -12,6 +12,13 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <!--Changes the background of the menu Items -->
+        <item name="android:itemBackground">@color/primaryDarkColor</item>
+        <item name="popupMenuBackground">@color/primaryDarkColor</item>
+
+
+
     </style>
 
                                      <!--LOGIN FRAGMENT-->
@@ -76,6 +83,12 @@
 
                                              <!--WELCOME FRAGMENT-->
 
+
+    <!-- TOOLBAR -->
+
+    <style name="styleToolbarIcon">
+        <item name="navigationIcon">@drawable/ic_back_arrow_light</item>
+    </style>
 
 
 
@@ -218,6 +231,8 @@
     <style name="styleSeeDocsTextColor">
         <item name="android:textColor">@color/white</item>
     </style>
+
+
 
 
 

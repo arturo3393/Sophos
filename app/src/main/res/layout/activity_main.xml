@@ -11,17 +11,19 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/white">
+        style="@style/styleBackgroundLight"
+
+        >
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/activitiyToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/ic_back_arrow_light"
+
             >
 
 

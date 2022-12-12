@@ -4,6 +4,7 @@ package com.google.challengesophos.ui
 import android.app.Activity
 import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.graphics.Bitmap.Config
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -85,7 +86,8 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
         val manager = LinearLayoutManager(context)
         val decoration = DividerItemDecoration(context, manager.orientation)
 
-        decoration.setDrawable(resources.getDrawable(R.drawable.rv_divider))
+        //This line puts a resource as the divider
+       // decoration.setDrawable(resources.getDrawable(R.drawable.rv_divider))
 
         binding.rvDocList.layoutManager = manager
         binding.rvDocList.adapter = ItemsDocsAdapter(getDocsModel.getDocsModelLiveData.value)
