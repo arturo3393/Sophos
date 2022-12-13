@@ -11,8 +11,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
-import androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode
+import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.MenuProvider
 import androidx.core.view.iterator
@@ -151,24 +150,47 @@ class WelcomeFragment : Fragment() {
             }
             R.id.darkModeMenu -> {
 
-               val appSettingPrefs =
+                val appSettingPrefs =
                     (activity as AppCompatActivity).getPreferences(0)
                 val sharedPrefsEdit: SharedPreferences.Editor = appSettingPrefs.edit()
                 val isNightModeOn: Boolean = appSettingPrefs.getBoolean("NightMode", false)
 
-                if (isNightModeOn) {
+                when(isNightModeOn){
+                    true->{
+                        setDefaultNightMode(MODE_NIGHT_NO)
+                        sharedPrefsEdit.putBoolean("NightMode", false)
+                        sharedPrefsEdit.apply()
+                    }
+                    else-> {
+                        setDefaultNightMode(MODE_NIGHT_YES)
+                        sharedPrefsEdit.putBoolean("NightMode", true)
+                        sharedPrefsEdit.apply()
+                    }
+                }
 
-                    setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    sharedPrefsEdit.putBoolean("NightMode", false)
-                    sharedPrefsEdit.apply()
-
-                } else {
-
-                    setDefaultNightMode(MODE_NIGHT_YES)
-                    sharedPrefsEdit.putBoolean("NightMode", true)
-                    sharedPrefsEdit.apply()
+                when (context?.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
+                    Configuration.UI_MODE_NIGHT_YES -> {item.setTitle(R.string.light_mode)}
+                    Configuration.UI_MODE_NIGHT_NO -> {item.setTitle(R.string.dark_mode)}
 
                 }
+
+
+                    /*    val appSettingPrefs =
+                             (activity as AppCompatActivity).getPreferences(0)
+                         val sharedPrefsEdit: SharedPreferences.Editor = appSettingPrefs.edit()
+                         val isNightModeOn: Boolean = appSettingPrefs.getBoolean("NightMode", false)
+
+                         if (isNightModeOn) {
+                             setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                             sharedPrefsEdit.putBoolean("NightMode", false)
+                             sharedPrefsEdit.apply()
+
+                         } else {
+                             setDefaultNightMode(MODE_NIGHT_YES)
+                             sharedPrefsEdit.putBoolean("NightMode", true)
+                             sharedPrefsEdit.apply()
+
+                         } */
 
 
 

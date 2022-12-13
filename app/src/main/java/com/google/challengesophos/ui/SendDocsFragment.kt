@@ -97,6 +97,8 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         }
 
 
+
+
         //Adapter for the spinner of docs type
         arrayAdapterTypeDocs =
             ArrayAdapter<String>(requireContext(), R.layout.spinner_styles_light)
@@ -430,7 +432,9 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                     "Langue espagnole" -> loadLocateSpanish()
                 }
 
+                // go back to the welcome fragment back btn
                 navigateFragmentItself()
+                // comeback to the fragment
 
                 true
             }

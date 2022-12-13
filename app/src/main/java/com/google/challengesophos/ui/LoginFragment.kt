@@ -18,16 +18,24 @@ import androidx.core.content.ContextCompat
 import androidx.core.util.PatternsCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.google.challengesophos.R
 import com.google.challengesophos.databinding.FragmentLoginBinding
 import com.google.challengesophos.ViewModel.LoginViewModel
+import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import java.util.concurrent.Executor
 
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
+
     private val loginViewModel: LoginViewModel by viewModels()
+
+    private var userName:String? = null
+
 
     //biometrics
     private lateinit var executor: Executor
@@ -42,13 +50,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private val binding get() = _binding!!
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //it removes the name of the app in the action bar
         (requireActivity() as AppCompatActivity).supportActionBar?.title = " "
-
 
     }
 
@@ -57,43 +63,34 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         savedInstanceState: Bundle?
     ): View {
 
+
         //binding initialized
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
-
-
-
-        //Observer to put the Toast  function, the same for navigation
-
-        loginViewModel.loginModel.observe(viewLifecycleOwner, Observer {
-            val emailIn = binding.etEmail.text?.trim().toString()
-            val passwordIn = binding.etPassword.text?.trim().toString()
-            loginViewModel.getLoginViewModel(emailIn, passwordIn)
-
-        })
-
+        //Method that checks if the device has biometrics
+        checkDeviceHasBiometric()
 
         //Login button that allows or denies the access to the app
         binding.btnLogin.setOnClickListener {
-
             val emailIn = binding.etEmail.text?.trim().toString()
             val passwordIn = binding.etPassword.text?.trim().toString()
             validateEmail(emailIn)
             loginViewModel.getLoginViewModel(emailIn, passwordIn)
-            println("Value of the loginModel: " + loginViewModel.loginModel.value)
-            when (loginViewModel.loginModel.value) {
-                true -> {
-                    saveFingerSharedPreferences()
-                    navigateToWelcomeFragment()
-                }
-                else -> toastLogin()
-            }
 
+            //it validates the API response
+            loginViewModel.loginApiResponse.observe(viewLifecycleOwner, Observer {
+                if(it.body()?.acceso == true){
+                    saveFingerSharedPreferences()
+                    userName = it.body()!!.nombre
+                    navigateToWelcomeFragment()
+                } else{
+                    toastLogin()
+                }
+            })
 
 
         }
-        //Method that checks if the device has biometrics
-        checkDeviceHasBiometric()
+
 
 
         // It checks the fingerprint authentificaiton
@@ -111,8 +108,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
 
         //TO DELETE!!! It allows me to put my email and pasword
-          binding.etEmail.setText("arturo3393@gmail.com")
-            binding.etPassword.setText("05ftK5Ly0J9s")
+         binding.etEmail.setText("arturo3393@gmail.com")
+         binding.etPassword.setText("05ftK5Ly0J9s")
 
 
         return binding.root
@@ -134,11 +131,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         view?.findNavController()
             ?.navigate(
                 LoginFragmentDirections.actionLoginFragmentToWelcomeFragment(
-                    loginViewModel.userNameLiveData.value,
+                    userName,
                     binding.etEmail.text?.trim().toString()
                 )
             )
-        println("Here we have the userName " +   loginViewModel.userNameLiveData.value)
+
     }
 
     //it allows or denies the access with fingerprint
@@ -166,11 +163,21 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     )
                         .show()
 
-
                     loadUserFingerPrintPreferences()
 
+                    val emailIn = binding.etEmail.text?.trim().toString()
+                    val passwordIn = binding.etPassword.text?.trim().toString()
+                    loginViewModel.getLoginViewModel(emailIn, passwordIn)
 
-                    navigateToWelcomeFragment()
+                    //it validates the API response
+                    loginViewModel.loginApiResponse.observe(viewLifecycleOwner, Observer {
+                        if(it.body()?.acceso == true){
+                            userName = it.body()!!.nombre
+                            navigateToWelcomeFragment()
+                        } else{
+                            toastLogin()
+                        }
+                    })
 
                 }
 
@@ -296,6 +303,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         binding.etEmail.setText(email)
         binding.etPassword.setText(password)
 
+
     }
 
     //it shows an alert to the user about login to get the preferences
@@ -309,3 +317,4 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
 
 }
+
