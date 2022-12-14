@@ -399,45 +399,11 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                 true
             }
             R.id.seeDocsMenu -> {
-                view?.findNavController()
-                    ?.navigate(
-                        SendDocsFragmentDirections.actionSendDocsFragmentToWelcomeFragment2(
-                            arguments?.getString("user_name"),
-                            arguments?.getString("user_email")
-                        )
-                    )
-
-                view?.findNavController()?.navigate(
-                    WelcomeFragmentDirections.actionWelcomeFragmentToSeeDocsFragment(
-                        arguments?.getString(
-                            "user_email"
-                        ),
-                        arguments?.getString(
-                            "user_name"
-                        )
-                    )
-                )
-
+                navigateToSeeDocs()
                 true
             }
             R.id.officesMenu -> {
-                view?.findNavController()
-                    ?.navigate(
-                        SendDocsFragmentDirections.actionSendDocsFragmentToWelcomeFragment2(
-                            arguments?.getString("user_name"),
-                            arguments?.getString("user_email")
-                        )
-                    )
-
-                view?.findNavController()?.navigate(
-                    WelcomeFragmentDirections.actionWelcomeFragmentToOfficesFragment(
-                        arguments?.getString(
-                            "user_email"
-                        ),   arguments?.getString(
-                            "user_name"
-                        )
-                    )
-                )
+                navigateToOffices()
                 true
             }
 
@@ -472,6 +438,40 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                 super.onOptionsItemSelected(item)
             }
         }
+    }
+
+    private  fun navigateToSeeDocs(){
+        view?.findNavController()
+            ?.navigate(
+                SendDocsFragmentDirections.actionSendDocsFragmentToWelcomeFragment2(
+                    arguments?.getString("user_name"),
+                    arguments?.getString("user_email")
+                )
+            )
+
+        view?.findNavController()?.navigate(
+            WelcomeFragmentDirections.actionWelcomeFragmentToSeeDocsFragment(
+                arguments?.getString("user_email"),
+                arguments?.getString("user_name")
+            )
+        )
+    }
+
+    private fun navigateToOffices(){
+        view?.findNavController()
+            ?.navigate(
+                SendDocsFragmentDirections.actionSendDocsFragmentToWelcomeFragment2(
+                    arguments?.getString("user_name"),
+                    arguments?.getString("user_email")
+                )
+            )
+
+        view?.findNavController()?.navigate(
+            WelcomeFragmentDirections.actionWelcomeFragmentToOfficesFragment(
+                arguments?.getString("user_email"),
+                arguments?.getString("user_name")
+            )
+        )
     }
 
     //save the preferences

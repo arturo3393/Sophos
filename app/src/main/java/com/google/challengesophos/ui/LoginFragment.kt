@@ -290,7 +290,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val editor = sharedPrefs.edit()
         editor.putString("email", email)
         editor.putString("password", password)
-        editor.commit()
+        editor.apply()
 
 
     }

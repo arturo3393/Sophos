@@ -29,7 +29,7 @@
     <string name="btn_continue">Ingresar</string>
 
     <!-- Menu -->
-    <string name="dark_mode">Modo nocturno</string>
+    <string name="dark_mode">Modo oscuro</string>
     <string name="light_mode">Modo claro</string>
     <string name="English_language">Idioma Inglés</string>
     <string name="logout">Cerrar sesión</string>

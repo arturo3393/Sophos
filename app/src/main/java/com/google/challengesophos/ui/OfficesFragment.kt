@@ -182,45 +182,11 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.sendDocsMenu -> {
-                view?.findNavController()
-                    ?.navigate(
-                        OfficesFragmentDirections.actionOfficesFragmentToWelcomeFragment(
-                            arguments?.getString("user_name"),
-                            arguments?.getString("user_email")
-                        )
-                    )
-                view?.findNavController()?.navigate(
-                    WelcomeFragmentDirections.actionWelcomeFragmentToSendDocsFragment(
-                        arguments?.getString(
-                            "user_email"
-                        ),
-                        arguments?.getString(
-                            "user_name"
-                        )
-                    )
-                )
+                navigateToSendDocs()
                 true
             }
             R.id.seeDocsMenu -> {
-
-                view?.findNavController()
-                    ?.navigate(
-                        OfficesFragmentDirections.actionOfficesFragmentToWelcomeFragment(
-                            arguments?.getString("user_name"),
-                            arguments?.getString("user_email")
-                        )
-                    )
-
-                view?.findNavController()?.navigate(
-                    WelcomeFragmentDirections.actionWelcomeFragmentToSeeDocsFragment(
-                        arguments?.getString("user_email"),
-                        arguments?.getString(
-                            "user_name"
-                        )
-                    )
-                )
-
-
+                navigateToSeeDocs()
                 true
             }
             R.id.officesMenu -> {
@@ -258,6 +224,40 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
                 super.onOptionsItemSelected(item)
             }
         }
+    }
+
+
+    private fun navigateToSendDocs() {
+        view?.findNavController()
+            ?.navigate(
+                OfficesFragmentDirections.actionOfficesFragmentToWelcomeFragment(
+                    arguments?.getString("user_name"),
+                    arguments?.getString("user_email")
+                )
+            )
+        view?.findNavController()?.navigate(
+            WelcomeFragmentDirections.actionWelcomeFragmentToSendDocsFragment(
+                arguments?.getString("user_email"),
+                arguments?.getString("user_name")
+            )
+        )
+    }
+
+    private fun navigateToSeeDocs() {
+        view?.findNavController()
+            ?.navigate(
+                OfficesFragmentDirections.actionOfficesFragmentToWelcomeFragment(
+                    arguments?.getString("user_name"),
+                    arguments?.getString("user_email")
+                )
+            )
+
+        view?.findNavController()?.navigate(
+            WelcomeFragmentDirections.actionWelcomeFragmentToSeeDocsFragment(
+                arguments?.getString("user_email"),
+                arguments?.getString("user_name")
+            )
+        )
     }
 
     //save the preferences

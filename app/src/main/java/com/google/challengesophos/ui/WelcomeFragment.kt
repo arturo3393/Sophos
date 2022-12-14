@@ -3,6 +3,7 @@ package com.google.challengesophos.ui
 
 import android.app.Activity
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
@@ -59,12 +60,8 @@ class WelcomeFragment : Fragment() {
             view?.findNavController()
                 ?.navigate(
                     WelcomeFragmentDirections.actionWelcomeFragmentToSendDocsFragment(
-                        arguments?.getString(
-                            "user_email"
-                        ),
-                        arguments?.getString(
-                            "user_name"
-                        )
+                        arguments?.getString("user_email"),
+                        arguments?.getString("user_name")
                     )
                 )
         }
@@ -73,9 +70,7 @@ class WelcomeFragment : Fragment() {
             view?.findNavController()?.navigate(
                 WelcomeFragmentDirections.actionWelcomeFragmentToSeeDocsFragment(
                     arguments?.getString("user_email"),
-                    arguments?.getString(
-                        "user_name"
-                    )
+                    arguments?.getString("user_name")
                 )
             )
 
@@ -84,18 +79,11 @@ class WelcomeFragment : Fragment() {
         binding.btnOffices.setOnClickListener {
             view?.findNavController()?.navigate(
                 WelcomeFragmentDirections.actionWelcomeFragmentToOfficesFragment(
-                    arguments?.getString(
-                        "user_email"
-                    ),   arguments?.getString(
-                        "user_name"
-                    )
+                    arguments?.getString("user_email"),
+                    arguments?.getString("user_name")
                 )
             )
         }
-
-
-
-
 
 
         return binding.root
@@ -106,6 +94,31 @@ class WelcomeFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.option_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
+
+
+        val darkModeString = getString(R.string.dark_mode)
+        val lightModeString = getString(R.string.light_mode)
+
+        when (context?.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                menu.findItem(R.id.darkModeMenu).title = lightModeString
+
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                menu.findItem(R.id.darkModeMenu).title = darkModeString
+
+            }
+        }
+
+
+      when(menu.findItem(R.id.darkModeMenu).title.toString()) {
+            "Modo oscuro" -> loadLocateSpanish()
+            "Dark Mode" -> loadLocateEnglish()
+            "Thème sombre" -> loadLocateFrench()
+            "Modo claro" -> loadLocateSpanish()
+            "Light Mode" -> loadLocateEnglish()
+            "Thème clair" -> loadLocateFrench()
+        }
     }
 
 
@@ -113,47 +126,56 @@ class WelcomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.sendDocsMenu -> {
-                view?.findNavController()?.navigate(
-                    WelcomeFragmentDirections.actionWelcomeFragmentToSendDocsFragment(
-                        arguments?.getString(
-                            "user_email"
-                        ),
-                        arguments?.getString(
-                            "user_name"
-                        )
-                    )
-                )
-
+                navigateToSendDocs()
                 true
-
             }
             R.id.seeDocsMenu -> {
-                view?.findNavController()?.navigate(
-                    WelcomeFragmentDirections.actionWelcomeFragmentToSeeDocsFragment(
-                        arguments?.getString("user_email"),
-                        arguments?.getString(
-                            "user_name"
-                        )
-                    )
-                )
+                navigateToSeeDocs()
                 true
             }
             R.id.officesMenu -> {
-                view?.findNavController()?.navigate(
-                    WelcomeFragmentDirections.actionWelcomeFragmentToOfficesFragment(
-                        arguments?.getString(
-                            "user_email"
-                        ),   arguments?.getString(
-                            "user_name"
-                        )
-                    )
-                )
+                navigateToOffices()
                 true
             }
             R.id.darkModeMenu -> {
 
+                when (context?.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
+                    Configuration.UI_MODE_NIGHT_YES -> {
+                        setDefaultNightMode(MODE_NIGHT_NO)
+                    }
+                    Configuration.UI_MODE_NIGHT_NO -> {
+                        setDefaultNightMode(MODE_NIGHT_YES)
+                    }
+                }
+
+
+
+
+
+
+
+                //   saveModeSharedPreferences()
+
+/*
+             val darkModeString = getString(R.string.dark_mode)
+             val lightModeString = getString(R.string.light_mode)
+
+             val sharedPrefs =PreferenceManager.getDefaultSharedPreferences(context)
+             val editor = sharedPrefs.edit()
+
+
+             editor.putString("DarkMode", darkModeString)
+             editor.putString("LightMode", lightModeString)
+             editor.apply()
+
+             val darkMode = sharedPrefs.getString("DarkMode","")
+             val lightMode = sharedPrefs.getString("LightMode","") */
+
+                /*
+
+
                 val appSettingPrefs =
-                    (activity as AppCompatActivity).getPreferences(0)
+                    (activity as AppCompatActivity).getPreferences(MODE_PRIVATE)
                 val sharedPrefsEdit: SharedPreferences.Editor = appSettingPrefs.edit()
                 val isNightModeOn: Boolean = appSettingPrefs.getBoolean("NightMode", false)
 
@@ -168,8 +190,8 @@ class WelcomeFragment : Fragment() {
                         sharedPrefsEdit.putBoolean("NightMode", true)
                         sharedPrefsEdit.apply()
                     }
-                }
-
+                }*/
+                /*
                 when (context?.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
                     Configuration.UI_MODE_NIGHT_YES -> {
                         item.setTitle(R.string.light_mode)
@@ -178,7 +200,7 @@ class WelcomeFragment : Fragment() {
                         item.setTitle(R.string.dark_mode)
                     }
 
-                }
+                }*/
 
 
                 /*    val appSettingPrefs =
@@ -197,11 +219,6 @@ class WelcomeFragment : Fragment() {
                          sharedPrefsEdit.apply()
 
                      } */
-
-
-
-
-
 
                 true
 
@@ -231,6 +248,35 @@ class WelcomeFragment : Fragment() {
                 super.onOptionsItemSelected(item)
             }
         }
+    }
+
+    private fun navigateToSendDocs() {
+        view?.findNavController()?.navigate(
+            WelcomeFragmentDirections.actionWelcomeFragmentToSendDocsFragment(
+                arguments?.getString("user_email"),
+                arguments?.getString("user_name")
+            )
+        )
+    }
+
+    private fun navigateToSeeDocs() {
+        view?.findNavController()?.navigate(
+            WelcomeFragmentDirections.actionWelcomeFragmentToSeeDocsFragment(
+                arguments?.getString("user_email"),
+                arguments?.getString(
+                    "user_name"
+                )
+            )
+        )
+    }
+
+    private fun navigateToOffices() {
+        view?.findNavController()?.navigate(
+            WelcomeFragmentDirections.actionWelcomeFragmentToOfficesFragment(
+                arguments?.getString("user_email"),
+                arguments?.getString("user_name")
+            )
+        )
     }
 
 
@@ -292,4 +338,32 @@ class WelcomeFragment : Fragment() {
     }
 
 
+    //it saves email and password when they are valid
+    private fun saveModeSharedPreferences() {
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+        val editor = sharedPrefs.edit()
+
+        val darkModeString = getString(R.string.dark_mode)
+        val lightModeString = getString(R.string.light_mode)
+
+        when (context?.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                editor.putString("LightMode", lightModeString)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                editor.putString("DarkMode", darkModeString)
+            }
+        }
+        editor.apply()
+    }
 }
+
+
+/*
+
+
+
+
+
+
+ */
