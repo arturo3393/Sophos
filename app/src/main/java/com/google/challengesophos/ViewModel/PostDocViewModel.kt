@@ -5,8 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.challengesophos.Repository.model.*
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+
 
 class PostDocViewModel : ViewModel() {
 
@@ -19,19 +18,14 @@ class PostDocViewModel : ViewModel() {
 
     var docModel = MutableLiveData<DocItems>()
 
-    fun getRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://6w33tkx4f9.execute-api.us-east-1.amazonaws.com")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
+
 
     fun postDoc(DocInput: DocItemsPost) {
         viewModelScope.launch {
-            val response = getRetrofit().create(ApiPostDoc::class.java)
-                .postDoc(DocInput)
+           val response = RetrofitHelper.getRetrofit().create(ApiPostDoc::class.java)
+               .postDoc(DocInput)
 
-           println("Server response ${response.toString()}")
+           println("Server response ${response}")
 
         }
 
@@ -40,7 +34,7 @@ class PostDocViewModel : ViewModel() {
     //Get the cities to be shown in the spinner of the fragment
     fun getCities() {
         viewModelScope.launch {
-            val response = getRetrofit().create(APIGetOffices::class.java)
+            val response = RetrofitHelper.getRetrofit().create(APIGetOffices::class.java)
                 .getCities()
 
             val cities = response.body()?.Items

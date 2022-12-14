@@ -8,23 +8,16 @@ import com.google.challengesophos.Repository.model.DocItems
 import com.google.challengesophos.Repository.model.DocResponse
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+
 
 class GetDocsByIdViewModel: ViewModel() {
 
     var getDocsImgMutableLiveData = MutableLiveData<List<DocItems>>()
 
-    fun getRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://6w33tkx4f9.execute-api.us-east-1.amazonaws.com")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
+//it gets the specific data of a document by its ID
     fun getDocsViewModel (idDoc:String) {
         viewModelScope.launch {
-            val response : Response<DocResponse> = getRetrofit().create(APIGetDocById::class.java)
+            val response : Response<DocResponse> = RetrofitHelper.getRetrofit().create(APIGetDocById::class.java)
                 .getSpecificDoc(idDoc)
 
             val docsInfo = response.body()
@@ -33,7 +26,7 @@ class GetDocsByIdViewModel: ViewModel() {
 
             }
 
-        }
+}
 
 
 }

@@ -9,8 +9,7 @@ import com.google.challengesophos.Repository.model.DocResponse
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+
 
 class GetDocsViewModel : ViewModel() {
 
@@ -18,17 +17,10 @@ class GetDocsViewModel : ViewModel() {
     var getDocsModelLiveData = MutableLiveData<List<DocItems>>()
 
 
-
-    fun getRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://6w33tkx4f9.execute-api.us-east-1.amazonaws.com")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
+//it gets the complete list of focuments with the user's email
     fun getDocsList(emailLogin: String) {
         viewModelScope.launch {
-            val response: Response<DocResponse> = getRetrofit().create(APIGetDocs::class.java)
+            val response: Response<DocResponse> = RetrofitHelper.getRetrofit().create(APIGetDocs::class.java)
                 .getDocs(emailLogin)
 
             val docsInfo = response.body()
@@ -46,31 +38,3 @@ class GetDocsViewModel : ViewModel() {
 
 
 }
-/*
-fun getDocsImgByID(idDoc: String) {
-    CoroutineScope(Dispatchers.IO).launch {
-        val response: Response<DocResponse> = getRetrofit().create(APIGetDocById::class.java)
-            .getSpecificDoc(idDoc)
-
-        val docsInfo = response.body()
-
-        println(response.isSuccessful)
-
-        //  println(docsInfo?.Items?.toString()) // Doc detail list
-
-        getDocsImgMutableLiveData.postValue(docsInfo?.Items)
-
-    }
-}
-/*fun getDocsSpecficImage(docID : String){
-viewModelScope.launch {
-    val response: Response<DocResponse> = getRetrofit().create(APIGetDocById::class.java)
-        .getSpecificDoc(docID)
-
-    val specficDocInfo = response.body()
-
-    getDocsIdMutableLiveData.postValue(specficDocInfo?.Items?.get(0)?.Adjunto)
-    println("In the viewModel"+  getDocsIdMutableLiveData.postValue(specficDocInfo?.Items?.get(0)?.Adjunto) )
-}
-
-}*/
