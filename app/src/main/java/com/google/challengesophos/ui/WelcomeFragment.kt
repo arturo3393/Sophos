@@ -17,6 +17,7 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.iterator
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.navArgument
 import com.google.challengesophos.R
 import com.google.challengesophos.databinding.FragmentWelcomeBinding
 import kotlinx.coroutines.CoroutineScope
@@ -27,6 +28,7 @@ import java.util.*
 
 
 class WelcomeFragment : Fragment() {
+
 
     private var _binding: FragmentWelcomeBinding? = null
 
@@ -46,12 +48,10 @@ class WelcomeFragment : Fragment() {
         //enables the menu in the fragment
         setHasOptionsMenu(true)
 
-
         //puts the name to the appbar
         (activity as AppCompatActivity).supportActionBar?.title = arguments?.getString("user_name")
         //disables the back array
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-
 
 
         binding.btnSendDocs.setOnClickListener {
@@ -61,6 +61,9 @@ class WelcomeFragment : Fragment() {
                     WelcomeFragmentDirections.actionWelcomeFragmentToSendDocsFragment(
                         arguments?.getString(
                             "user_email"
+                        ),
+                        arguments?.getString(
+                            "user_name"
                         )
                     )
                 )
@@ -69,8 +72,9 @@ class WelcomeFragment : Fragment() {
         binding.btnSeeDocs.setOnClickListener {
             view?.findNavController()?.navigate(
                 WelcomeFragmentDirections.actionWelcomeFragmentToSeeDocsFragment(
+                    arguments?.getString("user_email"),
                     arguments?.getString(
-                        "user_email"
+                        "user_name"
                     )
                 )
             )
@@ -82,14 +86,14 @@ class WelcomeFragment : Fragment() {
                 WelcomeFragmentDirections.actionWelcomeFragmentToOfficesFragment(
                     arguments?.getString(
                         "user_email"
+                    ),   arguments?.getString(
+                        "user_name"
                     )
                 )
             )
         }
 
 
-        //Bring the user's name with safe args
-        showUsersName()
 
 
 
@@ -97,14 +101,6 @@ class WelcomeFragment : Fragment() {
         return binding.root
     }
 
-    private fun showUsersName() {
-        if (arguments?.getString("user_name")?.isNotEmpty() == true) {
-            (activity as AppCompatActivity).supportActionBar?.title =
-                arguments?.getString("user_name")
-        }/* else {
-            (activity as AppCompatActivity).supportActionBar?.title = "Pablo"
-        }*/
-    }
 
     //creates the menu in welcome fragment
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -121,6 +117,9 @@ class WelcomeFragment : Fragment() {
                     WelcomeFragmentDirections.actionWelcomeFragmentToSendDocsFragment(
                         arguments?.getString(
                             "user_email"
+                        ),
+                        arguments?.getString(
+                            "user_name"
                         )
                     )
                 )
@@ -131,8 +130,9 @@ class WelcomeFragment : Fragment() {
             R.id.seeDocsMenu -> {
                 view?.findNavController()?.navigate(
                     WelcomeFragmentDirections.actionWelcomeFragmentToSeeDocsFragment(
+                        arguments?.getString("user_email"),
                         arguments?.getString(
-                            "user_email"
+                            "user_name"
                         )
                     )
                 )
@@ -143,6 +143,8 @@ class WelcomeFragment : Fragment() {
                     WelcomeFragmentDirections.actionWelcomeFragmentToOfficesFragment(
                         arguments?.getString(
                             "user_email"
+                        ),   arguments?.getString(
+                            "user_name"
                         )
                     )
                 )
@@ -155,13 +157,13 @@ class WelcomeFragment : Fragment() {
                 val sharedPrefsEdit: SharedPreferences.Editor = appSettingPrefs.edit()
                 val isNightModeOn: Boolean = appSettingPrefs.getBoolean("NightMode", false)
 
-                when(isNightModeOn){
-                    true->{
+                when (isNightModeOn) {
+                    true -> {
                         setDefaultNightMode(MODE_NIGHT_NO)
                         sharedPrefsEdit.putBoolean("NightMode", false)
                         sharedPrefsEdit.apply()
                     }
-                    else-> {
+                    else -> {
                         setDefaultNightMode(MODE_NIGHT_YES)
                         sharedPrefsEdit.putBoolean("NightMode", true)
                         sharedPrefsEdit.apply()
@@ -169,28 +171,32 @@ class WelcomeFragment : Fragment() {
                 }
 
                 when (context?.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
-                    Configuration.UI_MODE_NIGHT_YES -> {item.setTitle(R.string.light_mode)}
-                    Configuration.UI_MODE_NIGHT_NO -> {item.setTitle(R.string.dark_mode)}
+                    Configuration.UI_MODE_NIGHT_YES -> {
+                        item.setTitle(R.string.light_mode)
+                    }
+                    Configuration.UI_MODE_NIGHT_NO -> {
+                        item.setTitle(R.string.dark_mode)
+                    }
 
                 }
 
 
-                    /*    val appSettingPrefs =
-                             (activity as AppCompatActivity).getPreferences(0)
-                         val sharedPrefsEdit: SharedPreferences.Editor = appSettingPrefs.edit()
-                         val isNightModeOn: Boolean = appSettingPrefs.getBoolean("NightMode", false)
+                /*    val appSettingPrefs =
+                         (activity as AppCompatActivity).getPreferences(0)
+                     val sharedPrefsEdit: SharedPreferences.Editor = appSettingPrefs.edit()
+                     val isNightModeOn: Boolean = appSettingPrefs.getBoolean("NightMode", false)
 
-                         if (isNightModeOn) {
-                             setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                             sharedPrefsEdit.putBoolean("NightMode", false)
-                             sharedPrefsEdit.apply()
+                     if (isNightModeOn) {
+                         setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                         sharedPrefsEdit.putBoolean("NightMode", false)
+                         sharedPrefsEdit.apply()
 
-                         } else {
-                             setDefaultNightMode(MODE_NIGHT_YES)
-                             sharedPrefsEdit.putBoolean("NightMode", true)
-                             sharedPrefsEdit.apply()
+                     } else {
+                         setDefaultNightMode(MODE_NIGHT_YES)
+                         sharedPrefsEdit.putBoolean("NightMode", true)
+                         sharedPrefsEdit.apply()
 
-                         } */
+                     } */
 
 
 
@@ -284,5 +290,6 @@ class WelcomeFragment : Fragment() {
                 )
             )
     }
+
 
 }

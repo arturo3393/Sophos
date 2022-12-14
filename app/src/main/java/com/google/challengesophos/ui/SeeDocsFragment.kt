@@ -125,14 +125,26 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
     //navigate to each option in the menu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+
             R.id.sendDocsMenu -> {
+                view?.findNavController()
+                    ?.navigate(
+                        SeeDocsFragmentDirections.actionSeeDocsFragmentToWelcomeFragment(
+                            arguments?.getString("user_name"),
+                            arguments?.getString("user_email")
+                        )
+                    )
                 view?.findNavController()?.navigate(
-                    SeeDocsFragmentDirections.actionSeeDocsFragmentToSendDocsFragment(
+                    WelcomeFragmentDirections.actionWelcomeFragmentToSendDocsFragment(
                         arguments?.getString(
                             "user_email"
+                        ),
+                        arguments?.getString(
+                            "user_name"
                         )
                     )
                 )
+
                 true
             }
             R.id.seeDocsMenu -> {
@@ -142,13 +154,23 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
                 true
             }
             R.id.officesMenu -> {
+                view?.findNavController()
+                    ?.navigate(
+                        SeeDocsFragmentDirections.actionSeeDocsFragmentToWelcomeFragment(
+                            arguments?.getString("user_name"),
+                            arguments?.getString("user_email")
+                        )
+                    )
                 view?.findNavController()?.navigate(
-                    SeeDocsFragmentDirections.actionSeeDocsFragmentToOfficesFragment(
+                    WelcomeFragmentDirections.actionWelcomeFragmentToOfficesFragment(
                         arguments?.getString(
                             "user_email"
+                        ),   arguments?.getString(
+                            "user_name"
                         )
                     )
                 )
+
                 true
             }
             R.id.darkModeMenu -> {
@@ -230,10 +252,20 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
 
     //Upload the fragment to see the language changed
     private fun navigateFragmentItself() {
+
         view?.findNavController()
             ?.navigate(
-                SeeDocsFragmentDirections.actionSeeDocsFragmentSelf(
+                SeeDocsFragmentDirections.actionSeeDocsFragmentToWelcomeFragment(
+                    arguments?.getString("user_name"),
+                    arguments?.getString("user_email")
+                )
+            )
+
+        view?.findNavController()
+            ?.navigate(
+                WelcomeFragmentDirections.actionWelcomeFragmentToSeeDocsFragment(
                     arguments?.getString("user_email"),
+                    arguments?.getString("user_name")
                 )
             )
     }

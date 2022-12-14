@@ -15,7 +15,7 @@ class LoginViewModel() : ViewModel() {
 
     val _loginResponse: MutableLiveData<Response<LoginApiResponse>> = MutableLiveData()
     val loginApiResponse: LiveData<Response<LoginApiResponse>>
-    get() = _loginResponse
+        get() = _loginResponse
 
 
     //Method retrofit that is use to call the Api in the next method

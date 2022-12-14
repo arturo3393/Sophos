@@ -97,8 +97,6 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
         }
 
 
-
-
         //Adapter for the spinner of docs type
         arrayAdapterTypeDocs =
             ArrayAdapter<String>(requireContext(), R.layout.spinner_styles_light)
@@ -172,6 +170,9 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                         SendDocsFragmentDirections.actionSendDocsFragmentSelf(
                             arguments?.getString(
                                 "user_email"
+                            ),
+                            arguments?.getString(
+                                "user_name"
                             )
                         )
                     )
@@ -398,20 +399,42 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                 true
             }
             R.id.seeDocsMenu -> {
+                view?.findNavController()
+                    ?.navigate(
+                        SendDocsFragmentDirections.actionSendDocsFragmentToWelcomeFragment2(
+                            arguments?.getString("user_name"),
+                            arguments?.getString("user_email")
+                        )
+                    )
+
                 view?.findNavController()?.navigate(
-                    SendDocsFragmentDirections.actionSendDocsFragmentToSeeDocsFragment(
+                    WelcomeFragmentDirections.actionWelcomeFragmentToSeeDocsFragment(
                         arguments?.getString(
                             "user_email"
+                        ),
+                        arguments?.getString(
+                            "user_name"
                         )
                     )
                 )
+
                 true
             }
             R.id.officesMenu -> {
+                view?.findNavController()
+                    ?.navigate(
+                        SendDocsFragmentDirections.actionSendDocsFragmentToWelcomeFragment2(
+                            arguments?.getString("user_name"),
+                            arguments?.getString("user_email")
+                        )
+                    )
+
                 view?.findNavController()?.navigate(
-                    SendDocsFragmentDirections.actionSendDocsFragmentToOfficesFragment(
+                    WelcomeFragmentDirections.actionWelcomeFragmentToOfficesFragment(
                         arguments?.getString(
                             "user_email"
+                        ),   arguments?.getString(
+                            "user_name"
                         )
                     )
                 )
@@ -501,8 +524,17 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     private fun navigateFragmentItself() {
         view?.findNavController()
             ?.navigate(
-                SendDocsFragmentDirections.actionSendDocsFragmentSelf(
+                SendDocsFragmentDirections.actionSendDocsFragmentToWelcomeFragment2(
+                    arguments?.getString("user_name"),
                     arguments?.getString("user_email")
+                )
+            )
+
+        view?.findNavController()
+            ?.navigate(
+                WelcomeFragmentDirections.actionWelcomeFragmentToSendDocsFragment(
+                    arguments?.getString("user_email"),
+                    arguments?.getString("user_name")
                 )
             )
     }

@@ -182,25 +182,44 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.sendDocsMenu -> {
+                view?.findNavController()
+                    ?.navigate(
+                        OfficesFragmentDirections.actionOfficesFragmentToWelcomeFragment(
+                            arguments?.getString("user_name"),
+                            arguments?.getString("user_email")
+                        )
+                    )
                 view?.findNavController()?.navigate(
-                    OfficesFragmentDirections.actionOfficesFragmentToSendDocsFragment
-                        (
+                    WelcomeFragmentDirections.actionWelcomeFragmentToSendDocsFragment(
                         arguments?.getString(
                             "user_email"
+                        ),
+                        arguments?.getString(
+                            "user_name"
                         )
                     )
                 )
                 true
             }
             R.id.seeDocsMenu -> {
+
+                view?.findNavController()
+                    ?.navigate(
+                        OfficesFragmentDirections.actionOfficesFragmentToWelcomeFragment(
+                            arguments?.getString("user_name"),
+                            arguments?.getString("user_email")
+                        )
+                    )
+
                 view?.findNavController()?.navigate(
-                    OfficesFragmentDirections.actionOfficesFragmentToSeeDocsFragment
-                        (
+                    WelcomeFragmentDirections.actionWelcomeFragmentToSeeDocsFragment(
+                        arguments?.getString("user_email"),
                         arguments?.getString(
-                            "user_email"
+                            "user_name"
                         )
                     )
                 )
+
 
                 true
             }
@@ -286,12 +305,22 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
             setLocate(language)
         }
     }
+
     //Upload the fragment to see the language changed
     private fun navigateFragmentItself() {
         view?.findNavController()
             ?.navigate(
-                OfficesFragmentDirections.actionOfficesFragmentSelf(
+                OfficesFragmentDirections.actionOfficesFragmentToWelcomeFragment(
+                    arguments?.getString("user_name"),
                     arguments?.getString("user_email")
+                )
+            )
+
+        view?.findNavController()
+            ?.navigate(
+                WelcomeFragmentDirections.actionWelcomeFragmentToOfficesFragment(
+                    arguments?.getString("user_email"),
+                    arguments?.getString("user_name")
                 )
             )
     }
