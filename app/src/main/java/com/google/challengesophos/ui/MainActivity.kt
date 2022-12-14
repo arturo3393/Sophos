@@ -25,9 +25,12 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_ChallengeSophos)
         super.onCreate(savedInstanceState)
 
-//Databinding initialized
+
+
+        //Databinding initialized
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

@@ -59,7 +59,6 @@
             app:argType="string"
             app:nullable="true" />
 
-
         <action
             android:id="@+id/action_sendDocsFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -102,12 +101,10 @@
         android:label="fragment_offices"
         tools:layout="@layout/fragment_offices">
         <action
-            android:id="@+id/action_officesFragment_to_sendDocsFragment"
-            app:destination="@id/sendDocsFragment" />
-        <action
             android:id="@+id/action_officesFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
-        <argument android:name="user_email"
+        <argument
+            android:name="user_email"
             app:argType="string"
             app:nullable="true" />
         <argument
