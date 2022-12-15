@@ -71,12 +71,16 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         binding.btnLogin.setOnClickListener {
             val emailIn = binding.etEmail.text?.trim().toString()
             val passwordIn = binding.etPassword.text?.trim().toString()
+
             validateEmail(emailIn)
             loginViewModel.getLoginViewModel(emailIn, passwordIn)
+
             binding.progressBarLogin.visibility = View.VISIBLE
+
             //it validates the API response
             loginViewModel.loginApiResponse.observe(viewLifecycleOwner, Observer {
                 if(it.body()?.acceso == true){
+                    binding.btnLogin.isEnabled = false //it prevents users to make multiple clicks while request is working
                     saveFingerSharedPreferences()
                     userName = it.body()!!.nombre
                     navigateToWelcomeFragment()

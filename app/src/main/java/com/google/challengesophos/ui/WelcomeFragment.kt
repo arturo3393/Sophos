@@ -1,30 +1,17 @@
 package com.google.challengesophos.ui
 
 
-import android.app.Activity
-import android.content.Context
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
+
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.*
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.view.MenuProvider
-import androidx.core.view.iterator
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.navigation.navArgument
 import com.google.challengesophos.R
 import com.google.challengesophos.databinding.FragmentWelcomeBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -43,6 +30,15 @@ class WelcomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        //it loads the preferences of the language after changing between dark and light mode in different languages
+        val sharedPrefsDarkLanguage = PreferenceManager.getDefaultSharedPreferences(context)
+
+        when(sharedPrefsDarkLanguage.getString("My_Lang","")){
+            "es" -> setLocate("es")
+            "en"->setLocate("en")
+            "fr"->setLocate("fr")
+        }
+
         //binding initialized
         _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
 
@@ -86,6 +82,8 @@ class WelcomeFragment : Fragment() {
         }
 
 
+
+
         return binding.root
     }
 
@@ -95,8 +93,8 @@ class WelcomeFragment : Fragment() {
         inflater.inflate(R.menu.option_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
 
-
-        val darkModeString = getString(R.string.dark_mode)
+        // it puts the title of the darkModeMenu
+       val darkModeString = getString(R.string.dark_mode)
         val lightModeString = getString(R.string.light_mode)
 
         when (context?.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
@@ -106,21 +104,11 @@ class WelcomeFragment : Fragment() {
             }
             Configuration.UI_MODE_NIGHT_NO -> {
                 menu.findItem(R.id.darkModeMenu).title = darkModeString
-
             }
         }
 
 
-      when(menu.findItem(R.id.darkModeMenu).title.toString()) {
-            "Modo oscuro" -> loadLocateSpanish()
-            "Dark Mode" -> loadLocateEnglish()
-            "Thème sombre" -> loadLocateFrench()
-            "Modo claro" -> loadLocateSpanish()
-            "Light Mode" -> loadLocateEnglish()
-            "Thème clair" -> loadLocateFrench()
-        }
     }
-
 
     //navigate to each option in the menu from the welcome fragment
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -139,99 +127,31 @@ class WelcomeFragment : Fragment() {
             }
             R.id.darkModeMenu -> {
 
+                val sharedPrefsDarkLanguage = PreferenceManager.getDefaultSharedPreferences(context)
+                val editor = sharedPrefsDarkLanguage.edit()
+
+
                 when (context?.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
                     Configuration.UI_MODE_NIGHT_YES -> {
                         setDefaultNightMode(MODE_NIGHT_NO)
+                        editor.putString("My_Lang", resources.configuration.locale.language)
                     }
                     Configuration.UI_MODE_NIGHT_NO -> {
+                        editor.putString("My_Lang", resources.configuration.locale.language)
                         setDefaultNightMode(MODE_NIGHT_YES)
                     }
                 }
-
-
-
-
-
-
-
-                //   saveModeSharedPreferences()
-
-/*
-             val darkModeString = getString(R.string.dark_mode)
-             val lightModeString = getString(R.string.light_mode)
-
-             val sharedPrefs =PreferenceManager.getDefaultSharedPreferences(context)
-             val editor = sharedPrefs.edit()
-
-
-             editor.putString("DarkMode", darkModeString)
-             editor.putString("LightMode", lightModeString)
-             editor.apply()
-
-             val darkMode = sharedPrefs.getString("DarkMode","")
-             val lightMode = sharedPrefs.getString("LightMode","") */
-
-                /*
-
-
-                val appSettingPrefs =
-                    (activity as AppCompatActivity).getPreferences(MODE_PRIVATE)
-                val sharedPrefsEdit: SharedPreferences.Editor = appSettingPrefs.edit()
-                val isNightModeOn: Boolean = appSettingPrefs.getBoolean("NightMode", false)
-
-                when (isNightModeOn) {
-                    true -> {
-                        setDefaultNightMode(MODE_NIGHT_NO)
-                        sharedPrefsEdit.putBoolean("NightMode", false)
-                        sharedPrefsEdit.apply()
-                    }
-                    else -> {
-                        setDefaultNightMode(MODE_NIGHT_YES)
-                        sharedPrefsEdit.putBoolean("NightMode", true)
-                        sharedPrefsEdit.apply()
-                    }
-                }*/
-                /*
-                when (context?.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
-                    Configuration.UI_MODE_NIGHT_YES -> {
-                        item.setTitle(R.string.light_mode)
-                    }
-                    Configuration.UI_MODE_NIGHT_NO -> {
-                        item.setTitle(R.string.dark_mode)
-                    }
-
-                }*/
-
-
-                /*    val appSettingPrefs =
-                         (activity as AppCompatActivity).getPreferences(0)
-                     val sharedPrefsEdit: SharedPreferences.Editor = appSettingPrefs.edit()
-                     val isNightModeOn: Boolean = appSettingPrefs.getBoolean("NightMode", false)
-
-                     if (isNightModeOn) {
-                         setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                         sharedPrefsEdit.putBoolean("NightMode", false)
-                         sharedPrefsEdit.apply()
-
-                     } else {
-                         setDefaultNightMode(MODE_NIGHT_YES)
-                         sharedPrefsEdit.putBoolean("NightMode", true)
-                         sharedPrefsEdit.apply()
-
-                     } */
-
+                editor.apply()
                 true
 
             }
-
-
             R.id.languageMenu -> {
                 val getStringLanguage = getString(R.string.English_language)
 
                 when (getStringLanguage) {
-                    "Idioma Inglés" -> loadLocateEnglish()
-                    "French Language" -> loadLocateFrench()
-                    "Langue espagnole" -> loadLocateSpanish()
+                    "Idioma Inglés" -> setLocate("en")
+                    "French Language" -> setLocate("fr")
+                    "Langue espagnole" -> setLocate("es")
                 }
 
                 navigateFragmentItself()
@@ -294,37 +214,6 @@ class WelcomeFragment : Fragment() {
         editor.apply()
     }
 
-    //Write the preferences
-    private fun loadLocateSpanish() {
-
-        val sharedPreferences =
-            (activity as AppCompatActivity).getSharedPreferences("Settings", Activity.MODE_PRIVATE)
-        val language = sharedPreferences.getString("My_Lang", "")
-        if (language != null) {
-            setLocate(language)
-        }
-
-    }
-
-    private fun loadLocateEnglish() {
-
-        val sharedPreferences =
-            (activity as AppCompatActivity).getSharedPreferences("Settings", Activity.MODE_PRIVATE)
-        val language = sharedPreferences.getString("My_Lang", "en")
-        if (language != null) {
-            setLocate(language)
-        }
-    }
-
-    private fun loadLocateFrench() {
-
-        val sharedPreferences =
-            (activity as AppCompatActivity).getSharedPreferences("Settings", Activity.MODE_PRIVATE)
-        val language = sharedPreferences.getString("My_Lang", "fr")
-        if (language != null) {
-            setLocate(language)
-        }
-    }
 
     //Upload the fragment to see the language changed
     private fun navigateFragmentItself() {
@@ -338,32 +227,5 @@ class WelcomeFragment : Fragment() {
     }
 
 
-    //it saves email and password when they are valid
-    private fun saveModeSharedPreferences() {
-        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = sharedPrefs.edit()
-
-        val darkModeString = getString(R.string.dark_mode)
-        val lightModeString = getString(R.string.light_mode)
-
-        when (context?.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
-            Configuration.UI_MODE_NIGHT_YES -> {
-                editor.putString("LightMode", lightModeString)
-            }
-            Configuration.UI_MODE_NIGHT_NO -> {
-                editor.putString("DarkMode", darkModeString)
-            }
-        }
-        editor.apply()
-    }
 }
 
-
-/*
-
-
-
-
-
-
- */

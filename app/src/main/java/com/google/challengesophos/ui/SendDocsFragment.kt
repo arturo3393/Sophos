@@ -168,17 +168,14 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                     println(getInformationForPosting())
                     view?.findNavController()?.navigate(
                         SendDocsFragmentDirections.actionSendDocsFragmentSelf(
-                            arguments?.getString(
-                                "user_email"
-                            ),
-                            arguments?.getString(
-                                "user_name"
-                            )
+                            arguments?.getString("user_email"),
+                            arguments?.getString("user_name")
                         )
                     )
                 }
                 else -> showMessage(documentSentFail)
             }
+
         }
 
         return binding.root
@@ -227,10 +224,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
 
     private fun askForFilesPermission() {
         when {
-            ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
+            ContextCompat.checkSelfPermission(requireContext(),Manifest.permission.READ_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED -> {
                 uploadPhoto()
             }
@@ -316,7 +310,6 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                     //val bitmap = data?.extras?.get("data") as Bitmap
                     val bitmap = convertUriToBitmap(data?.data)
                     imageTakenBase64 = convertBitmapToBase64(bitmap)
-
 
                     // imageTakenBase64 = convertBitmapToBase64(bitmap)
                     //showMessage(imageTakenBase64)
