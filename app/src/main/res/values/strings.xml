@@ -59,6 +59,7 @@
     <!-- Offices -->
     <string name="location_permission">Habilite el permiso de localización en la configuración</string>
     <string name="already_offices">Actualmente en oficinas</string>
+    <string name="sophos_logo">Sophos\' Logo</string>
 
 
 </resources>

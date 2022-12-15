@@ -63,14 +63,7 @@
     <!-- Offices -->
     <string name="location_permission">Set up location permissions in settings</string>
     <string name="already_offices">You are currently in offices</string>
-
-
-
-
-
-
-
-
+    <string name="sophos_logo">Sophos\' Logo</string>
 
 
 </resources>

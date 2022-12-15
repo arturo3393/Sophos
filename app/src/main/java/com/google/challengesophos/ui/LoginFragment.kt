@@ -18,14 +18,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.util.PatternsCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.google.challengesophos.R
 import com.google.challengesophos.databinding.FragmentLoginBinding
 import com.google.challengesophos.ViewModel.LoginViewModel
-import kotlinx.coroutines.async
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
 import java.util.concurrent.Executor
 
 
@@ -77,7 +73,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             val passwordIn = binding.etPassword.text?.trim().toString()
             validateEmail(emailIn)
             loginViewModel.getLoginViewModel(emailIn, passwordIn)
-
+            binding.progressBarLogin.visibility = View.VISIBLE
             //it validates the API response
             loginViewModel.loginApiResponse.observe(viewLifecycleOwner, Observer {
                 if(it.body()?.acceso == true){
@@ -85,7 +81,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     userName = it.body()!!.nombre
                     navigateToWelcomeFragment()
                 } else{
+                    binding.progressBarLogin.visibility = View.GONE
                     toastLogin()
+
                 }
             })
 
