@@ -33,7 +33,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private var userName:String? = null
 
-
     //biometrics
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: androidx.biometric.BiometricPrompt

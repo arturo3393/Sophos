@@ -49,6 +49,9 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    //Mock
+    testImplementation "io.mockk:mockk:1.12.2"
+
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     // Json converter
@@ -70,6 +73,11 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
     // Dependency to include Maps SDK for Android
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    //Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0"
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+
 
 
 }

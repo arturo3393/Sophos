@@ -52,7 +52,6 @@ class WelcomeFragment : Fragment() {
 
 
         binding.btnSendDocs.setOnClickListener {
-
             view?.findNavController()
                 ?.navigate(
                     WelcomeFragmentDirections.actionWelcomeFragmentToSendDocsFragment(
@@ -200,7 +199,7 @@ class WelcomeFragment : Fragment() {
     }
 
 
-    //save the preferences
+    //save the preferences for the language
     private fun setLocate(Lang: String) {
 
         val locale = Locale(Lang)

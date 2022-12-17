@@ -10,6 +10,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -50,6 +51,15 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        //it loads the preferences of the language after changing between dark and light mode in different languages
+        val sharedPrefsDarkLanguage = PreferenceManager.getDefaultSharedPreferences(context)
+
+        when(sharedPrefsDarkLanguage.getString("My_Lang","")){
+            "es" -> setLocate("es")
+            "en"->setLocate("en")
+            "fr"->setLocate("fr")
+        }
+
         //binding initialized
         _binding = FragmentOfficesBinding.inflate(inflater, container, false)
 
@@ -176,6 +186,22 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.option_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
+
+        // it puts the title of the darkModeMenu
+        val darkModeString = getString(R.string.dark_mode)
+        val lightModeString = getString(R.string.light_mode)
+
+        when (context?.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                menu.findItem(R.id.darkModeMenu).title = lightModeString
+
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                menu.findItem(R.id.darkModeMenu).title = darkModeString
+            }
+        }
+
+
     }
 
     //navigate to each option in the menu
@@ -197,7 +223,24 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
                 true
             }
             R.id.darkModeMenu -> {
+                //it allows the map to be initialized before the theme changed
+                navigateFragmentItself()
 
+                val sharedPrefsDarkLanguage = PreferenceManager.getDefaultSharedPreferences(context)
+                val editor = sharedPrefsDarkLanguage.edit()
+
+
+                when (context?.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
+                    Configuration.UI_MODE_NIGHT_YES -> {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                        editor.putString("My_Lang", resources.configuration.locale.language)
+                    }
+                    Configuration.UI_MODE_NIGHT_NO -> {
+                        editor.putString("My_Lang", resources.configuration.locale.language)
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    }
+                }
+                editor.apply()
                 true
             }
 
@@ -205,9 +248,9 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
                 val getStringLanguage = getString(R.string.English_language)
 
                 when (getStringLanguage) {
-                    "Idioma Inglés" -> loadLocateEnglish()
-                    "French Language" -> loadLocateFrench()
-                    "Langue espagnole" -> loadLocateSpanish()
+                    "Idioma Inglés" -> setLocate("en")
+                    "French Language" -> setLocate("fr")
+                    "Langue espagnole" -> setLocate("es")
                 }
 
                 navigateFragmentItself()
@@ -274,37 +317,6 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
         editor.apply()
     }
 
-    //Write the preferences
-    private fun loadLocateSpanish() {
-
-        val sharedPreferences =
-            (activity as AppCompatActivity).getSharedPreferences("Settings", Activity.MODE_PRIVATE)
-        val language = sharedPreferences.getString("My_Lang", "")
-        if (language != null) {
-            setLocate(language)
-        }
-
-    }
-
-    private fun loadLocateEnglish() {
-
-        val sharedPreferences =
-            (activity as AppCompatActivity).getSharedPreferences("Settings", Activity.MODE_PRIVATE)
-        val language = sharedPreferences.getString("My_Lang", "en")
-        if (language != null) {
-            setLocate(language)
-        }
-    }
-
-    private fun loadLocateFrench() {
-
-        val sharedPreferences =
-            (activity as AppCompatActivity).getSharedPreferences("Settings", Activity.MODE_PRIVATE)
-        val language = sharedPreferences.getString("My_Lang", "fr")
-        if (language != null) {
-            setLocate(language)
-        }
-    }
 
     //Upload the fragment to see the language changed
     private fun navigateFragmentItself() {
