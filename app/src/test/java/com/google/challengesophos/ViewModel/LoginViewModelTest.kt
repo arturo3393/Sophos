@@ -1,7 +1,6 @@
-package com.google.challengesophos.ViewModelTest
+package com.google.challengesophos.ViewModel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.google.challengesophos.ViewModel.LoginViewModel
 import com.google.challengesophos.getOrAwaitValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -15,7 +14,6 @@ import org.junit.Test
 
 
 @ExperimentalCoroutinesApi
-
 class LoginViewModelTest {
 
     private lateinit var loginViewModel: LoginViewModel
@@ -42,12 +40,12 @@ class LoginViewModelTest {
         //When the user enters correct data
         loginViewModel.getLoginViewModel(correctEmail, correctPassword)
         val value = loginViewModel.loginApiResponse.getOrAwaitValue()
-        //then
+        //then access is given
          assert(value.body()?.acceso == true)
     }
 
     @Test
-    fun `loginViewModel with valid but incorrect input consume the API and returns access false`() =
+    fun `loginViewModel with valid but incorrect input consumes the API and returns access false`() =
         runTest {
             //Given a fresh viewModel
             loginViewModel = LoginViewModel()
@@ -55,7 +53,7 @@ class LoginViewModelTest {
             //When the user enters incorrect data
             loginViewModel.getLoginViewModel("a@a.com", "a")
             val value = loginViewModel.loginApiResponse.getOrAwaitValue()
-            //then
+            //then access is not allowed
             assert(value.body()?.acceso == false)
         }
     @Test
@@ -67,7 +65,7 @@ class LoginViewModelTest {
             //When the user enters empty data
             loginViewModel.getLoginViewModel("","")
             val value = loginViewModel.loginApiResponse.getOrAwaitValue()
-            //then
+            //then access is not allowed
             assert(value.body()?.acceso == null)
         }
 

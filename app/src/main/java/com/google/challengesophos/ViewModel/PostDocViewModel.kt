@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 class PostDocViewModel : ViewModel() {
 
     //initiate the method when the viewModel is called
-    init{
+    init {
         getCities()
     }
 
@@ -19,13 +19,10 @@ class PostDocViewModel : ViewModel() {
     var docModel = MutableLiveData<DocItems>()
 
 
-
     fun postDoc(DocInput: DocItemsPost) {
         viewModelScope.launch {
-           val response = RetrofitHelper.getRetrofit().create(ApiPostDoc::class.java)
-               .postDoc(DocInput)
-
-           println("Server response ${response}")
+            RetrofitHelper.getRetrofit().create(ApiPostDoc::class.java)
+                .postDoc(DocInput)
 
         }
 
@@ -48,7 +45,6 @@ class PostDocViewModel : ViewModel() {
 
 
                 citiesLiveData.postValue(citiesList.toMutableList())
-                println("I'm the set  $citiesList")
 
 
             }

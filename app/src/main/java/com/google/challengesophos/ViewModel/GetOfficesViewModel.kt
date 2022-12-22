@@ -6,8 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.google.challengesophos.Repository.model.APIGetOffices
 import com.google.challengesophos.Repository.model.OfficeItems
 import com.google.challengesophos.Repository.model.OfficeResponse
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -34,7 +32,7 @@ class GetOfficesViewModel : ViewModel() {
 
         }
     }
-
+/*
     //it gets the specific city, it will be used for future development
     fun getOfficesViewModel (city:String) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -50,5 +48,5 @@ class GetOfficesViewModel : ViewModel() {
             }
 
         }
-    }
+    }*/
 }

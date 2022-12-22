@@ -1,10 +1,8 @@
 package com.google.challengesophos.ui
 
 
-import android.app.Activity
 import android.content.res.Configuration
 import android.graphics.Bitmap
-import android.graphics.Bitmap.Config
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -91,8 +89,14 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
         //observing the image and converting it to image
         getDocsByIdViewModel.getDocsImgMutableLiveData.observe(viewLifecycleOwner, Observer {
             val imageBase64 = getDocsByIdViewModel.getDocsImgMutableLiveData.value?.get(0)?.Adjunto
-            val imgConverted = decodePicString(imageBase64!!)
-            binding.ivSeeDocsImage.setImageBitmap(imgConverted)
+            if(imageBase64?.contains("9j",true) == true){ //Makes sure it is an img in base64
+                val imgConverted = decodePicString(imageBase64)
+                binding.ivSeeDocsImage.setImageBitmap(imgConverted)
+            }
+            else{
+                Toast.makeText(context, "NO IMAGE", Toast.LENGTH_SHORT).show()
+            }
+
         })
 
 
