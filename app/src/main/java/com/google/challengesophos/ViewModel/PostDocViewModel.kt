@@ -1,5 +1,6 @@
 package com.google.challengesophos.ViewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,9 +15,12 @@ class PostDocViewModel : ViewModel() {
         getCities()
     }
 
-    var citiesLiveData = MutableLiveData<MutableList<String>>()
+    private var _citiesLiveData = MutableLiveData<MutableList<String>>()
+    val citiesLiveData: LiveData<MutableList<String>>
+    get() = _citiesLiveData
 
-    var docModel = MutableLiveData<DocItems>()
+
+    val docModel = MutableLiveData<DocItems>()
 
 
     fun postDoc(DocInput: DocItemsPost) {
@@ -44,7 +48,7 @@ class PostDocViewModel : ViewModel() {
                 }
 
 
-                citiesLiveData.postValue(citiesList.toMutableList())
+                _citiesLiveData.postValue(citiesList.toMutableList())
 
 
             }

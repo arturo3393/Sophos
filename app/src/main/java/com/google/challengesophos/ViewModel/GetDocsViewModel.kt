@@ -14,7 +14,8 @@ import retrofit2.Response
 class GetDocsViewModel : ViewModel() {
 
 
-    var getDocsModelLiveData = MutableLiveData<List<DocItems>>()
+    val getDocsModelLiveData = MutableLiveData<List<DocItems>>()
+
 
 
 //it gets the complete list of focuments with the user's email
