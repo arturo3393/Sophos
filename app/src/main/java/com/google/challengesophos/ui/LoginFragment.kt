@@ -83,6 +83,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     saveFingerSharedPreferences()
                     userName = it.body()!!.nombre
                     navigateToWelcomeFragment()
+
                 } else{
                     binding.progressBarLogin.visibility = View.GONE
                     toastLogin()
@@ -110,8 +111,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
 
         //TO DELETE!!! It allows me to put my email and pasword
-         binding.etEmail.setText("arturo3393@gmail.com")
-         binding.etPassword.setText("05ftK5Ly0J9s")
+        // binding.etEmail.setText("arturo3393@gmail.com")
+       //  binding.etPassword.setText("05ftK5Ly0J9s")
 
 
         return binding.root
@@ -137,6 +138,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     binding.etEmail.text?.trim().toString()
                 )
             )
+
+        loginViewModel.cleanLiveData()
 
     }
 

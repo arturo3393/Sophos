@@ -25,6 +25,9 @@ class LoginViewModel() : ViewModel() {
         }
 
 
+    fun cleanLiveData (){
+        _loginResponse.value?.body()?.acceso = false
+    }
 
 }
 

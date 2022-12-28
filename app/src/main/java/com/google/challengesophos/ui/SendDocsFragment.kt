@@ -178,12 +178,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
                     postDocViewModel.postDoc(getInformationForPosting())
                     showMessage(documentSent)
                     println(getInformationForPosting())
-                    view?.findNavController()?.navigate(
-                        SendDocsFragmentDirections.actionSendDocsFragmentSelf(
-                            arguments?.getString("user_email"),
-                            arguments?.getString("user_name")
-                        )
-                    )
+                    navigateFragmentItself()
                 }
                 else -> showMessage(documentSentFail)
             }
