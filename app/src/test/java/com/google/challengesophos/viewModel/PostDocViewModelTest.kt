@@ -1,4 +1,4 @@
-package com.google.challengesophos.ViewModel
+package com.google.challengesophos.viewModel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 

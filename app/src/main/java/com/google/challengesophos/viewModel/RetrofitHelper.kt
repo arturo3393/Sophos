@@ -1,4 +1,4 @@
-package com.google.challengesophos.ViewModel
+package com.google.challengesophos.viewModel
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

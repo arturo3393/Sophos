@@ -21,13 +21,11 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.google.challengesophos.R
 import com.google.challengesophos.databinding.FragmentLoginBinding
-import com.google.challengesophos.ViewModel.LoginViewModel
+import com.google.challengesophos.viewModel.LoginViewModel
 import java.util.concurrent.Executor
 
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
-
-
 
     private val loginViewModel: LoginViewModel by viewModels()
 
@@ -110,9 +108,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
 
-        //TO DELETE!!! It allows me to put my email and pasword
-        // binding.etEmail.setText("arturo3393@gmail.com")
-       //  binding.etPassword.setText("05ftK5Ly0J9s")
+        //TO DELETE!!! It allows me to put my email and password
+         binding.etEmail.setText("arturo3393@gmail.com")
+         binding.etPassword.setText("05ftK5Ly0J9s")
 
 
         return binding.root

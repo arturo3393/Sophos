@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.challengesophos.R
-import com.google.challengesophos.Repository.model.DocItems
+import com.google.challengesophos.repository.model.DocItems
 
 class ItemsDocsAdapter(
     private val getDocsViewModel: List<DocItems>?,

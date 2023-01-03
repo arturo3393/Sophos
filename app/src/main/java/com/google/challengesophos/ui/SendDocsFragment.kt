@@ -24,8 +24,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.google.challengesophos.R
-import com.google.challengesophos.Repository.model.DocItemsPost
-import com.google.challengesophos.ViewModel.PostDocViewModel
+import com.google.challengesophos.repository.model.DocItemsPost
+import com.google.challengesophos.viewModel.PostDocViewModel
 import com.google.challengesophos.databinding.FragmentSendDocsBinding
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
@@ -42,7 +42,7 @@ class SendDocsFragment : Fragment(R.layout.fragment_send_docs), AdapterView.OnIt
     //Adapter for the spinner of docs type
     lateinit var arrayAdapterTypeDocs: ArrayAdapter<String>
 
-    //Adapter fot the spiner of cities
+    //Adapter fot the spinner of cities
     lateinit var arrayAdapterCities: ArrayAdapter<String>
 
     //The code of the permission for the camera

@@ -1,11 +1,11 @@
-package com.google.challengesophos.ViewModel
+package com.google.challengesophos.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.challengesophos.Repository.model.APIGetOffices
-import com.google.challengesophos.Repository.model.OfficeItems
-import com.google.challengesophos.Repository.model.OfficeResponse
+import com.google.challengesophos.repository.model.APIGetOffices
+import com.google.challengesophos.repository.model.OfficeItems
+import com.google.challengesophos.repository.model.OfficeResponse
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import retrofit2.Response

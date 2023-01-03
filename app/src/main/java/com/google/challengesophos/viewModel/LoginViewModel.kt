@@ -1,9 +1,9 @@
-package com.google.challengesophos.ViewModel
+package com.google.challengesophos.viewModel
 
 
 import androidx.lifecycle.*
-import com.google.challengesophos.Repository.model.APILogin
-import com.google.challengesophos.Repository.model.LoginApiResponse
+import com.google.challengesophos.repository.model.APILogin
+import com.google.challengesophos.repository.model.LoginApiResponse
 import kotlinx.coroutines.*
 import retrofit2.Response
 

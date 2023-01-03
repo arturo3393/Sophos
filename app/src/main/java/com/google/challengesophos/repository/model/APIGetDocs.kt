@@ -1,4 +1,4 @@
-package com.google.challengesophos.Repository.model
+package com.google.challengesophos.repository.model
 
 import retrofit2.Response
 import retrofit2.http.GET

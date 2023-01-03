@@ -1,4 +1,4 @@
-package com.google.challengesophos.Repository.model
+package com.google.challengesophos.repository.model
 
 data class OfficeItems(
     var IdOficina: Int,

@@ -18,8 +18,8 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.challengesophos.R
-import com.google.challengesophos.ViewModel.GetDocsByIdViewModel
-import com.google.challengesophos.ViewModel.GetDocsViewModel
+import com.google.challengesophos.viewModel.GetDocsByIdViewModel
+import com.google.challengesophos.viewModel.GetDocsViewModel
 import com.google.challengesophos.databinding.FragmentSeeDocsBinding
 import com.google.challengesophos.ui.adapter.ItemsDocsAdapter
 import java.util.*
@@ -49,7 +49,6 @@ class SeeDocsFragment : Fragment(R.layout.fragment_see_docs) {
             "en"->setLocate("en")
             "fr"->setLocate("fr")
         }
-
 
 
         //binding initialized

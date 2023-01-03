@@ -1,10 +1,10 @@
-package com.google.challengesophos.ViewModel
+package com.google.challengesophos.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.challengesophos.Repository.model.*
+import com.google.challengesophos.repository.model.*
 import kotlinx.coroutines.launch
 
 

@@ -1,7 +1,7 @@
 package com.google.challengesophos.ui
 
 import android.Manifest
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Bundle
@@ -23,8 +23,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.challengesophos.R
-import com.google.challengesophos.Repository.model.OfficeItems
-import com.google.challengesophos.ViewModel.GetOfficesViewModel
+import com.google.challengesophos.repository.model.OfficeItems
+import com.google.challengesophos.viewModel.GetOfficesViewModel
 import com.google.challengesophos.databinding.FragmentOfficesBinding
 import java.util.*
 
@@ -121,12 +121,9 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
                 .position(LatLng(cities.Latitud.toDouble(), cities.Longitud.toDouble()))
                 .title(cities.Nombre)
             map.addMarker(marker)
+
+
         }
-
-
-        map.animateCamera(
-            CameraUpdateFactory.newLatLngZoom(LatLng(4.7109886, -74.072092), 12f), 4000, null
-        )
     }
 
     private fun isLocationPermissionGranted() = ContextCompat.checkSelfPermission(
@@ -134,10 +131,15 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
         Manifest.permission.ACCESS_FINE_LOCATION
     ) == PackageManager.PERMISSION_GRANTED
 
+    @SuppressLint("MissingPermission")//I already handle the permissions
     private fun enableLocation() {
         if (!::map.isInitialized) return
         if (isLocationPermissionGranted()) {
             map.isMyLocationEnabled = true
+            //It Focuses the camera in the location
+          map.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(LatLng(4.7109886, -74.072092), 12f), 4000, null
+            )
         } else {
             requestLocationPermission()
         }
@@ -150,7 +152,9 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
                 Manifest.permission.ACCESS_FINE_LOCATION
             )
         ) {
-            Toast.makeText(context, "Set up location permissions in settings", Toast.LENGTH_SHORT)
+            //String for toast
+            val locationPermission = getString(R.string.location_permission)
+           Toast.makeText(context, locationPermission, Toast.LENGTH_SHORT)
                 .show()
         } else {
             ActivityCompat.requestPermissions(
@@ -161,6 +165,7 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    @SuppressLint("MissingPermission")//I already handle the permissions
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -169,6 +174,8 @@ class OfficesFragment : Fragment(), OnMapReadyCallback {
         when (requestCode) {
             REQUEST_CODE_LOCATION -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 map.isMyLocationEnabled = true
+                //It Focuses the camera in the location
+
             } else {
                 //String for toast
                 val locationPermission = getString(R.string.location_permission)

@@ -3,7 +3,7 @@ package com.google.challengesophos.ui.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.google.challengesophos.Repository.model.DocItems
+import com.google.challengesophos.repository.model.DocItems
 import com.google.challengesophos.databinding.ItemSeeDocsBinding
 
 class ItemsDocsViewHolder(view: View) : RecyclerView.ViewHolder(view) {

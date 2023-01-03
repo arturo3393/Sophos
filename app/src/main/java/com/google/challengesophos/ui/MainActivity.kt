@@ -5,7 +5,6 @@ package com.google.challengesophos.ui
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -13,7 +12,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.challengesophos.R
-import com.google.challengesophos.ViewModel.LoginViewModel
 import com.google.challengesophos.databinding.ActivityMainBinding
 
 
@@ -25,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //theme used to switch the splash
         setTheme(R.style.Theme_ChallengeSophos)
         super.onCreate(savedInstanceState)
 
@@ -76,51 +75,5 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
 
     }
-/*
-    //enables the menu
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.option_menu, menu)
-        return true
-    }
-
-
-    //navigate to each option in the menu
-     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-          return when (item.itemId) {
-              R.id.sendDocsMenu -> {
-                  navController.navigate(R.id.action_welcomeFragment_to_sendDocsFragment,)
-                  //println( binding.navHostFragment.getFragment<WelcomeFragment>().arguments)
-
-                  true
-                  //WelcomeFragmentDirections.actionWelcomeFragmentToSeeDocsFragment
-              }
-              R.id.seeDocsMenu -> {
-                  navController.navigate(R.id.action_welcomeFragment_to_seeDocsFragment)
-                  true
-              }
-              R.id.officesMenu -> {
-                  navController.navigate(R.id.action_welcomeFragment_to_officesFragment)
-                  true
-              }
-
-              R.id.logoutMenu -> {
-                  navController.navigate(R.id.action_welcomeFragment_to_loginFragment)
-                  true
-              }
-              //missing the dark and language menu
-              /*R.id.darkModeMenu->view?.findNavController()?.navigate(R
-                      R.id.languageMenu->view?.findNavController()?.navigate(R*/
-              else -> {
-                  super.onOptionsItemSelected(item)
-              }
-          }
-      }
-
-
- */
-
-
-
-
 
 }
